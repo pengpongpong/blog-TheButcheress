@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100;0,400;0,700;1,400&family=Sacramento&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "swiper/css";
+@import "swiper/css/navigation";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+[data-theme="light"] {
+  --color-default: #fbf7f0;
+}
+
+[data-theme="dark"] {
+  --color-default: #252b30;
+}
+
+.swiper {
+  margin: 0;
+  height: 300px;
+}
+
+.swiper-wrapper {
+  width: 100%;
+}
+
+.swiper-slide {
+  border: 0;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #d9e4dd !important;
+}
+
+.stepIcon {
+  color: #d9e4dd !important;
+  &__text {
+    font-family: "Josefin Slab", "serif" !important;
+    font-weight: bold;
+    fill: black !important;
+  }
+}
