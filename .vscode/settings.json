@@ -1,18 +1,30 @@
 {
     "cSpell.words": [
+        "durch",
+        "formatjs",
+        "Gesamt",
         "groq",
         "kategorie",
         "kontakt",
         "Kontakt",
         "Ladet",
+        "localematcher",
         "Nahrung",
+        "Portionen",
         "reisen",
         "Reisen",
         "rezepte",
         "Rezepte",
+        "Stöbere",
         "swiper",
+        "tollen",
         "über",
         "Über",
-        "ueber"
+        "ueber",
+        "Vorbereitung",
+        "Zutaten"
+    ],
+    "cSpell.ignoreWords": [
+        "Mobilenav"
     ]
 }

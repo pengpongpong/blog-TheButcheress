@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { urlFor } from "@/sanity/lib/sanity-utils";
-import { Lang } from "@/sanity/lib/sanity-query";
 import { ImageSliderProps } from "@/components/image-slider/ImageSlider";
 
 
@@ -54,9 +53,11 @@ interface Links {
     travel: LinksContent;
 }
 
+export type Locale = "en" | "de"
+
 export interface HomeProps {
     pageData: PageDataProps;
-    lang: Lang;
+    lang: Locale;
 }
 
 const ImageSlider = lazy(() => import("@/components/image-slider/ImageSlider"))
@@ -64,16 +65,16 @@ const ImageSlider = lazy(() => import("@/components/image-slider/ImageSlider"))
 const Home = ({ pageData, lang }: HomeProps) => {
     const links: Links = {
         about: {
-            text: lang === "EN" ? "About me" : "Über mich",
-            url: lang === "EN" ? "/about-me" : "/ueber-mich"
+            text: lang === "en" ? "About me" : "Über mich",
+            url: lang === "en" ? "/about-me" : "/ueber-mich"
         },
         recipe: {
-            text: lang === "EN" ? "All recipes" : "Alle Rezepte",
-            url: lang === "EN" ? "/recipes" : "/rezepte"
+            text: lang === "en" ? "All recipes" : "Alle Rezepte",
+            url: lang === "en" ? "/recipes" : "/rezepte"
         },
         travel: {
-            text: lang === "EN" ? "All travels" : "Alle Reisen",
-            url: lang === "EN" ? "/travel" : "/reisen"
+            text: lang === "en" ? "All travels" : "Alle Reisen",
+            url: lang === "en" ? "/travel" : "/reisen"
         },
     }
 
