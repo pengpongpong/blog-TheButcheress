@@ -227,7 +227,7 @@ export default defineConfig({
     dataset: `${dataset}`,
 
     apiVersion: `${apiVersion}`,
-    basePath: "/admin",
+    basePath: "/de/admin",
 
     plugins: [
         deskTool({

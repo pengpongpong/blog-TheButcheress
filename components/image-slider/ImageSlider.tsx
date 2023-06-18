@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef } from "react";
 import Swiper, { SwiperOptions, type Swiper as SwiperRef } from "swiper";
 import { register } from "swiper/element/bundle";

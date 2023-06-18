@@ -5,7 +5,7 @@ import Negotiator from 'negotiator'
 
 const locales = ['en', 'de']
 
-// Get the preferred locale, similar to above or using a library
+// Get the preferred locale
 function getLocale(request: NextRequest) {
     let headers = { 'accept-language': 'de,en;q=0.5' }
     let languages = new Negotiator({ headers }).languages()

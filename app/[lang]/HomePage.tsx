@@ -1,4 +1,3 @@
-"use client"
 import React, { lazy } from "react";
 import Link from "next/link";
 import Image from "next/image";

@@ -1,4 +1,4 @@
-import "./globals.scss"
+import "./globals.css"
 import Navbar from "@/components/navbar/Navbar"
 import { transformLocale } from "@/components/utils/utils"
 import { lazy } from "react"
@@ -15,7 +15,7 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode,
-  params: { lang: "de" | "en" }
+  params: { lang: "de" | "en" },
 }) {
 
   return (

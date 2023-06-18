@@ -3,7 +3,9 @@ import Home from "./HomePage"
 import { Metadata, ResolvingMetadata } from 'next'
 import { Lang, homeQuery } from "@/sanity/lib/sanity-query"
 import { transformLocale } from "@/components/utils/utils"
-
+import { draftMode } from "next/headers"
+import HomePreview from "./HomePreview"
+import Preview from "@/components/preview/Preview"
 
 const getData = async (lang: Lang) => {
   const pageQuery = homeQuery(lang)
@@ -14,7 +16,7 @@ const getData = async (lang: Lang) => {
 interface HomePageProps {
   params: {
     lang: string
-  }
+  },
 }
 
 type MetaDataProps = {
@@ -43,11 +45,19 @@ export async function generateMetadata(
 
 
 export default async function HomePage({ params: { lang } }: HomePageProps) {
+  const { isEnabled } = draftMode()
   const locale: "DE" | "EN" = transformLocale(lang)
-  const data = await getData(lang.toUpperCase() as Lang)
-  return (
+  const pageQuery = homeQuery(locale)
+  const data = !isEnabled ? await client.fetch(pageQuery) : ""
+
+  return isEnabled ? (
     <>
-      <Home pageData={data} lang={locale}/>
+      <Preview>
+        <HomePreview pageQuery={pageQuery} lang={locale} />
+      </Preview>
     </>
-  )
+  ) :
+    <>
+      <Home pageData={data} lang={locale} />
+    </>
 }

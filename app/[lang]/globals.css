@@ -40,9 +40,10 @@
 
 .stepIcon {
   color: #d9e4dd !important;
-  &__text {
-    font-family: "Josefin Slab", "serif" !important;
-    font-weight: bold;
-    fill: black !important;
-  }
+}
+
+.stepIcon__text {
+  font-family: "Josefin Slab", "serif" !important;
+  font-weight: bold;
+  fill: black !important;
 }

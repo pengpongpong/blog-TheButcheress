@@ -6,7 +6,7 @@ import { Slide } from "@mui/material";
 import Link from "next/link";
 import React, { useState, ReactNode, useEffect } from "react";
 import { NavigationItem } from "@/sanity.config";
-// import LanguageSwitch from "../language-switch/LanguageSwitch";
+import LanguageSwitch from "../language-switch/LanguageSwitch";
 import { usePathname } from 'next/navigation'
 import SearchIcon from "/public/icons/bx-search.svg"
 import Image from "next/image";
@@ -320,11 +320,11 @@ async function Navbar({ lang }: { lang: Lang, navData?: NavigationItem[] }) {
           <nav className="lg:mr-5 mb-4 mt-2 lg:mt-0 flex justify-center items-center gap-8">
             <Link href="/suche"><Image alt="" src={SearchIcon} /></Link>
             <Socials />
-            {/* <LanguageSwitch /> */}
+            <LanguageSwitch />
           </nav>
         </nav>
         <nav className="flex w-full justify-between items-center">
-          <Link href="/" className="font-headline text-4xl lg:text-5xl">
+          <Link href={`/${lang.toLowerCase()}`} className="font-headline text-4xl lg:text-5xl">
             TheButcheress_
           </Link>
           {/* mobile navbar */}
