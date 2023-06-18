@@ -274,9 +274,7 @@ const MenuList = ({ list }: MenuListType) => {
 };
 
 //Navbar
-async function Navbar({ lang }: { lang: Lang, navData?: NavigationItem[] }) {
-
-  const navData = await client.fetch(navQuery(lang))
+async function Navbar({ navData, lang }: { lang: Lang, navData: NavigationItem[] }) {
 
   //creates structure for navbar from data
   const navStructure = (list: NavigationItem[]): MenuListInterface[] => {

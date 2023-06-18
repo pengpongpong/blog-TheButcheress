@@ -3,10 +3,11 @@ import React from "react"
 
 import Home from "./HomePage";
 
-import { ExitPreview } from "@/components/utils/utils";
+
 import { Params } from "next-sanity/preview";
 import { Lang } from "@/sanity/lib/sanity-query";
 import { usePreview } from "@/sanity/lib/sanity-preview";
+import { ExitPreview } from "@/components/preview/ExitPreview";
 
 export interface Preview {
     pageQuery: string;

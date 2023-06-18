@@ -10,14 +10,18 @@ export const devStructure: DefaultDocumentNodeResolver = (S, { schemaType, docum
     }
 }
 
+const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
+const dataset = process.env.NEXT_PUBLIC_DATASET;
+const apiVersion = process.env.NEXT_PUBLIC_API_VERSION;
+
 export default defineConfig({
     name: 'default',
     title: 'blog-butcheress',
 
-    projectId: '94y9p2mz',
-    dataset: 'production',
+    projectId: `${projectId}`,
+    dataset: `${dataset}`,
 
-    apiVersion: "2023-04-24",
+    apiVersion: `${apiVersion}`,
     basePath: "/de/admin",
 
     plugins: [deskTool({
@@ -25,7 +29,7 @@ export default defineConfig({
     }), visionTool()],
 
     useCdn: true,
-    
+
     schema: {
         types: schemaTypes,
     },
