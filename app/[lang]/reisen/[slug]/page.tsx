@@ -4,11 +4,10 @@ import { client } from "@/sanity/lib/sanity-utils"
 import { Metadata } from "next"
 import { groq } from "next-sanity"
 import React, { lazy } from 'react'
-import { PreviewSuspense } from "next-sanity/preview"
 import { MetaDataProps, ParamsProps } from "../../page"
 import { draftMode } from "next/headers"
 import BlogPost from "@/components/blog/BlogPost"
-
+import Preview from "@/components/preview/Preview"
 
 const travelPostQuery = (lang: Lang) => {
     return (
@@ -33,8 +32,8 @@ export const generateStaticParams = async () => {
     }))
 }
 
-export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
-    const data = await client.fetch(travelPostQuery(transformLocale(lang)))
+export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps): Promise<Metadata> => {
+    const data = await client.fetch(travelPostQuery(transformLocale(lang)), { slug })
     const text = lang === "en" ? `The Butcheress_ | A blog about travel - ${data?.title}` : `The Butcheress_ | Ein Blog über Reisen - ${data?.title}`
     const description = `The Butcheress_ | ${data?.description}`
 
@@ -52,9 +51,9 @@ const TravelPost = async ({ params: { lang, slug } }: ParamsProps) => {
 
     return isEnabled ? (
         <>
-            <PreviewSuspense fallback="Ladet Preview...">
+            <Preview>
                 <BlogPreview pageQuery={travelPostQuery(transformLocale(lang))} lang={lang} queryParams={{ slug }} />
-            </PreviewSuspense>
+            </Preview>
         </>
     ) :
         <>

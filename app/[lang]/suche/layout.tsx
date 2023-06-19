@@ -7,7 +7,7 @@ import { transformLocale } from "@/components/utils/utils";
 
 const Footer = lazy(() => import("@/components/footer/Footer"))
 
-const BlogLayout = async ({ children, params }: { children: ReactNode, params: { lang: Locale } }) => {
+const SearchLayout = async ({ children, params }: { children: ReactNode, params: { lang: Locale } }) => {
     const navData = await client.fetch(navQuery(transformLocale(params.lang)))
     return (
         <>
@@ -18,4 +18,4 @@ const BlogLayout = async ({ children, params }: { children: ReactNode, params: {
     )
 } 
 
-export default BlogLayout
+export default SearchLayout

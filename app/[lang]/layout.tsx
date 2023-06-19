@@ -17,7 +17,7 @@ export default async function RootLayout({
 
   return (
     <html lang={`${params.lang ?? "de"}`}>
-      <body>
+      <body className="min-h-screen flex flex-col">
         {children}
       </body>
     </html>
