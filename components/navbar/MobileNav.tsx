@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { Slide } from "@mui/material";
 import { MenuListType } from "./Navbar";
+import Link from "next/link";
 
 
 //mobile navbar

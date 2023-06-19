@@ -23,8 +23,6 @@ export function middleware(request: NextRequest) {
 
     // Redirect if there is no locale
     if (pathnameIsMissingLocale) {
-        const locale = getLocale(request)
-
         //get language preference from cookie
         const cookie = request.cookies.get("lang")
         if (cookie) {
@@ -32,6 +30,7 @@ export function middleware(request: NextRequest) {
                 new URL(`/${cookie.value}/${pathname}`, request.url)
             )
         }
+        const locale = getLocale(request)
 
         return NextResponse.redirect(
             new URL(`/${locale}/${pathname}`, request.url)

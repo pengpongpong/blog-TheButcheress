@@ -1,12 +1,23 @@
+import React from 'react'
 import CardContainer, { CardData } from "@/components/card/Card"
 
 import { transformLocale } from "@/components/utils/utils"
-import { recipesQuery } from "@/sanity/lib/sanity-query"
+import { Lang } from "@/sanity/lib/sanity-query"
 import { client } from "@/sanity/lib/sanity-utils"
 import { Metadata, ResolvingMetadata } from "next"
-import React from 'react'
 
 import { MetaDataProps, ParamsProps } from "../page"
+import { groq } from "next-sanity"
+
+//get all recipes
+const recipesQuery = (lang: Lang) => {
+    return (groq`*[_type == "recipe"]{
+        "title": title${lang},
+        "description": description.description${lang},
+        "imageUrl": image,
+        "url": slug.current}`
+    )
+}
 
 export const generateMetadata = async ({ params }: MetaDataProps, parent: ResolvingMetadata): Promise<Metadata> => {
     const { lang } = params

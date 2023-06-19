@@ -1,11 +1,6 @@
+import { ReactNode } from "react"
 import "./globals.css"
-import Navbar from "@/components/navbar/Navbar"
-import { transformLocale } from "@/components/utils/utils"
-import { navQuery } from "@/sanity/lib/sanity-query"
-import { client } from "@/sanity/lib/sanity-utils"
-import { ReactNode, lazy } from "react"
-
-const Footer = lazy(() => import("@/components/footer/Footer"))
+import { Locale } from "./HomePage"
 
 export const metadata = {
   title: 'TheButcheress | Blog',
@@ -17,17 +12,13 @@ export default async function RootLayout({
   params,
 }: {
   children: ReactNode,
-  params: { lang: "de" | "en" },
+  params: { lang: Locale },
 }) {
 
-  const navData = await client.fetch(navQuery(transformLocale(params.lang)))
-
   return (
-    <html lang={`${params?.lang ?? "de"}`}>
+    <html lang={`${params.lang ?? "de"}`}>
       <body>
-        <Navbar navData={navData} lang={transformLocale(params.lang)} />
         {children}
-        <Footer lang={params?.lang} />
       </body>
     </html>
   )

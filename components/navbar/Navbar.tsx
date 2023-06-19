@@ -5,8 +5,8 @@ import LanguageSwitch from "../language-switch/LanguageSwitch";
 import SearchIcon from "/public/icons/bx-search.svg"
 import Image from "next/image";
 import Socials from "../socials/Socials";
-import { Lang } from "@/sanity/lib/sanity-query";
 import MobileNav, { SubMenu } from "./MobileNav";
+import { Locale } from "@/app/[lang]/HomePage";
 
 
 //interface and data for dropdown menu
@@ -129,7 +129,7 @@ const MenuList = ({ list }: MenuListType) => {
 };
 
 //Navbar
-async function Navbar({ navData, lang }: { lang: Lang, navData: NavigationItem[] }) {
+function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) {
 
   //creates structure for navbar from data
   const navStructure = (list: NavigationItem[]): MenuListInterface[] => {
@@ -177,7 +177,7 @@ async function Navbar({ navData, lang }: { lang: Lang, navData: NavigationItem[]
           </nav>
         </nav>
         <nav className="flex w-full justify-between items-center">
-          <Link href={`/${lang.toLowerCase()}`} className="font-headline text-4xl lg:text-5xl">
+          <Link href={`/${lang}`} className="font-headline text-4xl lg:text-5xl">
             TheButcheress_
           </Link>
           {/* mobile navbar */}

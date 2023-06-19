@@ -180,7 +180,7 @@ export const devStructure: DefaultDocumentNodeResolver = (S, { schemaType, docum
                 S.view
                     .component(Iframe)
                     .options({
-                        url: `http://localhost:3000/api/preview`,
+                        url: `http://localhost:3000/de/api/preview`,
                     })
                     .title('Preview'),
             ])
@@ -193,7 +193,7 @@ export const devStructure: DefaultDocumentNodeResolver = (S, { schemaType, docum
                     S.view
                         .component(Iframe)
                         .options({
-                            url: `http://localhost:3000/api/preview?rezept=${documentId}`,
+                            url: `http://localhost:3000/de/api/preview?rezept=${documentId}`,
                         })
                         .title('Preview'),
                 ])
@@ -206,7 +206,7 @@ export const devStructure: DefaultDocumentNodeResolver = (S, { schemaType, docum
                     S.view
                         .component(Iframe)
                         .options({
-                            url: `http://localhost:3000/api/preview?blog=${documentId}`,
+                            url: `http://localhost:3000/de/api/preview?blog=${documentId}`,
                         })
                         .title('Preview'),
                 ])

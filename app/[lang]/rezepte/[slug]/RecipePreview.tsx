@@ -1,5 +1,6 @@
-import { usePreview } from "@/sanity/lib/sanity-preview"
+"use client"
 import React from 'react'
+import { usePreview } from "@/sanity/lib/sanity-preview"
 import Recipe from "./Recipe"
 import { ExitPreview } from "@/components/preview/ExitPreview"
 import { Preview } from "../../HomePreview"

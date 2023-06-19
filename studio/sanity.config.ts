@@ -1,7 +1,6 @@
 import { defineConfig } from 'sanity'
 import { DefaultDocumentNodeResolver, deskTool } from 'sanity/desk'
 import { visionTool } from '@sanity/vision'
-import { schemaTypes } from "../sanity/schemas/index"
 
 export const devStructure: DefaultDocumentNodeResolver = (S, { schemaType, documentId }) => {
     switch (schemaType) {
@@ -30,7 +29,4 @@ export default defineConfig({
 
     useCdn: true,
 
-    schema: {
-        types: schemaTypes,
-    },
 })

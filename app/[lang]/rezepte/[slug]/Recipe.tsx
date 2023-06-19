@@ -1,4 +1,3 @@
-// recipe.tsx
 import React from "react";
 import Image from "next/image";
 
@@ -79,18 +78,13 @@ const styles = {
 }
 
 const Recipe = ({ pageData, lang }: RecipeProps) => {
-    // const router = useRouter();
-    // const { locale, query } = router
-    // const path = query.slug ?? ""
-    const path = ""
-
     return (
         <>
             <main>
                 <section className="flex flex-col gap-4 font-text lg:mx-16 lg:flex-row">
                     <div className="w-full flex flex-col-reverse gap-4 lg:gap-0 lg:flex-row">
                         <div className="max-w-full lg:max-w-fit lg:pr-8 my-auto lg:w-1/6 text-center">
-                            <SocialShare path={path as string} lang={lang} title={pageData?.title} styles={styles}/>
+                            <SocialShare lang={lang} title={pageData?.title} styles={styles}/>
                         </div>
                         <div className="mb-4 lg:mb-0 flex flex-col items-center justify-between">
                             <h1 className="m-4 mb-8 text-4xl tracking-wide lg:mt-8 lg:text-6xl">

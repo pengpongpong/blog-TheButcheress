@@ -1,9 +1,9 @@
 import React from 'react'
 import Navbar from "./Navbar"
 import { usePreview } from "@/sanity/lib/sanity-preview"
-import { Lang } from "@/sanity/lib/sanity-query"
+import { Locale } from "@/app/[lang]/HomePage"
 
-const NavbarPreview = ({ navQuery, lang }: { navQuery: string, lang: Lang }) => {
+const NavbarPreview = ({ navQuery, lang }: { navQuery: string, lang: Locale }) => {
     const data = usePreview(null, navQuery)
 
     return <Navbar navData={data} lang={lang} />
