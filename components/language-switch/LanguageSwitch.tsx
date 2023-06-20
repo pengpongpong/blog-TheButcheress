@@ -48,7 +48,7 @@ const LanguageSwitch = () => {
         }
     }
 
-    return <Link className="inline-block tracking-wide hover:underline cursor-pointer font-text" href={getUrl()} onClick={setLang}>DE/EN</Link>
+    return <Link className="inline-block tracking-wide hover:underline cursor-pointer font-text" href={getUrl()} onClick={setLang} prefetch>DE/EN</Link>
 }
 
 export default LanguageSwitch

@@ -8,15 +8,14 @@ import CookieIcon from "/public/icons/bx-cookie.svg"
 import { useConsentStore } from "../utils/store"
 import { setLocalStorage } from "./LocalStorage"
 
+const setConsent = (current: boolean) => {
+    useConsentStore.getState().setConsent(current)
+}
 
 const CookieBanner = ({ lang }: { lang: Locale }) => {
-    const setConsent = (current: boolean) => {
-        useConsentStore.getState().setConsent(current)
-    }
-
     const [store, setStore] = useState(true)
     const [showBanner, setShowBanner] = useState(true)
-    
+
     useEffect(() => {
         const data = localStorage.getItem("cookie-preference")
         const result = data === "true" || data === "false"

@@ -66,15 +66,15 @@ const Home = ({ pageData, lang }: HomeProps) => {
     const links: Links = {
         about: {
             text: lang === "en" ? "About me" : "Über mich",
-            url: lang === "en" ? "/about-me" : "/ueber-mich"
+            url: lang === "en" ? "/en/ueber-mich" : "de/ueber-mich"
         },
         recipe: {
             text: lang === "en" ? "All recipes" : "Alle Rezepte",
-            url: lang === "en" ? "/recipes" : "/rezepte"
+            url: lang === "en" ? "en/rezepte" : "de/rezepte"
         },
         travel: {
             text: lang === "en" ? "All travels" : "Alle Reisen",
-            url: lang === "en" ? "/travel" : "/reisen"
+            url: lang === "en" ? "en/reisen" : "de/reisen"
         },
     }
 

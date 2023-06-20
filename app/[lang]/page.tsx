@@ -73,7 +73,6 @@ export default async function HomePage({ params: { lang } }: ParamsProps) {
     <>
       <Navbar navData={navData} lang={lang} />
       <Home pageData={data} lang={lang} />
-      <CookieBanner lang={lang} />
       <Footer lang={lang} />
     </>
 }
