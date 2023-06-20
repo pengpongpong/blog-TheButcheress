@@ -2,10 +2,10 @@
 import CardContainer, { CardData } from "@/components/card/Card"
 import { client } from "@/sanity/lib/sanity-utils"
 import { groq } from "next-sanity"
-import React, { ChangeEventHandler, useEffect, useState } from 'react'
+import React, { ChangeEventHandler, useEffect } from 'react'
 import { Locale } from "../HomePage"
-import { create } from "zustand"
 import Loading from "@/components/loading/Loading"
+import { useSearchStore } from "@/components/utils/store"
 
 const getData = async (query: string) => {
     const searchQuery = groq`*[
@@ -15,24 +15,6 @@ const getData = async (query: string) => {
 
     return await client.fetch(searchQuery, { query: query })
 }
-
-interface SearchStore {
-    search: string;
-    data: CardData[];
-    loading: boolean;
-    setSearch: (query: string) => void;
-    setData: (data: CardData[]) => void;
-    setLoading: (current: boolean) => void;
-}
-
-const useSearchStore = create<SearchStore>((set) => ({
-    search: "",
-    data: [],
-    loading: false,
-    setSearch: ((query) => set(() => ({ search: query }))),
-    setData: ((data) => set(() => ({ data: data }))),
-    setLoading: ((current) => set(() => ({ loading: current }))),
-}))
 
 const Search = ({ lang }: { lang: Locale }) => {
     const data = useSearchStore((state) => state.data)

@@ -1,6 +1,7 @@
 import { ReactNode } from "react"
 import "./globals.css"
 import { Locale } from "./HomePage"
+import CookieBanner from "@/components/cookie-banner/CookieBanner"
 
 export const metadata = {
   title: 'TheButcheress | Blog',

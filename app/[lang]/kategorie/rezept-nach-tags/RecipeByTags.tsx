@@ -2,8 +2,9 @@
 import React, { lazy } from 'react'
 
 import { Lang } from "@/sanity/lib/sanity-query"
-import TagInputs, { TagsProps, useQueryStore } from "./TagInputs"
+import TagInputs, { TagsProps } from "./TagInputs"
 import { transformLocale } from "@/components/utils/utils"
+import { useQueryStore } from "@/components/utils/store"
 import Loading from "@/components/loading/Loading"
 
 export interface RecipeByTagsProps {

@@ -16,6 +16,6 @@ const CategoryLayout = async ({ children, params }: { children: ReactNode, param
             <Footer lang={params.lang} />
         </>
     )
-} 
+}
 
 export default CategoryLayout

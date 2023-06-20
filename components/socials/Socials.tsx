@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import instagramIcon from "public/icons/socials/bxl-instagram.svg"
-import facebookIcon from "public/icons/socials/bxl-facebook.svg"
-import tiktokIcon from "public/icons/socials/bxl-tiktok.svg"
-import twitchIcon from "public/icons/socials/bxl-twitch.svg"
-import twitterIcon from "public/icons/socials/bxl-twitter.svg"
-import youtubeIcon from "public/icons/socials/bxl-youtube.svg"
+import instagramIcon from "/public/icons/socials/bxl-instagram.svg"
+import facebookIcon from "/public/icons/socials/bxl-facebook.svg"
+import tiktokIcon from "/public/icons/socials/bxl-tiktok.svg"
+import twitchIcon from "/public/icons/socials/bxl-twitch.svg"
+import twitterIcon from "/public/icons/socials/bxl-twitter.svg"
+import youtubeIcon from "/public/icons/socials/bxl-youtube.svg"
 
 export const Socials = () => {
     return (

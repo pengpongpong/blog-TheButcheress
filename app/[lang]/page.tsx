@@ -9,6 +9,8 @@ import HomePreview from "./HomePreview"
 import Preview from "@/components/preview/Preview"
 import Navbar from "@/components/navbar/Navbar"
 import { groq } from "next-sanity"
+import CookieBanner from "@/components/cookie-banner/CookieBanner"
+import Text from "./Text"
 
 export interface ParamsProps {
   params: {
@@ -47,6 +49,10 @@ export async function generateMetadata(
   }
 }
 
+export const generateStaticParams = () => {
+  return [{ lang: "de" }, { lang: "en" }]
+}
+
 const Footer = lazy(() => import("@/components/footer/Footer"))
 
 export default async function HomePage({ params: { lang } }: ParamsProps) {
@@ -66,8 +72,10 @@ export default async function HomePage({ params: { lang } }: ParamsProps) {
     </>
   ) :
     <>
-        <Navbar navData={navData} lang={lang} />
-        <Home pageData={data} lang={lang} />
-        <Footer lang={lang} />
+      <Navbar navData={navData} lang={lang} />
+      <Home pageData={data} lang={lang} />
+      <CookieBanner lang={lang} />
+      <Text />
+      <Footer lang={lang} />
     </>
 }

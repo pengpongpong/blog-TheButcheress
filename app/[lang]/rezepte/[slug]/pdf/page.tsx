@@ -16,6 +16,14 @@ export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Pro
     }
 }
 
+export const generateStaticParams = async () => {
+    const paths = await client.fetch(groq`*[_type == "recipe" && defined(slug.current)][].slug.current`)
+
+    return paths.map((path: string) => ({
+        slug: path
+    }))
+}
+
 const Index = async ({ params: { lang, slug } }: ParamsProps) => {
     const locale = transformLocale(lang)
     const data = await client.fetch(groq`*[_type == "recipe" && slug.current == $slug][0]{

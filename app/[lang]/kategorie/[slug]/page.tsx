@@ -11,6 +11,7 @@ import { groq } from "next-sanity";
 import { MetaDataProps, ParamsProps } from "../../page";
 import { draftMode } from "next/headers";
 import { Lang } from "@/sanity/lib/sanity-query";
+import { notFound } from "next/navigation";
 
 //get category
 const categoryQuery = (lang: Lang) => {
@@ -55,6 +56,8 @@ const CategoryPage = async ({ params: { lang, slug } }: ParamsProps) => {
     const { isEnabled } = draftMode()
     const data = await client.fetch(categoryQuery(transformLocale(lang)), { slug })
 
+    // if (!data) return notFound()
+    
     return isEnabled ? (
         <>
             <PreviewSuspense fallback="Ladet Preview...">
@@ -67,6 +70,5 @@ const CategoryPage = async ({ params: { lang, slug } }: ParamsProps) => {
         </>
 
 }
-
 
 export default CategoryPage

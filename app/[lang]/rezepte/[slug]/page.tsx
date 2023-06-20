@@ -11,6 +11,7 @@ import { groq } from "next-sanity"
 import { Lang, navQuery } from "@/sanity/lib/sanity-query"
 import Navbar from "@/components/navbar/Navbar"
 import Footer from "@/components/footer/Footer"
+import { notFound } from "next/navigation"
 
 //get specific recipe
 const recipeQuery = (lang: Lang) => {
@@ -58,6 +59,8 @@ const RecipePage = async ({ params: { lang, slug } }: ParamsProps) => {
     const { isEnabled } = draftMode()
     const data = await client.fetch(pageQuery, { slug })
     const navData = await client.fetch(navQuery(transformLocale(lang)))
+
+    if (!data) return notFound()
 
     return isEnabled ? (
         <>

@@ -5,7 +5,7 @@ import { CardData } from "@/components/card/Card";
 import { Lang } from "@/sanity/lib/sanity-query";
 import { client } from "@/sanity/lib/sanity-utils";
 import { groq } from "next-sanity";
-import { create } from "zustand";
+import { useQueryStore } from "@/components/utils/store";
 
 export interface TagsProps {
     title: string;
@@ -15,17 +15,6 @@ export interface TagsProps {
 interface TagInputsProps {
     tags: TagsProps[];
     lang: Lang,
-}
-
-
-interface QueryStore {
-    query: string[];
-    data: CardData[];
-    loading: boolean;
-    addQuery: (url: string) => void;
-    setQuery: (url: string[]) => void;
-    setData: (result: CardData[]) => void;
-    setLoading: (current: boolean) => void;
 }
 
 //get recipes by selected tags
@@ -44,16 +33,6 @@ const getSelectedTags = async (lang: Lang, tags: string[]) => {
 
     return await client.fetch(selectedTagsQuery(lang, tagsQuery))
 }
-
-export const useQueryStore = create<QueryStore>((set) => ({
-    query: [],
-    data: [],
-    loading: false,
-    addQuery: (url) => set((state) => ({ query: [...state.query, url] })),
-    setQuery: (url) => set(() => ({ query: url })),
-    setData: (result) => set(() => ({ data: result })),
-    setLoading: (current) => set(() => ({ loading: current }))
-}))
 
 const TagInputs = ({ tags, lang }: TagInputsProps) => {
     const query = useQueryStore((state) => state.query)
