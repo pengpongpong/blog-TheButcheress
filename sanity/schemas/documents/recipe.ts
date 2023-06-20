@@ -29,13 +29,13 @@ export default defineType({
       },
       validation: Rule => Rule.required()
     }),
-    defineField({
-      name: "category",
-      title: "Main Tag",
-      type: "reference",
-      to: [{ type: "tags" }],
-      validation: Rule => Rule.required(),
-    }),
+    // defineField({
+    //   name: "category",
+    //   title: "Main Tag",
+    //   type: "reference",
+    //   to: [{ type: "tags" }],
+    //   validation: Rule => Rule.required(),
+    // }),
     defineField({
       name: "pdf",
       title: "PDF hochladen",

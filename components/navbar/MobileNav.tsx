@@ -130,7 +130,7 @@ const MobileNav = ({ children }: { children: ReactNode }) => {
             >
                 <Slide direction="left" in={open} mountOnEnter unmountOnExit>
                     <Box className={style}>
-                        <Button className="btn btn-md btn-square glass absolute top-4 right-4" onClick={handleClose}>
+                        <Button className="btn btn-md btn-square glass absolute top-6 right-6" onClick={handleClose}>
                             <svg
                                 className="fill-black swap-on"
                                 xmlns="http://www.w3.org/2000/svg"

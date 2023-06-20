@@ -56,7 +56,6 @@ export default async function HomePage({ params: { lang } }: ParamsProps) {
 
   const navData = await client.fetch(navQuery(transformLocale(lang)))
 
-
   return isEnabled ? (
     <>
       <Navbar navData={navData} lang={lang} />
@@ -64,12 +63,11 @@ export default async function HomePage({ params: { lang } }: ParamsProps) {
         <HomePreview pageQuery={pageQuery} lang={lang} />
       </Preview>
       <Footer lang={lang} />
-
     </>
   ) :
     <>
-      <Navbar navData={navData} lang={lang} />
-      <Home pageData={data} lang={lang} />
-      <Footer lang={lang} />
+        <Navbar navData={navData} lang={lang} />
+        <Home pageData={data} lang={lang} />
+        <Footer lang={lang} />
     </>
 }

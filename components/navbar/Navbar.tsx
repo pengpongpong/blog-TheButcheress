@@ -168,26 +168,39 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
 
   return (
     <>
-      <header className="navbar relative z-10 m-8 w-auto flex flex-col p-0 lg:pt-0 lg:ml-16 lg:mr-16 lg:mb-16 lg:mt-10">
-        <nav className="w-full mb-4 mt-2 lg:mt-0 justify-center lg:justify-end">
-          <nav className="lg:mr-5 mb-4 mt-2 lg:mt-0 flex justify-center items-center gap-8">
+      {/* mobile navbar */}
+      <header className="lg:hidden navbar m-4 w-auto flex flex-col gap-8">
+        <nav className="flex w-full justify-between items-center">
+          <Link href={`/${lang}`} className="font-headline text-4xl">
+            TheButcheress_
+          </Link>
+          <nav>
+            <MobileNav >
+              <SubMenu list={structure} />
+            </MobileNav>
+          </nav>
+        </nav>
+        <Socials />
+        <nav className="flex justify-center items-center gap-8">
+          <Link href="/suche"><Image alt="" src={SearchIcon} /></Link>
+          <LanguageSwitch />
+        </nav>
+      </header>
+
+      {/* desktop navbar */}
+      <header className="hidden lg:flex navbar relative z-10 w-auto flex-col m-8">
+        <nav className="w-full mb-4 justify-end">
+          <nav className="mr-5 flex justify-center items-center gap-8">
             <Link href="/suche"><Image alt="" src={SearchIcon} /></Link>
             <Socials />
             <LanguageSwitch />
           </nav>
         </nav>
         <nav className="flex w-full justify-between items-center">
-          <Link href={`/${lang}`} className="font-headline text-4xl lg:text-5xl">
+          <Link href={`/${lang}`} className="font-headline text-5xl">
             TheButcheress_
           </Link>
-          {/* mobile navbar */}
-          <nav className="lg:hidden">
-            <MobileNav >
-              <SubMenu list={structure} />
-            </MobileNav>
-          </nav>
-          {/* desktop navbar */}
-          <nav className="hidden lg:block">
+          <nav>
             <DesktopNav list={structure} />
           </nav>
         </nav>

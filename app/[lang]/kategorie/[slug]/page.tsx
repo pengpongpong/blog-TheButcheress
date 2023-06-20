@@ -16,15 +16,16 @@ import { Lang } from "@/sanity/lib/sanity-query";
 const categoryQuery = (lang: Lang) => {
     return (
         groq`*[_type == "tags" && slug.current == $slug][0]{
-          "title": title${lang},
-          "description": description.description${lang},
-          "recipes": *[_type == "recipe" && $slug in tags[]->slug.current]
-          {
-          "title": title${lang},
-          "description": description.description${lang},
-          "imageUrl": image,
-          "url": slug.current
-          } | order(_createdAt desc)}`
+        "title": title${lang},
+        "description": description.description${lang},
+        "recipes": *[_type == "recipe" && $slug in tags[]->slug.current]
+        {
+        "title": title${lang},
+        "description": description.description${lang},
+        "imageUrl": image,
+        "url": slug.current,
+        _updatedAt
+        } | order(_updatedAt desc)}`
     )
 }
 

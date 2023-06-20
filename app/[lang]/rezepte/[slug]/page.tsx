@@ -8,24 +8,27 @@ import { draftMode } from "next/headers"
 import Preview from "@/components/preview/Preview"
 import RecipePreview from "./RecipePreview"
 import { groq } from "next-sanity"
-import { Lang } from "@/sanity/lib/sanity-query"
+import { Lang, navQuery } from "@/sanity/lib/sanity-query"
+import Navbar from "@/components/navbar/Navbar"
+import Footer from "@/components/footer/Footer"
 
 //get specific recipe
 const recipeQuery = (lang: Lang) => {
     return (groq`*[_type == "recipe" && slug.current == $slug][0]{
-          ingredients[]{"title": title${lang},
-          ingredientsList[]{"title": title${lang},
-          "quantity": quantity${lang}}},
-          instructions[]{"title": title${lang},"content": content${lang}, image, _id, tipp[]{"title": title${lang}, _id, "content": content${lang}}},
-          prepTime,
-          totalTime,
-          servings,
-          "imageUrl": image.asset->url,
-          tags[]->{_id, "title": title${lang}, "url": slug.current},
-          "title": title${lang},
-          "description": description.description${lang}
-          }
-          `)
+        ingredients[]{"title": title${lang},
+        ingredientsList[]{"title": title${lang},
+        "quantity": quantity${lang}}},
+        instructions[]{"title": title${lang},"content": content${lang}, image, _id, tipp[]{"title": title${lang}, _id, "content": content${lang}}},
+        prepTime,
+        totalTime,
+        servings,
+        "imageUrl": image.asset->url,
+        tags[]->{_id, "title": title${lang}, "url": slug.current},
+        "title": title${lang},
+        "description": description.description${lang},
+        "pdf": pdf.pdf${lang}.asset->url
+        }
+        `)
 }
 
 export const generateStaticParams = async () => {
@@ -54,16 +57,21 @@ const RecipePage = async ({ params: { lang, slug } }: ParamsProps) => {
     const pageQuery = recipeQuery(transformLocale(lang))
     const { isEnabled } = draftMode()
     const data = await client.fetch(pageQuery, { slug })
+    const navData = await client.fetch(navQuery(transformLocale(lang)))
 
     return isEnabled ? (
         <>
+            <Navbar navData={navData} lang={lang} />
             <Preview>
                 <RecipePreview pageQuery={pageQuery} lang={lang} queryParams={{ slug }} />
             </Preview>
+            <Footer lang={lang} />
         </>
     ) :
         <>
+            <Navbar navData={navData} lang={lang} />
             <Recipe pageData={data} lang={lang} />
+            <Footer lang={lang} />
         </>
 }
 

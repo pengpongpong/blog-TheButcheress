@@ -22,7 +22,7 @@ const blogPostsQuery = (lang: Lang) => {
     return (
         groq`*[_type == "blogPage" && category == "blog"][0]{
             "title": title${lang},
-            "blogs": *[_type == "blog" && category == "blog"]{"title": title${lang}, "description": description.description${lang}, "imageUrl": image, "url": slug.current} | order(_createdAt desc)
+            "blogs": *[_type == "blog" && category == "blog"]{"title": title${lang}, "description": description.description${lang}, "imageUrl": image, "url": slug.current, _updatedAt} | order(_updatedAt desc)
             }`
     )
 }

@@ -31,7 +31,7 @@ const LanguageSwitch = () => {
     //!adapt for cookie banner
     //set cookie for language preference for 1 year
     const setLang = () => {
-        if (langCookie === "en" || !langCookie) {
+        if (langCookie === "en" || !langCookie && params.lang === "en") {
             setCookie("lang", "de", { maxAge: 60 * 60 * 24 * 365 })
         } else {
             setCookie("lang", "en", { maxAge: 60 * 60 * 24 * 365 })

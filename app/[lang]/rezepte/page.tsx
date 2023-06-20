@@ -2,12 +2,14 @@ import React from 'react'
 import CardContainer, { CardData } from "@/components/card/Card"
 
 import { transformLocale } from "@/components/utils/utils"
-import { Lang } from "@/sanity/lib/sanity-query"
+import { Lang, navQuery } from "@/sanity/lib/sanity-query"
 import { client } from "@/sanity/lib/sanity-utils"
 import { Metadata, ResolvingMetadata } from "next"
 
 import { MetaDataProps, ParamsProps } from "../page"
 import { groq } from "next-sanity"
+import Footer from "@/components/footer/Footer"
+import Navbar from "@/components/navbar/Navbar"
 
 //get all recipes
 const recipesQuery = (lang: Lang) => {
@@ -15,7 +17,8 @@ const recipesQuery = (lang: Lang) => {
         "title": title${lang},
         "description": description.description${lang},
         "imageUrl": image,
-        "url": slug.current}`
+        "url": slug.current,
+        _updatedAt} | order(_updatedAt desc)`
     )
 }
 
@@ -32,9 +35,11 @@ export const generateMetadata = async ({ params }: MetaDataProps, parent: Resolv
 
 const RecipesPage = async ({ params: { lang } }: ParamsProps) => {
     const pageData: CardData[] = await client.fetch(recipesQuery(transformLocale(lang)))
+    const navData = await client.fetch(navQuery(transformLocale(lang)))
 
     return (
         <>
+            <Navbar navData={navData} lang={lang} />
             <header>
                 <h1 className="mb-12 lg:mb-20 text-center font-text text-6xl lg:text-8xl">
                     {lang === "en" ? "Recipes" : "Rezepte"}
@@ -43,6 +48,7 @@ const RecipesPage = async ({ params: { lang } }: ParamsProps) => {
             <main className="m-8">
                 <CardContainer data={pageData} />
             </main>
+            <Footer lang={lang} />
         </>
     )
 }
