@@ -10,7 +10,6 @@ import Preview from "@/components/preview/Preview"
 import Navbar from "@/components/navbar/Navbar"
 import { groq } from "next-sanity"
 import CookieBanner from "@/components/cookie-banner/CookieBanner"
-import Text from "./Text"
 
 export interface ParamsProps {
   params: {
@@ -75,7 +74,6 @@ export default async function HomePage({ params: { lang } }: ParamsProps) {
       <Navbar navData={navData} lang={lang} />
       <Home pageData={data} lang={lang} />
       <CookieBanner lang={lang} />
-      <Text />
       <Footer lang={lang} />
     </>
 }
