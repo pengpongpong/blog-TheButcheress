@@ -10,7 +10,8 @@ import Link from "next/link";
 
 
 //mobile navbar
-const style = "w-full h-full p-16 py-24 bg-primary font-text text-3xl absolute"
+//styles
+const style = "w-full h-full p-14 py-24 bg-primary font-text text-3xl absolute"
 
 const ChildModal = ({ children, title }: { children: ReactNode, title: string }) => {
     const [open, setOpen] = useState(false);
