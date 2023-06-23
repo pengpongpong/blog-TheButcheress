@@ -1,7 +1,8 @@
 import { connectToDatabase, db } from "@/components/utils/db"
-import { UserModel } from "@/models/User"
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+
+const UserModel = require("@/models/UserModel")
 
 const bcrypt = require('bcrypt');
 
@@ -14,9 +15,8 @@ export const authOption = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                await connectToDatabase()
-
                 const getUserData = async (credentials: Record<"username" | "password", string> | undefined) => {
+                    await connectToDatabase()
                     const userData = await UserModel.find({ name: credentials?.username }).exec();
                     db.on('open', function () {
                         db.close();

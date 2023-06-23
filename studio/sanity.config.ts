@@ -12,7 +12,7 @@ export const devStructure: DefaultDocumentNodeResolver = (S, { schemaType, docum
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_DATASET;
 const apiVersion = process.env.NEXT_PUBLIC_API_VERSION;
-
+console.log(projectId)
 export default defineConfig({
     name: 'default',
     title: 'blog-butcheress',

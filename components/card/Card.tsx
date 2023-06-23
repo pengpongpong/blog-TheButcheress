@@ -18,7 +18,10 @@ const Card = ({ title, description, imageUrl, url, blog }: CardData & { blog?: s
         linkHref = `blog/${url}`
     } else if (blog === "travel") {
         linkHref = `reisen/${url}`
-    } else {
+    } else if( blog === "email") {
+        linkHref = `dashboard/email/${url}`
+    }
+    else {
         linkHref = `rezepte/${url}`
     }
 
@@ -26,17 +29,18 @@ const Card = ({ title, description, imageUrl, url, blog }: CardData & { blog?: s
         <Link href={`/${linkHref}`}>
             <div className="mb-8 p-4 max-w-xs max-h-fit bg-white rounded-xl font-text">
                 <p className="text-center text-2xl font-bold">{title}</p>
-                <Image className="mb-4 mt-4 mx-auto object-scale-down" loading="lazy" style={{width: "auto", height: "auto"}} width={600} height={400} src={urlFor(imageUrl).size(600, 400).auto("format").url()} alt={title} />
+                <Image className="mb-4 mt-4 mx-auto object-scale-down" loading="lazy" style={{ width: "auto", height: "auto" }} width={600} height={400} src={urlFor(imageUrl).size(600, 400).auto("format").url()} alt={title} />
                 <p className="text-center text-base font-base">{description}</p>
             </div>
         </Link>
     );
 }
 
-
+//display cards
 const CardContainer = ({ data, blog }: { data?: CardData[], blog?: string }) => {
     const items: Array<Array<CardData>> = [[], [], [], []]
 
+    //split data into 4 arrays for styling reason
     data?.map((obj, index) => {
         const ArrayIndex = index % 4
         items[ArrayIndex].push(obj)
@@ -44,44 +48,21 @@ const CardContainer = ({ data, blog }: { data?: CardData[], blog?: string }) => 
 
     return (
         <>
+            {/* desktop view */}
             <ul className="hidden lg:flex w-full flex-row gap-8 justify-center mx-auto list-none">
-                <li>
-                    <ul className="list-none">
-                        {items[0]?.map(obj => (
-                            <li key={obj.url} className="flex justify-center items-center">
-                                <Card blog={blog} title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} />
-                            </li>
-                        ))}
-                    </ul>
-                </li>
-                {items[1].length ? <li>
-                    <ul className="list-none">
-                        {items[1]?.map(obj => (
-                            <li key={obj.url} className="flex justify-center items-center">
-                                <Card blog={blog} title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} />
-                            </li>
-                        ))}
-                    </ul>
-                </li> : ""}
-                {items[2].length ? <li>
-                    <ul className="list-none">
-                        {items[2]?.map(obj => (
-                            <li key={obj.url} className="flex justify-center items-center">
-                                <Card blog={blog} title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} />
-                            </li>
-                        ))}
-                    </ul>
-                </li> : ""}
-                {items[3].length ? <li>
-                    <ul className="list-none">
-                        {items[3]?.map(obj => (
-                            <li key={obj.url} className="flex justify-center items-center">
-                                <Card blog={blog} title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} />
-                            </li>
-                        ))}
-                    </ul>
-                </li> : ""}
+                {items.map((item, index) => (
+                    <li key={index}>
+                        <ul className="list-none">
+                            {item.map(obj => (
+                                <li key={obj.url} className="flex justify-center items-center">
+                                    <Card blog={blog} title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} />
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
+                ))}
             </ul>
+            {/* mobile view */}
             <ul className="lg:hidden w-full flex flex-col justify-center list-none">
                 {data?.map(obj => (
                     <li key={obj.url} className="flex justify-center items-center">

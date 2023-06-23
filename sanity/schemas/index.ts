@@ -10,6 +10,8 @@ import link from "./documents/link";
 import home from "./documents/home";
 import blogPage from "./documents/blogpage";
 import blog from "./documents/blog";
+import blockContentEmail from "./components/blockContentEmail";
+import emailContent from "./documents/emailContent";
 
 
 export const schemaTypes = [
@@ -25,4 +27,6 @@ export const schemaTypes = [
   home,
   blogPage,
   blog,
+  blockContentEmail,
+  emailContent
 ];

@@ -24,8 +24,8 @@ const RecipeIcon: FunctionComponent = () => (
 );
 
 export default defineType({
-  title: "Block Content",
-  name: "blockContent",
+  title: "Block Content Email",
+  name: "blockContentEmail",
   type: "array",
   of: [
     defineArrayMember({

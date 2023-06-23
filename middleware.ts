@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { match } from '@formatjs/intl-localematcher'
 import type { NextRequest } from 'next/server'
 import Negotiator from 'negotiator'
+// export { default } from "next-auth/middleware"
 
 const locales = ['en', 'de']
 
@@ -43,6 +44,7 @@ export const config = {
         // Skip all internal paths (_next)
         '/((?!_next).*)',
         // Optional: only run on root (/) URL
-        // '/'
+        // '/',
+        // "/de/dashboard"
     ],
 }

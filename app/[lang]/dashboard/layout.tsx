@@ -13,11 +13,11 @@ const ContactLayout = async ({ children, params }: { children: ReactNode, params
 
     return (
         <>
+            <Navbar navData={navData} lang={params.lang} />
             <Provider>
-                <Navbar navData={navData} lang={params.lang} />
                 {children}
-                {/* <Footer lang={params.lang} /> */}
             </Provider>
+            {/* <Footer lang={params.lang} /> */}
         </>
     )
 }

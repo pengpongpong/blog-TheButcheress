@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-
 export const POST = async (req: NextRequest,) => {
     let nodemailer = require("nodemailer");
     let aws = require("@aws-sdk/client-ses");
-    
+
     const data = await req.json()
+
     const ses = new aws.SES({
         // apiVersion: "2010-12-01",
         region: "eu-central-1",
@@ -20,28 +20,38 @@ export const POST = async (req: NextRequest,) => {
         SES: { ses, aws },
     });
 
-    transporter.sendMail(
-        {
-            from: "t.m.phuong@hotmail.com",
-            to: "t.m.p.2609@gmail.com",
-            subject: "Message",
-            // text: "I hope this message gets sent! TEST",
-            html: data,
-            ses: {
-                // optional extra arguments for SendRawEmail
-                Tags: [
-                    {
-                        Name: "tag_name",
-                        Value: "tag_value",
-                    },
-                ],
-            },
-        },
-        (err: any, info: any) => {
-            console.log(info.envelope)
-            console.log(err)
-        }
-    );
+    // transporter.sendMail(
+    //     {
+    //         from: "t.m.phuong@hotmail.com",
+    //         to: "t.m.p.2609@gmail.com",
+    //         subject: "Message",
+    //         // text: "I hope this message gets sent! TEST",
+    //         html: `
+    //         <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+    //         <html>
+    //             <head>
+    //                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    //             </head>
+    //             <body>
+    //                 ${data.body}
+    //             </body>
+    //         </html>
+    //         `,
+    //         attachments: data.attachments,
+    //         ses: {
+    //             // optional extra arguments for SendRawEmail
+    //             Tags: [
+    //                 {
+    //                     Name: "tag_name",
+    //                     Value: "tag_value",
+    //                 },
+    //             ],
+    //         },
+    //     },
+    //     (err: any, info: any) => {
+    //         console.log(info.envelope)
+    //         console.log(err)
+    //     }
+    // );
     return NextResponse.json("bla")
 }
-
