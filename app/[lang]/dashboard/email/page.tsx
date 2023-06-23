@@ -1,16 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { useSession } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react"
 import { redirect } from "next/navigation"
 import { groq } from "next-sanity"
 import { client } from "@/sanity/lib/sanity-utils"
 import CardContainer, { CardData } from "@/components/card/Card"
-import { getServerSession } from "next-auth/next"
-import { authOption } from "../../api/auth/[...nextauth]/route"
-
-
-
-
+import Link from "next/link"
 
 const EmailsPage = () => {
     const { data: session } = useSession({
@@ -37,10 +32,11 @@ const EmailsPage = () => {
     }, [])
 
     if (session) {
-        console.log(data)
         return (
-            <main>
-                <h1>Email</h1>
+            <main className="mx-8 flex flex-col justify-center items-center gap-8">
+                <h1 className="text-6xl text-center font-text">Alle Emails</h1>
+                <Link className="btn btn-primary" href="/de/dashboard">Back to dashboard</Link>
+                <button className="btn btn-warning" onClick={() => signOut()}>Logout</button>
                 <pre>{JSON.stringify(session, null, 2)}</pre>
                 <CardContainer blog="email" data={data} />
             </main>
@@ -48,7 +44,10 @@ const EmailsPage = () => {
     }
 
     return (
-        <h1>Not logged in!</h1>
+        <main>
+            <h1 className="text-6xl text-center font-text">Nicht eingeloggt!</h1>
+            <button className="btn btn-primary" onClick={() => signIn()}>Login</button>
+        </main>
     )
 }
 

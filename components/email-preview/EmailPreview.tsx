@@ -14,8 +14,6 @@ import { SanityImageAssetDocument } from "@sanity/client";
 
 const html = htm.bind(vhtml)
 
-
-
 const EmailPreview = ({ body }: { body: PortableTextBlock[] }) => {
     const htmlData = toHTML(body, {
         components: {
@@ -53,10 +51,9 @@ const EmailPreview = ({ body }: { body: PortableTextBlock[] }) => {
     return (
         <article className="max-w-3xl mx-auto font-text">
             <button onClick={onSubmit}>call email</button>
-            {/* <PortableText
+            <PortableText
                 value={body}
-                components={portableComponents}
-            /> */}
+            />
         </article>
     )
 }
