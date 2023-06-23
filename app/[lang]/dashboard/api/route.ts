@@ -1,33 +1,47 @@
-import { connectToDatabase } from "@/components/utils/db";
-import { UserModel } from "@/models/User";
-import { setCookie } from "cookies-next";
 import { NextRequest, NextResponse } from "next/server";
-import { v4 as uuidv4 } from 'uuid';
 
-const bcrypt = require('bcrypt');
 
-export const POST = async (req: NextRequest, session: any) => {
+export const POST = async (req: NextRequest,) => {
+    let nodemailer = require("nodemailer");
+    let aws = require("@aws-sdk/client-ses");
+    
     const data = await req.json()
+    const ses = new aws.SES({
+        // apiVersion: "2010-12-01",
+        region: "eu-central-1",
+        credentials: {
+            accessKeyId: process.env.AWS_ACCESS_KEY,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+        }
+    });
 
-    const { email, password } = data
+    // create Nodemailer SES transporter
+    let transporter = nodemailer.createTransport({
+        SES: { ses, aws },
+    });
 
-    const checkEmail = process.env.NEXT_PUBLIC_EMAIL
-
-    if (!email || !password) return NextResponse.json({ error: "No email or password" }, { status: 401 })
-    if (email !== checkEmail) return NextResponse.json({ error: "Not allowed" }, { status: 405 })
-
-    await connectToDatabase()
-
-    const userData = await UserModel.find({ name: email }).exec()
-
-    const comparePassword = await bcrypt.compare(password, userData[0].password);
-
-    if (comparePassword) {
-        const sessionId = uuidv4();
-        req.cookies.set('sessionId', sessionId)
-        return NextResponse.json({ message: "success", sessionId: sessionId }, { status: 200 })
-    } else {
-        return NextResponse.json({ error: "Not allowed" }, { status: 401 })
-    }
+    transporter.sendMail(
+        {
+            from: "t.m.phuong@hotmail.com",
+            to: "t.m.p.2609@gmail.com",
+            subject: "Message",
+            // text: "I hope this message gets sent! TEST",
+            html: data,
+            ses: {
+                // optional extra arguments for SendRawEmail
+                Tags: [
+                    {
+                        Name: "tag_name",
+                        Value: "tag_value",
+                    },
+                ],
+            },
+        },
+        (err: any, info: any) => {
+            console.log(info.envelope)
+            console.log(err)
+        }
+    );
+    return NextResponse.json("bla")
 }
 

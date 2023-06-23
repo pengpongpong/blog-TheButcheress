@@ -1,4 +1,4 @@
-import { connectToDatabase } from "@/components/utils/db"
+import { connectToDatabase, db } from "@/components/utils/db"
 import { UserModel } from "@/models/User"
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
@@ -16,7 +16,15 @@ export const authOption = {
             async authorize(credentials, req) {
                 await connectToDatabase()
 
-                const userData = await UserModel.find({ name: credentials?.username }).exec()
+                const getUserData = async (credentials: Record<"username" | "password", string> | undefined) => {
+                    const userData = await UserModel.find({ name: credentials?.username }).exec();
+                    db.on('open', function () {
+                        db.close();
+                    });
+                    return userData;
+                }
+
+                const userData = await getUserData(credentials)
                 const comparePassword = await bcrypt.compare(credentials?.password, userData[0].password);
 
                 if (comparePassword) {

@@ -7,6 +7,8 @@ import { PortableTextBlock } from "sanity"
 import { HighlightDecorator, LinkDecorator } from "@/sanity/decorators/decorators"
 import { urlFor } from "@/sanity/lib/sanity-utils"
 
+import { toHTML } from '@portabletext/to-html'
+
 const portableComponents = {
     types: {
         image: ({ value }: { value: any }) => <Image className="my-12" style={{ width: "auto", height: "auto" }} width={900} height={600} loading="lazy" src={urlFor(value).size(2560, 1440).auto("format").url()} alt={""} />
@@ -34,10 +36,19 @@ const portableComponents = {
     },
 }
 
-const Blog = ({body}: {body: PortableTextBlock}) => {
+const Blog = ({ body }: { body: PortableTextBlock }) => {
+
+    const htmlData = toHTML(body, {
+        components: {},
+    })
+
+    const onSubmit = () => {
+        fetch("/de/dashboard/api", { method: "POST", body: JSON.stringify(htmlData) })
+    }
 
     return (
         <article className="max-w-3xl mx-auto font-text">
+            <button onClick={onSubmit}>call email</button>
             <PortableText
                 value={body}
                 components={portableComponents}
