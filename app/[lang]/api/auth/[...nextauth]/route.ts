@@ -1,8 +1,8 @@
 import { connectToDatabase, db } from "@/components/utils/db"
+import UserModel from "@/models/UserModel";
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
-const UserModel = require("@/models/UserModel")
 
 const bcrypt = require('bcrypt');
 

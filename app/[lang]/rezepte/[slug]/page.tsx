@@ -64,17 +64,13 @@ const RecipePage = async ({ params: { lang, slug } }: ParamsProps) => {
 
     return isEnabled ? (
         <>
-            <Navbar navData={navData} lang={lang} />
             <Preview>
                 <RecipePreview pageQuery={pageQuery} lang={lang} queryParams={{ slug }} />
             </Preview>
-            <Footer lang={lang} />
         </>
     ) :
         <>
-            <Navbar navData={navData} lang={lang} />
             <Recipe pageData={data} lang={lang} />
-            <Footer lang={lang} />
         </>
 }
 

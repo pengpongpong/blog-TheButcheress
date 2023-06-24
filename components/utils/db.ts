@@ -19,5 +19,4 @@ export async function connectToDatabase(): Promise<void> {
     }
 }
 
-// Export the default connection created by Mongoose
 export const db = mongoose.connection;

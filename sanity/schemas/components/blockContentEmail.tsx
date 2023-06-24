@@ -33,11 +33,12 @@ export default defineType({
       type: "block",
       styles: [
         { title: "Normal", value: "normal" },
-        { title: "Headline 1", value: "h2" },
-        { title: "Headline 2", value: "h3" },
-        { title: "Headline 3", value: "h4" },
-        { title: "Headline 4", value: "h5" },
+        { title: "Headline 1", value: "h1" },
+        { title: "Headline 2", value: "h2" },
+        { title: "Headline 3", value: "h3" },
+        { title: "Headline 4", value: "h4" },
         { title: "Quote", value: "blockquote" },
+        { title: "Link/Liste", value: "noParent" },
       ],
       lists: [
         { title: "Bullet", value: "bullet" },

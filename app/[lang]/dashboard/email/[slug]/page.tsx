@@ -15,7 +15,7 @@ const EmailPage = async ({ params: { slug } }: ParamsProps) => {
 
     return (
         <main>
-            <Link className="btn btn-primary" href="/de/dashboard/email">Go to Email</Link>
+            <Link className="btn btn-primary" href="/de/dashboard/email">Zurück zu Emails</Link>
             <EmailPreview body={data.body} />
         </main>
     )

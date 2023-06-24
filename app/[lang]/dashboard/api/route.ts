@@ -20,38 +20,33 @@ export const POST = async (req: NextRequest,) => {
         SES: { ses, aws },
     });
 
-    // transporter.sendMail(
-    //     {
-    //         from: "t.m.phuong@hotmail.com",
-    //         to: "t.m.p.2609@gmail.com",
-    //         subject: "Message",
-    //         // text: "I hope this message gets sent! TEST",
-    //         html: `
-    //         <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-    //         <html>
-    //             <head>
-    //                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    //             </head>
-    //             <body>
-    //                 ${data.body}
-    //             </body>
-    //         </html>
-    //         `,
-    //         attachments: data.attachments,
-    //         ses: {
-    //             // optional extra arguments for SendRawEmail
-    //             Tags: [
-    //                 {
-    //                     Name: "tag_name",
-    //                     Value: "tag_value",
-    //                 },
-    //             ],
-    //         },
-    //     },
-    //     (err: any, info: any) => {
-    //         console.log(info.envelope)
-    //         console.log(err)
-    //     }
-    // );
-    return NextResponse.json("bla")
+    transporter.sendMail(
+        {
+            from: "t.m.phuong@hotmail.com",
+            to: "t.m.p.2609@gmail.com",
+            subject: "Message",
+            // text: "I hope this message gets sent! TEST",
+            html: `
+            <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+            <html>
+                <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100;0,400;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
+                    ${data.style}
+                </head>
+                <body>
+                    ${data.body}
+                </body>
+            </html>
+            `,
+            attachments: data.attachments,
+        },
+        (err: any, info: any) => {
+            console.log(info.envelope)
+            if (err) return NextResponse.json({ message: "Could not send email", error: err }, { status: 500 })
+        }
+    );
+    return NextResponse.json({ message: "Email sent!" })
 }

@@ -12,25 +12,25 @@ export const HighlightDecorator: FunctionComponent<DecoratorProps> = ({
   children,
 }) => <span className="bg-primary font-text text-xl rounded-xl">{children}</span>;
 
-const getHref = async (id: string) => {
+export const getHref = async (id: string) => {
   return await client.fetch(groq`*[_id == $id][0]{"url": slug.current}`, { id: id })
 }
 
 //!fix any
-export const LinkDecorator: FunctionComponent<any> = ({ children, value }: any) => {
+export const LinkInternBlogDecorator: FunctionComponent<any> = ({ children, value }: any) => {
   const [url, setUrl] = useState<string>("")
 
   useEffect(() => {
     if ("recipe" in value) {
       getHref(value.recipe._ref).then(res => setUrl(`/rezepte/${res.url}`))
     } else if ("tags" in value) {
-      getHref(value.tags._ref).then(res => setUrl(`/rezepte/${res.url}`))
-    } else if ("href" in value && (url !== value?.href)) {
-      setUrl(value?.href)
+      getHref(value.tags._ref).then(res => setUrl(`/kategorie/${res.url}`))
     }
-  }, [])
+  }, [value])
 
+  return <Link className="underline" target="_blank" href={`${url}` ?? ""}>{children}</Link>
+}
 
-
-  return <Link className="underline" href={`${url}` ?? ""}>{children}</Link>
+export const LinkExternBlogDecorator: FunctionComponent<any> = ({ children, value }: any) => {
+  return <Link className="underline" rel="noopener noreferrer" target="_blank" href={`${value?.href}` ?? ""}>{children}</Link>
 }
