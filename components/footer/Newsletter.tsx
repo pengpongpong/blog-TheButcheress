@@ -13,7 +13,7 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
         const checkEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
         if (checkEmail.test(email!)) {
-            fetch("/de/api/newsletter", { method: "POST", body: JSON.stringify({ email }) })
+            fetch("/de/api/newsletter/subscribe", { method: "POST", body: JSON.stringify({ email }) })
                 .then(res => res.json())
                 .then(result => {
                     setMessage(result.message)

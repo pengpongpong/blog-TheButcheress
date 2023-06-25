@@ -1,12 +1,12 @@
 import { connectToDatabase, db } from "@/components/utils/db";
 import EmailModel from "@/models/EmailModel";
 import { NextRequest, NextResponse } from "next/server";
-import { transporter } from "../../dashboard/api/route";
+import { transporter } from "../../../dashboard/api/route";
 
 const getEmail = async (email: string) => {
     await connectToDatabase()
     const emailData = await EmailModel.find({ email: email })
-    db.on("open", function() {
+    db.on("open", function () {
         db.close()
     })
 
@@ -17,19 +17,19 @@ const saveEmail = async (email: string) => {
     const emailData = await EmailModel.create({
         email: email
     })
-    db.on("open", function() {
+    db.on("open", function () {
         db.close()
     })
 
     return emailData
 }
 
+export const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 //!include lang
 export const POST = async (req: NextRequest) => {
     const data = await req.json()
-    const checkEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
-    if (!checkEmail.test(data.email)) return NextResponse.json({ message: "Invalid email" }, { status: 400 })
+    if (!emailRegex.test(data.email)) return NextResponse.json({ message: "Invalid email" }, { status: 400 })
 
     const checkEmailData = await getEmail(data.email)
 
@@ -61,7 +61,7 @@ export const POST = async (req: NextRequest) => {
                 <body>
                     <h1>Danke für das Anmelden vom Newsletter!</h1>
                     <p>Bitte Link bestätigen!</p>
-                    <a href="${domain}/de/newsletter/${_id}" target="_blank" rel="noopener noreferrer">id: ${_id}</a>
+                    <a href="${domain}/de/newsletter/subscribe/${_id}" target="_blank" rel="noopener noreferrer">id: ${_id}</a>
                 </body>
             </html>
             `,
