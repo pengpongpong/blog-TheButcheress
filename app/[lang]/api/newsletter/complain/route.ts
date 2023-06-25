@@ -17,7 +17,5 @@ export const POST = async (req: NextRequest) => {
     })
 
 
-
-
     return NextResponse.json({ message: JSON.stringify(data) }, { status: 201 })
 }

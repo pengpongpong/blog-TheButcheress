@@ -9,15 +9,15 @@ export const POST = async (req: NextRequest) => {
 
     await connectToDatabase()
 
-    data.mail.destination.map((recipient: string) => {
-        const getEmail = async (email: String) => {
-            await EmailModel.findOneAndUpdate({ email: email }, { active: "blocked", error: "bounce" })
-        }
-        getEmail(recipient)
-    })
+    if (data.mail?.destination?.length) {
+        data.mail.destination.map((recipient: string) => {
+            const getEmail = async (email: String) => {
+                await EmailModel.findOneAndUpdate({ email: email }, { active: "blocked", error: "bounce" })
+            }
+            getEmail(recipient)
+        })
+    }
 
-
-
-
+    console.log("bounce", data)
     return NextResponse.json({ message: JSON.stringify(data) }, { status: 201 })
 }
