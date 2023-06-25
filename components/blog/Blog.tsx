@@ -4,8 +4,9 @@ import Image from "next/image"
 import { PortableText } from "@portabletext/react"
 import { PortableTextBlock } from "sanity"
 
-import { HighlightDecorator, LinkInternBlogDecorator, LinkExternBlogDecorator } from "@/sanity/decorators/decorators"
+import { LinkInternBlogDecorator, LinkExternBlogDecorator } from "@/sanity/decorators/decorators"
 import { urlFor } from "@/sanity/lib/sanity-utils"
+import QuoteIcon from "/public/icons/studio/bxs-quote-left.svg"
 
 const portableComponents = {
     types: {
@@ -17,10 +18,12 @@ const portableComponents = {
         h4: ({ children }: { children?: ReactNode }) => <h4 className="mt-12 mb-4 text-3xl lg:text-3xl">{children}</h4>,
         h5: ({ children }: { children?: ReactNode }) => <h5 className="my-8 text-2xl">{children}</h5>,
         normal: ({ children }: { children?: ReactNode }) => <p className="my-6 text-xl">{children}</p>,
-        blockquote: ({ children }: { children?: ReactNode }) => <blockquote className="p-12 m-4 lg:m-8 my-8 lg:my-12 bg-no-repeat bg-[url('/public/icons/studio/bxs-quote-left.svg')] text-xl">{children}</blockquote>,
+        blockquote: ({ children }: { children?: ReactNode }) => <blockquote className="p-12 m-4 lg:m-8 my-8 lg:my-12 bg-repeat text-xl relative">
+            <Image className="absolute top-0 left-0" src={QuoteIcon} width={24} height={24} alt="" />
+            {children}
+        </blockquote>,
     },
     marks: {
-        highlight: HighlightDecorator,
         link: LinkExternBlogDecorator,
         recipeLink: LinkInternBlogDecorator,
     },

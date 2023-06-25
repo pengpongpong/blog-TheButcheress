@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import Socials from "../socials/Socials";
+import Newsletter from "./Newsletter";
 
 interface TagsProps {
   _id: string;
@@ -32,7 +33,7 @@ const FooterLink = ({ text, url }: { text: string, url: string }) => {
 };
 
 
-function Footer({ tags, lang }: { tags?: TagsProps[], lang: "de" | "en" }) {
+const Footer = ({ tags, lang }: { tags?: TagsProps[], lang: "de" | "en" }) => {
 
   return (
     <>
@@ -49,20 +50,7 @@ function Footer({ tags, lang }: { tags?: TagsProps[], lang: "de" | "en" }) {
             <span className="footer-title">Social</span>
             <Socials />
           </div>
-          <div className="flex flex-col text-center md:text-left">
-            <span className="footer-title">Newsletter</span>
-            <div className="flex flex-col gap-4 md:flex-row">
-              <input
-                type="text"
-                placeholder={lang === "en" ? "your@email.com" : "deine@email.com"}
-                className="input-bordered input w-full pr-16"
-              />
-              <button className="btn-outline btn hover:bg-primary hover:text-neutral">
-                Subscribe
-              </button>
-            </div>
-            <span className="mt-2">{lang === "en" ? "Stay in contact!" : "Bleibe in Kontakt!"} </span>
-          </div>
+          <Newsletter lang={lang}/>
         </div>
       </footer>
     </>

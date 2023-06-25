@@ -30,7 +30,7 @@ const Index = async ({ params: { lang, slug } }: ParamsProps) => {
         "title": title${locale},
         "url": pdf.pdf${locale}.asset->url
         }`, { slug })
-
+        
     if (data) {
         return <iframe src={`${data?.url}#view=fitH`} title={data?.title} width={"100%"} height={"100%"} />
     } else {

@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 export const authOption = {
     providers: [
         CredentialsProvider({
-            name: "Login",
+            name: "Credentials",
             credentials: {
                 username: { label: "Username", type: "text", placeholder: "Username" },
                 password: { label: "Password", type: "password" }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import CardContainer, { CardData } from "@/components/card/Card"
 
 import { transformLocale } from "@/components/utils/utils"
@@ -8,8 +8,9 @@ import { Metadata, ResolvingMetadata } from "next"
 
 import { MetaDataProps, ParamsProps } from "../page"
 import { groq } from "next-sanity"
-import Footer from "@/components/footer/Footer"
 import Navbar from "@/components/navbar/Navbar"
+
+const Footer = lazy(() => import("@/components/footer/Footer"))
 
 //get all recipes
 const recipesQuery = (lang: Lang) => {
@@ -39,6 +40,7 @@ const RecipesPage = async ({ params: { lang } }: ParamsProps) => {
 
     return (
         <>
+            <Navbar navData={navData} lang={lang} />
             <header>
                 <h1 className="mb-12 lg:mb-20 text-center font-text text-6xl lg:text-8xl">
                     {lang === "en" ? "Recipes" : "Rezepte"}
@@ -47,6 +49,7 @@ const RecipesPage = async ({ params: { lang } }: ParamsProps) => {
             <main className="m-8">
                 <CardContainer data={pageData} />
             </main>
+            <Footer lang={lang} />
         </>
     )
 }

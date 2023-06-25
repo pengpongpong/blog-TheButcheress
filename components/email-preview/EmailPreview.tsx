@@ -1,7 +1,5 @@
 "use client"
-import React, { ReactNode, useEffect, useState } from 'react'
-import Image from "next/image"
-import { PortableText } from "@portabletext/react"
+import React, { useEffect, useState } from 'react'
 import { PortableTextBlock } from "sanity"
 
 import { urlFor } from "@/sanity/lib/sanity-utils"
@@ -13,9 +11,11 @@ import { toHTML } from '@portabletext/to-html'
 import { SanityImageAssetDocument } from "@sanity/client";
 import { getHref } from "@/sanity/decorators/decorators"
 
-
-const html = htm.bind(vhtml)
-
+interface Attachments {
+    filename: string;
+    path: string;
+    cid: string
+}
 interface LinkInterface {
     tags?: { _ref: string, _type: 'reference' },
     recipe?: { _ref: string, _type: 'reference' },
@@ -24,10 +24,15 @@ interface LinkInterface {
     _key: string
 }
 
+//set html strings from block content
+const html = htm.bind(vhtml)
+
 //marks decorator
 const LinkInternEmailDecorator = (value: LinkInterface, text: string) => {
     const [url, setUrl] = useState<string>("")
     const domain = "https://butcheress.me"
+
+    //check if recipes or tags
     useEffect(() => {
         if ("recipe" in value) {
             getHref(value.recipe!._ref).then(res => setUrl(`/rezepte/${res.url}`))
@@ -47,8 +52,8 @@ const LinkExternEmailDecorator = (value: LinkInterface, text: string) => {
     )
 }
 
-const EmailPreview = ({ body }: { body: PortableTextBlock[] }) => {
-
+const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: string }) => {
+    const [message, setMessage] = useState<string>("")
     //Email Content
     const htmlData = toHTML(body, {
         components: {
@@ -109,14 +114,10 @@ const EmailPreview = ({ body }: { body: PortableTextBlock[] }) => {
         },
     })
 
+    //get images for email attachment
     const images = body.filter((obj: PortableTextBlock) => obj._type === "image")
 
-    interface Attachments {
-        filename: string;
-        path: string;
-        cid: string
-    }
-
+    //format structure for node-mailer
     const attachments: Attachments[] = images.map(obj => {
         const url = urlFor(obj).size(400, 300).auto("format").url()
         return {
@@ -126,68 +127,76 @@ const EmailPreview = ({ body }: { body: PortableTextBlock[] }) => {
         }
     })
 
+    //styles intern for request
     const style = `
     <style>
-    .h1 {
-        font-size: 8rem;
-        font-family: Sacramento;
-        color: red;
-    }
-    .h2 {
-        font-size: 6rem;
-        font-family: Josefin Slab;
-    }
-    .h3 {
-        font-size: 4rem;
-        font-family: Baskerville;
-    }
-    .h4 {
-        font-size: 2rem;
-        font-family: Baskerville;
-    }
-    .text {
-        font-size: 1rem;
-        font-family: Courier;
-    }
-    .quote {
-        font-style: italic;
-    }
-    .anchor {
-        font-style: italic;
-    }
-    ul {
-        list-style-type: circle;
-        font-style: italic;
-    }
-    .bulletItem {
-        color: steelblue;
-    }
-    ol {
-        font-style: italic;
-        list-style-type: upper-roman;
-    }
-    .numberItem {
-        color: red;
-    }
-    .underline {
-        text-decoration: underline
-    }
+        .h1 {
+            font-size: 8rem;
+            font-family: Sacramento;
+            color: red;
+        }
+        .h2 {
+            font-size: 6rem;
+            font-family: Josefin Slab;
+        }
+        .h3 {
+            font-size: 4rem;
+            font-family: Baskerville;
+        }
+        .h4 {
+            font-size: 2rem;
+            font-family: Baskerville;
+        }
+        .text {
+            font-size: 1rem;
+            font-family: Courier;
+        }
+        .quote {
+            font-style: italic;
+        }
+        .anchor {
+            font-style: italic;
+        }
+        ul {
+            list-style-type: circle;
+            font-style: italic;
+        }
+        .bulletItem {
+            color: steelblue;
+        }
+        ol {
+            font-style: italic;
+            list-style-type: upper-roman;
+        }
+        .numberItem {
+            color: red;
+        }
+        .underline {
+            text-decoration: underline
+        }
     </style>
     `
-    const data = {
-        body: htmlData,
-        attachments: attachments,
-        style: style
-    }
+
+    //send emails
     const onSubmit = () => {
+        const data = {
+            subject: title,
+            body: htmlData,
+            attachments: attachments,
+            style: style
+        }
+
         fetch("/de/dashboard/api", { method: "POST", body: JSON.stringify(data) })
+            .then(res => res.json())
+            .then(response => setMessage(response.message))
     }
 
     return (
         <main className="max-w-4xl mx-auto flex flex-col justify-center items-center font-text">
-            <button className="btn btn-primary" onClick={onSubmit}>Email senden</button>
+            <button className="btn btn-primary mb-8" onClick={onSubmit}>Email senden</button>
+            {message ? <span className="m-4 font-bold">{message}</span> : ""}
             <article className="bg-white p-12" dangerouslySetInnerHTML={{ __html: htmlDataPreview + style }}></article>
-        </main>
+        </main >
     )
 }
 

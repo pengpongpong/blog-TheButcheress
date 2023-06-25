@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import Recipe from "./Recipe"
 import { client } from "@/sanity/lib/sanity-utils"
 import { MetaDataProps, ParamsProps } from "../../page"
@@ -10,7 +10,6 @@ import RecipePreview from "./RecipePreview"
 import { groq } from "next-sanity"
 import { Lang, navQuery } from "@/sanity/lib/sanity-query"
 import Navbar from "@/components/navbar/Navbar"
-import Footer from "@/components/footer/Footer"
 import { notFound } from "next/navigation"
 
 //get specific recipe
@@ -54,6 +53,8 @@ export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps
     }
 }
 
+const Footer = lazy(() => import("@/components/footer/Footer"))
+
 const RecipePage = async ({ params: { lang, slug } }: ParamsProps) => {
     const pageQuery = recipeQuery(transformLocale(lang))
     const { isEnabled } = draftMode()
@@ -70,7 +71,9 @@ const RecipePage = async ({ params: { lang, slug } }: ParamsProps) => {
         </>
     ) :
         <>
+            <Navbar navData={navData} lang={lang} />
             <Recipe pageData={data} lang={lang} />
+            <Footer lang={lang} />
         </>
 }
 

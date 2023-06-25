@@ -11,7 +11,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 [data-theme="light"] {
   --color-default: #fbf7f0;
 }

@@ -8,10 +8,6 @@ type DecoratorProps = {
   children: ReactNode;
 };
 
-export const HighlightDecorator: FunctionComponent<DecoratorProps> = ({
-  children,
-}) => <span className="bg-primary font-text text-xl rounded-xl">{children}</span>;
-
 export const getHref = async (id: string) => {
   return await client.fetch(groq`*[_id == $id][0]{"url": slug.current}`, { id: id })
 }

@@ -12,6 +12,7 @@ import blogPage from "./documents/blogpage";
 import blog from "./documents/blog";
 import blockContentEmail from "./components/blockContentEmail";
 import emailContent from "./documents/emailContent";
+import aboutMe from "./documents/aboutMe";
 
 
 export const schemaTypes = [
@@ -28,5 +29,6 @@ export const schemaTypes = [
   blogPage,
   blog,
   blockContentEmail,
-  emailContent
+  emailContent,
+  aboutMe
 ];

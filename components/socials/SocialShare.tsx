@@ -56,7 +56,7 @@ const SocialShare = ({ lang, title, blog, styles = { main: "", first: "", second
     return (
         <ul className={styles.main}>
             {!blog ? <SocialShareLink
-                url={"/rezepte/pancake/pdf"}
+                url={`/${lang}/rezepte/pancake/pdf`}
                 title={lang === "en" ? "Print it" : "Drucke es aus"}
                 alt={"Share PDF"}
                 imageIcon={PrinterIcon}

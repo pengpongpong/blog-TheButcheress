@@ -1,33 +1,22 @@
-"use client"
 import React from 'react'
 import { ParamsProps } from "../page";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import Link from "next/link";
 
-const Dashboard = ({ params: { lang } }: ParamsProps) => {
-    const { data: session } = useSession({
-        required: true,
-        onUnauthenticated() {
-            redirect("/de/api/auth/signin?callbackUrl=/de/dashboard")
-        }
-    })
+import SignOut from "../../../components/auth/SignOut";
+import { authOption } from "../api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import SignIn from "@/components/auth/SignIn";
+
+const Dashboard = async ({ params: { lang } }: ParamsProps) => {
+    const session = await getServerSession(authOption)
 
     if (session) {
         return (
-            <main className="flex flex-col justify-center items-center gap-8">
-                <p>Signed in as {session?.user?.email}</p>
-                <Link className="btn btn-primary"  href="/de/dashboard/email">Go to Email</Link>
-                <button className="btn btn-warning" onClick={() => signOut()}>Logout</button>
-            </main>
-
+            <SignOut session={session} />
         );
     }
+
     return (
-        <main className="flex flex-col justify-center items-center gap-8">
-            <h1 className="text-6xl text-center font-text">Nicht eingeloggt!</h1>
-            <button className="btn btn-primary" onClick={() => signIn()}>Login</button>
-        </main>
+        <SignIn callbackUrl="/de/api/auth/signin?callbackUrl=/de/dashboard"/>
     )
 
 }
