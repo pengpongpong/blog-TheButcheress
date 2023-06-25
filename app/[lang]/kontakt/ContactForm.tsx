@@ -34,15 +34,16 @@ const Error = ({ text }: { text?: string }) => {
 }
 
 const ContactForm = ({ lang }: { lang: Locale }) => {
-    const nameErrorText = lang === "en" ? "Please enter name" : "Bitte Name angeben"
+    const nameErrorText = lang === "en" ? "Please enter name" : "Bitte Name eingeben"
     const emailErrorText = lang === "en" ? "Please enter valid email" : "Bitte gültige Email eingeben"
+    const messageErrorText = lang === "en" ? "Please enter a message" : "Bitte hinterlasse mir eine Nachricht"
 
     //validation schema
     const schema = yup
         .object({
             name: yup.string().required(nameErrorText),
             email: yup.string().email().required(emailErrorText),
-            textField: yup.string()
+            textField: yup.string().required(messageErrorText)
         })
         .required()
 
@@ -82,8 +83,9 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
 
                 <TextField style={{ marginBottom: "1rem" }} {...register("email")} id="outlined-basic" label="Email" variant="outlined" />
                 {errors?.email && <Error text={errors?.email.message} />}
-
+                
                 <TextField style={{ marginBottom: "1rem" }} {...register("textField")} label={lang === "en" ? "Message" : "Nachricht"} multiline rows={7} />
+                {errors?.textField && <Error text={errors?.textField.message} />}
             </ThemeProvider>
 
             <input type="submit" className="w-full py-2 border border-grey hover:border-neutral text-lg font-bold rounded cursor-pointer hover:bg-primary transition duration-300" defaultValue={lang === "en" ? "Submit" : "Abschicken"} />
