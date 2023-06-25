@@ -2,7 +2,7 @@
 import CardContainer, { CardData } from "@/components/card/Card"
 import { client } from "@/sanity/lib/sanity-utils"
 import { groq } from "next-sanity"
-import React, { ChangeEventHandler, useEffect } from 'react'
+import React, { ChangeEventHandler, useEffect, useRef } from 'react'
 import { Locale } from "../HomePage"
 import Loading from "@/components/loading/Loading"
 import { useSearchStore } from "@/components/utils/store"
@@ -57,9 +57,20 @@ const Search = ({ lang }: { lang: Locale }) => {
         }
     }, [search, data.length])
 
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.addEventListener("keypress", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault()
+                }
+            })
+        }
+    }, [])
     return (
         <>
-            <input type="text" placeholder={lang === "en" ? "Enter search here" : "Gib Suche hier ein"} className="mb-12 input input-bordered w-4/5 lg:w-2/5 mx-auto max-w-content" onChange={onChange} />
+                <input ref={inputRef} type="text" placeholder={lang === "en" ? "Enter search here" : "Gib Suche hier ein"} className="mb-12 w-4/5 lg:w-2/5 mx-auto max-w-content input input-bordered " onChange={onChange} />
             {loading ? <Loading /> : <CardContainer data={data} />}
         </>
     )

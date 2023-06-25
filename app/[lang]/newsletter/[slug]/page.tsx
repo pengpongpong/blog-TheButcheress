@@ -3,7 +3,7 @@ import { ParamsProps } from "../../page"
 import Confirmation from "./Confirmation"
 
 
-const Page = async ({ params: { slug } }: ParamsProps) => {
+const ConfirmationPage = async ({ params: { slug } }: ParamsProps) => {
     console.log(slug)
 
     return (
@@ -13,4 +13,4 @@ const Page = async ({ params: { slug } }: ParamsProps) => {
     )
 }
 
-export default Page
+export default ConfirmationPage

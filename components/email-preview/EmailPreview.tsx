@@ -30,7 +30,7 @@ const html = htm.bind(vhtml)
 //marks decorator
 const LinkInternEmailDecorator = (value: LinkInterface, text: string) => {
     const [url, setUrl] = useState<string>("")
-    const domain = "https://butcheress.me"
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
 
     //check if recipes or tags
     useEffect(() => {

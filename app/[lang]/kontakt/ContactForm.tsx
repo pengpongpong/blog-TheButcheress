@@ -62,7 +62,9 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
 
     //submit form
     const onSubmit = handleSubmit((data) => {
-        // console.log(data)
+        fetch("/de/kontakt/api", { method: "POST", body: JSON.stringify(data) })
+            .then(res => res.json())
+            .then(result => console.log(result))
     });
 
     //clear form after success submit

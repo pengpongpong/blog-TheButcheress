@@ -20,24 +20,26 @@ export const POST = async (req: NextRequest) => {
         return emailData
     }
 
-    const setActive = async (id: string) => {
-        await connectToDatabase()
-        const emailData = await EmailModel.findOneAndUpdate({ _id: id }, { active: "active" }, { new: true })
-
-        db.on("open", function () {
-            db.close()
-        })
-
-        return emailData
-    }
-
     const emailData = await getEmail(data.id)
 
+    //no email found
     if (!emailData.length) return NextResponse.json({ message: "Email not found!" }, { status: 401 })
 
+    //if already set to active
     if (emailData[0]?.active === "active") {
         return NextResponse.json({ message: "Email already confirmed!" }, { status: 201 })
-    } else {
+    } else if (emailData[0]?.active === "pending") {
+        const setActive = async (id: string) => {
+            await connectToDatabase()
+            const emailData = await EmailModel.findOneAndUpdate({ _id: id }, { active: "active" }, { new: true })
+
+            db.on("open", function () {
+                db.close()
+            })
+
+            return emailData
+        }
+
         const updatedEmail = await setActive(data.id)
         return NextResponse.json({ message: "Email successfully confirmed!", updatedEmail }, { status: 201 })
     }

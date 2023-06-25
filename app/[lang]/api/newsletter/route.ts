@@ -1,29 +1,48 @@
-import { connectToDatabase } from "@/components/utils/db";
+import { connectToDatabase, db } from "@/components/utils/db";
 import EmailModel from "@/models/EmailModel";
 import { NextRequest, NextResponse } from "next/server";
 import { transporter } from "../../dashboard/api/route";
 
+const getEmail = async (email: string) => {
+    await connectToDatabase()
+    const emailData = await EmailModel.find({ email: email })
+    db.on("open", function() {
+        db.close()
+    })
+
+    return emailData
+}
+const saveEmail = async (email: string) => {
+    await connectToDatabase()
+    const emailData = await EmailModel.create({
+        email: email
+    })
+    db.on("open", function() {
+        db.close()
+    })
+
+    return emailData
+}
+
+//!include lang
 export const POST = async (req: NextRequest) => {
     const data = await req.json()
-    console.log(data)
     const checkEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
-    if (!checkEmail.test(data.email)) return NextResponse.json({ message: "Invalid email" }, { status: 401 })
+    if (!checkEmail.test(data.email)) return NextResponse.json({ message: "Invalid email" }, { status: 400 })
 
-    const saveEmail = async (email: string) => {
-        await connectToDatabase()
-        const emailData = await EmailModel.create({
-            email: email
-        })
+    const checkEmailData = await getEmail(data.email)
 
-        return emailData
-    }
+    if (checkEmailData.length) return NextResponse.json({ message: "Email already registered!" }, { status: 201 })
 
     const emailData = await saveEmail(data.email)
+
     if (!emailData) return NextResponse.json({ message: "Could not save email" }, { status: 500 })
 
     const { _id } = emailData
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
 
+    //!fix lang in anchor
     transporter.sendMail(
         {
             from: process.env.NEXT_PUBLIC_EMAIL_FROM,
@@ -42,7 +61,7 @@ export const POST = async (req: NextRequest) => {
                 <body>
                     <h1>Danke für das Anmelden vom Newsletter!</h1>
                     <p>Bitte Link bestätigen!</p>
-                    <p>id: ${_id}</p>
+                    <a href="${domain}/de/newsletter/${_id}" target="_blank" rel="noopener noreferrer">id: ${_id}</a>
                 </body>
             </html>
             `,
@@ -53,5 +72,5 @@ export const POST = async (req: NextRequest) => {
         }
     )
 
-    return NextResponse.json({ message: "success", emailData }, { status: 201 })
+    return NextResponse.json({ message: "Success! Please check inbox", emailData }, { status: 201 })
 }

@@ -13,7 +13,8 @@ const Confirmation = ({ id }: { id: string }) => {
     return (
         <>
             <h1>Confirm Newsletter</h1>
-            <p>{message}</p>
+            {message ? <p>{message}</p> : ""}
+
         </>
     )
 }
