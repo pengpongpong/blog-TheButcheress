@@ -6,11 +6,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
     const data = await req.json()
-
+    const bounceData = data.Message.json()
+    console.log("bounceData", bounceData)
     await connectToDatabase()
 
-    if (data.mail?.destination?.length) {
-        data.mail.destination.map((recipient: string) => {
+    if (bounceData.mail?.destination?.length) {
+        bounceData.mail.destination.map((recipient: string) => {
             const getEmail = async (email: String) => {
                 await EmailModel.findOneAndUpdate({ email: email }, { active: "blocked", error: "bounce" })
             }
