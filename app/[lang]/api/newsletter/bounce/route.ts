@@ -1,6 +1,5 @@
 import { connectToDatabase, db } from "@/components/utils/db";
 import EmailModel from "@/models/EmailModel";
-import { String } from "aws-sdk/clients/appstream";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -12,18 +11,18 @@ export const POST = async (req: NextRequest) => {
     console.log("destination", destination)
     await connectToDatabase()
 
-    if (destination.length) {
-        destination.map(async (recipient: string) => {
-            const getEmail = async (email: String) => {
-                await EmailModel.findOneAndUpdate({ email: email }, { active: "blocked", error: "bounce" })
-            }
-            return await EmailModel.findOneAndUpdate({ email: recipient }, { active: "blocked", error: "bounce" })
-        })
+    for (let i = 0; i < destination.length; i++) {
+        try {
+            await EmailModel.findOneAndUpdate({ email: destination[i] }, { active: "blocked", error: "bounce" })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     db.on("open", function () {
         db.close()
     })
+
     console.log("bounce", data)
     return NextResponse.json({ message: JSON.stringify(data) }, { status: 201 })
 }
