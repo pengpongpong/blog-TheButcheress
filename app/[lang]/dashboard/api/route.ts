@@ -11,12 +11,12 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         //send email
         transporter.sendMail(
             {
-                from: process.env.NEXT_PUBLIC_EMAIL_FROM,
-                to: process.env.NEXT_PUBLIC_EMAIL_TO,
+                from: process.env.NEXT_PUBLIC_EMAIL_TO,
+                to: process.env.NEXT_PUBLIC_EMAIL_FROM,
                 subject: `${data.subject}`,
                 html: `
-                <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-                <html>
+                <!DOCTYPE htmlPUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
                     <head>
                         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
                         <link rel="preconnect" href="https://fonts.googleapis.com">

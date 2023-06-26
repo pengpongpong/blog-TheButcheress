@@ -58,7 +58,7 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
     const htmlData = toHTML(body, {
         components: {
             types: {
-                image: (value: { value: SanityImageAssetDocument }) => html`<img src="cid:${urlFor(value.value).size(400, 300).auto("format").url()}" alt="" />` as string,
+                image: (value: { value: SanityImageAssetDocument }) => html`<img src="${urlFor(value.value).size(400, 300).auto("format").url()}" alt="" />` as string,
             },
             block: {
                 h1: (value) => html`<h1 class="h1">${value.children}</h1>` as string,
@@ -118,14 +118,14 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
     const images = body.filter((obj: PortableTextBlock) => obj._type === "image")
 
     //format structure for node-mailer
-    const attachments: Attachments[] = images.map(obj => {
-        const url = urlFor(obj).size(400, 300).auto("format").url()
-        return {
-            filename: "image.jpg",
-            path: url,
-            cid: url
-        }
-    })
+    // const attachments: Attachments[] = images.map(obj => {
+    //     const url = urlFor(obj).size(400, 300).auto("format").url()
+    //     return {
+    //         filename: "image.jpg",
+    //         path: url,
+    //         cid: url
+    //     }
+    // })
 
     //styles intern for request
     const style = `
@@ -182,7 +182,7 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
         const data = {
             subject: title,
             body: htmlData,
-            attachments: attachments,
+            // attachments: attachments,
             style: style
         }
 
