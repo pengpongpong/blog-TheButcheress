@@ -6,9 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
     const data = await req.json()
     const bounceData = JSON.parse(data.Message)
-    const { destination, messageId } = bounceData.mail
-    console.log("messageId", messageId)
-    console.log("destination", destination)
+    const { destination } = bounceData.mail
     await connectToDatabase()
 
     for (let i = 0; i < destination.length; i++) {
@@ -23,6 +21,5 @@ export const POST = async (req: NextRequest) => {
         db.close()
     })
 
-    console.log("bounce", data)
     return NextResponse.json({ message: JSON.stringify(data) }, { status: 201 })
 }

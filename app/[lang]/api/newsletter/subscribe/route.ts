@@ -14,7 +14,7 @@ const ses = new aws.SES({
 });
 
 // create Nodemailer SES transporter
-const transporter = nodemailer.createTransport({
+export const transporter = nodemailer.createTransport({
     SES: { ses, aws },
 });
 
@@ -82,7 +82,6 @@ export const POST = async (req: NextRequest) => {
         </body>
     </html>
     `
-    console.log("mail", mailHtml)
 
     const mailData = {
         from: process.env.NEXT_PUBLIC_EMAIL_FROM,
@@ -90,7 +89,6 @@ export const POST = async (req: NextRequest) => {
         subject: `Newsletter | TheButcheress_`,
         html: mailHtml,
     }
-    console.log("mailData", mailData)
 
     await new Promise((resolve, reject) => {
         transporter.sendMail(mailData, (err: any, info: any) => {

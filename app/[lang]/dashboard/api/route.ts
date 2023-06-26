@@ -1,23 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 import { authOption } from "../../api/auth/[...nextauth]/route";
-
-const nodemailer = require("nodemailer");
-const aws = require("@aws-sdk/client-ses");
-
-const ses = new aws.SES({
-    // apiVersion: "2010-12-01",
-    region: "eu-central-1",
-    credentials: {
-        accessKeyId: process.env.SES_AWS_ACCESS_KEY,
-        secretAccessKey: process.env.SES_AWS_SECRET_ACCESS_KEY
-    }
-});
-
-// create Nodemailer SES transporter
-const transporter = nodemailer.createTransport({
-    SES: { ses, aws },
-});
+import { transporter } from "../../api/newsletter/subscribe/route";
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
     const session = await getServerSession(authOption)
