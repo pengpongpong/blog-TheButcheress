@@ -8,8 +8,8 @@ declare global {
             NEXT_PUBLIC_EMAIL: "test";
             NEXTAUTH_SECRET: string;
             NEXTAUTH_URL: string;
-            AWS_ACCESS_KEY: string;
-            AWS_SECRET_ACCESS_KEY: string
+            NEXT_PUBLIC_AWS_ACCESS_KEY: string;
+            NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY: string
         }
     }
 }
