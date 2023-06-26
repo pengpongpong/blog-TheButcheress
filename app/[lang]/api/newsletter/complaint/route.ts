@@ -5,23 +5,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
     const data = await req.json()
-    // const bounceData = JSON.parse(data.Message)
-    // const { destination, messageId } = bounceData.mail
-    console.log("complaint", data)
+    const complaintData = JSON.parse(data.Message)
+    const { destination } = complaintData.mail
 
-    // await connectToDatabase()
+    await connectToDatabase()
 
-    // for (let i = 0; i < destination.length; i++) {
-    //     try {
-    //         await EmailModel.findOneAndUpdate({ email: destination[i] }, { active: "blocked", error: "bounce" })
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    for (let i = 0; i < destination.length; i++) {
+        try {
+            await EmailModel.findOneAndUpdate({ email: destination[i] }, { active: "blocked", error: "complaint" })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-    // db.on("open", function () {
-    //     db.close()
-    // })
+    db.on("open", function () {
+        db.close()
+    })
 
     return NextResponse.json({ message: JSON.stringify(data) }, { status: 201 })
 }
