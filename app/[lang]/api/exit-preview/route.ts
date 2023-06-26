@@ -1,8 +1,7 @@
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-export async function GET(request: Request) {
-    draftMode().disable()
+export async function GET() {
+    draftMode().disable() //exit preview mode 
     redirect("/")
-    // return new Response('Draft mode is enabled')
 }

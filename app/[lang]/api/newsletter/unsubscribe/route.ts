@@ -1,31 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
-import { emailRegex } from "../subscribe/route";
 import { connectToDatabase, db } from "@/components/utils/db";
 import EmailModel from "@/models/EmailModel";
 
+// remove email from database
+const removeEmail = async (id: string) => {
+    await connectToDatabase()
+
+    const emailData = await EmailModel.deleteOne({ _id: id })
+    db.on("open", function () {
+        db.close()
+    })
+    return emailData
+}
+
 export const POST = async (req: NextRequest) => {
     const data = await req.json()
-    const { email } = data
+    const { id } = data
+    const ObjectId = require('mongoose').Types.ObjectId;
 
-    //check if email format
-    if (!emailRegex.test(data.email)) return NextResponse.json({ message: "Invalid email" }, { status: 400 })
+    // check for valid MongoDB ID
+    if ((!ObjectId.isValid(id)) || (!id)) return NextResponse.json({ message: "Invalid or no ID" }, { status: 400 })
 
-    //remove email from database
-    const removeEmail = async (email: string) => {
-        await connectToDatabase()
+    // remove email and return deletedCount
+    const emailData = await removeEmail(id)
 
-        const emailData = await EmailModel.deleteOne({ email: email })
-        db.on("open", function () {
-            db.close()
-        })
-        return emailData
-    }
+    // if not found return
+    if (emailData.deletedCount <= 0 || !emailData) return NextResponse.json({ message: "Email not found!" }, { status: 404 })
 
-    const emailData = await removeEmail(email)
-
-    //if not found return
-    if (emailData.deletedCount <= 0) return NextResponse.json({ message: "No email found!" }, { status: 201 })
-
-    return NextResponse.json({ message: "Successfully unsubscribed!" }, { status: 201 })
+    return NextResponse.json({ message: "Successfully unsubscribed!" }, { status: 200 })
 
 }

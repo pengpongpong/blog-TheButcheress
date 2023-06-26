@@ -1,19 +1,19 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 
-const Confirmation = ({ id }: { id: string }) => {
+const Confirmation = ({ id, title, fetchApi }: { id: string, title: string, fetchApi: string }) => {
     const [message, setMessage] = useState<string>("")
 
     useEffect(() => {
-        fetch("/de/newsletter/api", { method: "POST", body: JSON.stringify({ id }) })
+        fetch(fetchApi, { method: "POST", body: JSON.stringify({ id }) })
             .then(res => res.json())
             .then(result => setMessage(result.message))
-    }, [id])
+    }, [id, fetchApi])
 
     return (
         <>
-            <h1 className="text-4xl">Confirm Newsletter</h1>
-            {message ? <p>{message}</p> : ""}
+            <h1 className="mb-20 text-6xl">{title}</h1>
+            {message ? <p className="text-xl">{message}</p> : ""}
 
         </>
     )

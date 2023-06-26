@@ -3,32 +3,33 @@ import UserModel from "@/models/UserModel";
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
-
 const bcrypt = require('bcrypt');
 
+// get user data from database
+const getUserData = async (credentials: Record<"username" | "password", string> | undefined) => {
+    await connectToDatabase()
+    const userData = await UserModel.find({ name: credentials?.username }).exec();
+    db.on('open', function () {
+        db.close();
+    });
+    return userData;
+}
+
+// options for next-auth
 export const authOption = {
     providers: [
         CredentialsProvider({
-            name: "Credentials",
+            name: "Login Daten",
             credentials: {
-                username: { label: "Username", type: "text", placeholder: "Username" },
+                username: { label: "Benutzername", type: "text", placeholder: "Benutzername" },
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                const getUserData = async (credentials: Record<"username" | "password", string> | undefined) => {
-                    await connectToDatabase()
-                    const userData = await UserModel.find({ name: credentials?.username }).exec();
-                    db.on('open', function () {
-                        db.close();
-                    });
-                    return userData;
-                }
-
-                const userData = await getUserData(credentials)
-                const comparePassword = await bcrypt.compare(credentials?.password, userData[0].password);
+                const userData = await getUserData(credentials) // get user data
+                const comparePassword: boolean = await bcrypt.compare(credentials?.password, userData[0].password); // check password
 
                 if (comparePassword) {
-                    return { id: "1", name: userData[0].name, email: "test" }
+                    return { id: "1", name: userData[0].name }
                 } else {
                     return null
                 }

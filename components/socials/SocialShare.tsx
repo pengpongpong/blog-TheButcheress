@@ -39,7 +39,7 @@ interface SocialShareLinkProps {
 const SocialShareLink = ({ url, title, alt, dataAction, style, width = 24, height = 24, imageIcon }: SocialShareLinkProps) => {
     return (
         <li className={style}>
-            <Link href={url} target="_blank" title={title} data-action={dataAction}>
+            <Link href={url} rel="noopener noreferrer" target="_blank" title={title} data-action={dataAction}>
                 <Image src={imageIcon} alt={alt} width={width} height={height} />
             </Link>
         </li>

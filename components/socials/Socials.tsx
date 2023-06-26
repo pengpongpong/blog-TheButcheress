@@ -11,22 +11,22 @@ import youtubeIcon from "/public/icons/socials/bxl-youtube.svg"
 export const Socials = () => {
     return (
         <div className="flex items-center justify-center gap-8">
-            <Link href="">
+            <Link rel="noopener noreferrer" target="_blank" href="">
                 <Image src={instagramIcon} alt="instagram icon" />
             </Link>
-            <Link href="">
+            <Link rel="noopener noreferrer" target="_blank" href="">
                 <Image src={youtubeIcon} alt="youtube icon" />
             </Link>
-            <Link href="">
+            <Link rel="noopener noreferrer" target="_blank" href="">
                 <Image src={tiktokIcon} alt="tiktok icon" />
             </Link>
-            <Link href="">
+            <Link rel="noopener noreferrer" target="_blank" href="">
                 <Image src={twitterIcon} alt="twitter icon" />
             </Link>
-            <Link href="">
+            <Link rel="noopener noreferrer" target="_blank" href="">
                 <Image src={facebookIcon} alt="facebook icon" />
             </Link>
-            <Link href="">
+            <Link rel="noopener noreferrer" target="_blank" href="">
                 <Image src={twitchIcon} alt="twitch icon" />
             </Link>
         </div>
