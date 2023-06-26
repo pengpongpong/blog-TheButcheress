@@ -68,20 +68,26 @@ export const POST = async (req: NextRequest) => {
     </html>
     `
     console.log("mail", mailHtml)
-    console.log("transporter", transporter)
-    //!fix lang in anchor
-    transporter.sendMail(
-        {
-            from: process.env.NEXT_PUBLIC_EMAIL_FROM,
-            to: process.env.NEXT_PUBLIC_EMAIL_TO,
-            subject: `Newsletter | TheButcheress_`,
-            html: mailHtml,
-        },
-        (err: any, info: any) => {
-            console.log(info.envelope)
-            if (err) return NextResponse.json({ message: "Could not send email", error: err }, { status: 500 })
-        }
-    )
+
+    const mailData = {
+        from: process.env.NEXT_PUBLIC_EMAIL_FROM,
+        to: process.env.NEXT_PUBLIC_EMAIL_TO,
+        subject: `Newsletter | TheButcheress_`,
+        html: mailHtml,
+    }
+    console.log("mailData", mailData)
+
+    await new Promise((resolve, reject) => {
+        transporter.sendMail(mailData, (err: any, info: any) => {
+            if (err) {
+                console.error(err);
+                reject(err);
+                return NextResponse.json({ message: "Could not send email", error: err }, { status: 500 })
+            } else {
+                resolve(info);
+            }
+        });
+    });
 
     return NextResponse.json({ message: "Success! Please check inbox", emailData }, { status: 201 })
 }
