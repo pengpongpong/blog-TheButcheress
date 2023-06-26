@@ -68,6 +68,7 @@ export const POST = async (req: NextRequest) => {
     </html>
     `
     console.log("mail", mailHtml)
+    console.log("transporter", transporter)
     //!fix lang in anchor
     transporter.sendMail(
         {
