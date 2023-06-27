@@ -1,6 +1,6 @@
 import { transformLocale } from "@/components/utils/utils"
 import { Lang } from "@/sanity/lib/sanity-query"
-import { client } from "@/sanity/lib/sanity-utils"
+import { client, urlFor } from "@/sanity/lib/sanity-utils"
 import { groq } from "next-sanity"
 import React, { lazy } from 'react'
 
@@ -10,6 +10,7 @@ import { draftMode } from "next/headers"
 import Preview from "@/components/preview/Preview"
 import { Metadata } from "next"
 
+// query for blog by slug from CMS
 const blogQuery = (lang: Lang) => {
     return (groq`*[_type == "blog" && slug.current == $slug && category == "blog"][0]{
         "author": author->name,
@@ -23,6 +24,7 @@ const blogQuery = (lang: Lang) => {
         }`)
 }
 
+// static paths
 export const generateStaticParams = async () => {
     const paths = await client.fetch(groq`*[_type == "blog" && defined(slug.current) && category == "blog"][].slug.current`)
 
@@ -31,15 +33,34 @@ export const generateStaticParams = async () => {
     }))
 }
 
+// meta data
 export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps): Promise<Metadata> => {
     const data = await client.fetch(blogQuery(transformLocale(lang)), { slug })
 
     const text = lang === "en" ? `The Butcheress_ | A blog about food and recipes - ${data?.title}` : `The Butcheress_ | Ein Blog über Nahrung and Rezepte - ${data?.title}`
     const description = `The Butcheress_ | ${data?.description}`
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["food", "blog", "recipe"] : ["Essen", "Blog", "Rezept"]
 
     return {
         title: text,
-        description: description
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/blog/${slug}`,
+            images: [{
+                url: urlFor(data?.image).size(2560, 1440).auto("format").url(),
+                width: 1000,
+                height: 600,
+                alt: data.title
+            }],
+            siteName: 'TheButcheress_',
+            locale: lang,
+            type: 'article',
+        },
     }
 }
 

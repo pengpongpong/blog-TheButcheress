@@ -4,9 +4,22 @@ import { Locale } from "./HomePage"
 import CookieBanner from "@/components/cookie-banner/CookieBanner"
 
 export const metadata = {
-  title: 'TheButcheress | Blog',
-  description: "A blog about food, recipes and travel",
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: false,
+      noimageindex: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  category: "blog",
 }
+
 
 export default async function RootLayout({
   children,
@@ -15,6 +28,7 @@ export default async function RootLayout({
   children: ReactNode,
   params: { lang: Locale },
 }) {
+
 
   return (
     <html lang={`${params.lang ?? "de"}`}>

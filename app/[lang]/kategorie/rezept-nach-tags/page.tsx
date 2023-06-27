@@ -21,15 +21,29 @@ const tagsQuery = (lang: Lang) => {
     )
 }
 
+// meta data
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
     const text = lang === "en" ? `The Butcheress_ | Recipes by tags` : `The Butcheress_ | Rezepte nach Tags und Präferenzen`
     const description = lang === "en" ? `The Butcheress_ | A collection of recipes based on preferences` : `The Butcheress_ | Eine Sammlung von Rezepten basierend auf eigene Präferenzen`
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["food", "recipes", "tags", "search"] : ["Essen", "Rezepte", "Tags", "Suche"]
 
     return {
         title: text,
-        description: description
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/kategorie/rezept-nach-tags`,
+            siteName: 'TheButcheress_',
+            locale: lang,
+            type: 'website',
+        },
     }
 }
+
 
 const RecipeByTagsPage = async ({ params: { lang } }: ParamsProps) => {
     const data: TagsProps[] = await client.fetch(tagsQuery(transformLocale(lang)))

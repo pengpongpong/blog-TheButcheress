@@ -1,7 +1,7 @@
 import { lazy } from "react"
 import { client } from "@/sanity/lib/sanity-utils"
 import Home, { Locale } from "./HomePage"
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 import { Lang, navQuery } from "@/sanity/lib/sanity-query"
 import { transformLocale } from "@/components/utils/utils"
 import { draftMode } from "next/headers"
@@ -19,6 +19,7 @@ export interface ParamsProps {
 
 export interface MetaDataProps extends ParamsProps { }
 
+// query for home data from CMS
 const homeQuery = (lang: Lang) => {
   return groq`*[_type == "home"][0]{
       introduction{title{"title": title${lang}}, content{"content": content${lang}}},
@@ -28,21 +29,30 @@ const homeQuery = (lang: Lang) => {
     }`
 }
 
+// meta data
 export async function generateMetadata(
-  { params }: MetaDataProps,
-  parent: ResolvingMetadata
+  { params }: MetaDataProps
 ): Promise<Metadata> {
   const { lang } = params
   const data = await client.fetch(homeQuery(transformLocale(lang)))
   const text = lang === "en" ? "The Butcheress_ | A blog about food, recipes and travel" : "The Butcheress_ | Ein Blog über Nahrung, Rezepte und Reisen"
+  const domain = process.env.NEXT_PUBLIC_DOMAIN
 
-  const previousImages = (await parent).openGraph?.images || []
+  const keywords = lang === "en" ? ["blog", "food", "travel"] : ["Blog", "Essen", "Reisen"]
 
   return {
     title: text,
-    description: `${data.introduction.content.content}`,
+    description: data?.introduction?.content?.content,
+    keywords: keywords,
+    authors: [{ name: 'TheButcheress_' }],
     openGraph: {
-      images: ['/some-specific-page-image.jpg', ...previousImages],
+      title: text,
+      description: data?.introduction?.content?.content,
+      url: `${domain}/${lang}`,
+      siteName: 'TheButcheress_',
+      images: [],
+      locale: lang,
+      type: 'website',
     },
   }
 }

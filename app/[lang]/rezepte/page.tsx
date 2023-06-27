@@ -4,15 +4,13 @@ import CardContainer, { CardData } from "@/components/card/Card"
 import { transformLocale } from "@/components/utils/utils"
 import { Lang, navQuery } from "@/sanity/lib/sanity-query"
 import { client } from "@/sanity/lib/sanity-utils"
-import { Metadata, ResolvingMetadata } from "next"
+import { Metadata } from "next"
 
 import { MetaDataProps, ParamsProps } from "../page"
 import { groq } from "next-sanity"
 import Navbar from "@/components/navbar/Navbar"
 
-const Footer = lazy(() => import("@/components/footer/Footer"))
-
-//get all recipes
+// get all recipes
 const recipesQuery = (lang: Lang) => {
     return (groq`*[_type == "recipe"]{
         "title": title${lang},
@@ -23,16 +21,31 @@ const recipesQuery = (lang: Lang) => {
     )
 }
 
-export const generateMetadata = async ({ params }: MetaDataProps, parent: ResolvingMetadata): Promise<Metadata> => {
+// meta data
+export const generateMetadata = async ({ params }: MetaDataProps): Promise<Metadata> => {
     const { lang } = params
     const text = lang === "en" ? `The Butcheress_ | All recipes` : `The Butcheress_ | Alle Rezepte`
     const description = lang === "en" ? `The Butcheress_ | Browse through all delicious recipes` : `The Butcheress_ | Stöbere durch alle tollen Rezepte`
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["food", "recipes", "collection"] : ["Essen", "Rezepte", "Sammlung"]
 
     return {
         title: text,
-        description: `${description}`,
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/rezepte`,
+            siteName: 'TheButcheress_',
+            locale: lang,
+            type: 'website',
+        },
     }
 }
+
+const Footer = lazy(() => import("@/components/footer/Footer"))
 
 const RecipesPage = async ({ params: { lang } }: ParamsProps) => {
     const pageData: CardData[] = await client.fetch(recipesQuery(transformLocale(lang)))

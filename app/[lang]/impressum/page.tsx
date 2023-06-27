@@ -1,6 +1,31 @@
 import React from 'react'
 import { Headline, Text } from "../datenschutz/page"
 import Link from "next/link"
+import { MetaDataProps } from "../page"
+import { Metadata } from "next"
+
+// meta data
+export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
+    const text = lang === "en" ? "The Butcheress_ | Imprint" : "The Butcheress_ | Impressum"
+    const description = lang === "en" ? `The Butcheress_ | Information about publisher and website` : `The Butcheress_ | Information über den Herausgeber und Webseite`
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["imprint"] : ["Impressum"]
+
+    return {
+        title: text,
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/impressum`,
+            siteName: 'TheButcheress_',
+            locale: lang,
+            type: 'article',
+        },
+    }
+}
 
 const ImpressumPage = () => {
     return (

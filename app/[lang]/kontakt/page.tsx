@@ -3,13 +3,26 @@ import ContactForm from "./ContactForm"
 import { Metadata } from "next"
 import { MetaDataProps, ParamsProps } from "../page"
 
+// meta data
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
     const text = lang === "en" ? "The Butcheress_ | Contact form" : "The Butcheress_ | Kontakt Formular"
     const description = lang === "en" ? "The Butcheress_ | Contact form" : "The Butcheress_ | Kontakt Formular"
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["contact me"] : ["Kontaktiere mich"]
 
     return {
         title: text,
-        description: description
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/kontakt`,
+            siteName: 'TheButcheress_',
+            locale: lang,
+            type: 'website',
+        },
     }
 }
 

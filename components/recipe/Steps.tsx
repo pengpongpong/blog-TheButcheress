@@ -30,8 +30,9 @@ const Steps = ({ list }: { list: Instruction[] }) => {
           <Typography className="font-text">{instruction.content}</Typography>
           {instruction.image ? (
               <Image
+              style={{width: "auto", height: "auto"}}
                 width={600}
-                height={600}
+                height={400}
                 loading="lazy"
                 className="mx-auto my-8"
                 src={urlFor(instruction.image).size(2560, 1440).auto("format").url()}

@@ -1,9 +1,7 @@
 import { redirect } from "next/navigation"
-import React from 'react'
 
-type Props = {}
-
-const Index = (props: Props) => {
+// redirect to all recipes
+const Index = () => {
     redirect("/rezepte")
 }
 

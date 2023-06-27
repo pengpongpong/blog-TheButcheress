@@ -4,12 +4,38 @@ import { groq } from "next-sanity"
 import { client, urlFor } from "@/sanity/lib/sanity-utils"
 import { Lang } from "@/sanity/lib/sanity-query"
 import { transformLocale } from "@/components/utils/utils"
-import { ParamsProps } from "../page"
+import { MetaDataProps, ParamsProps } from "../page"
+import { Metadata } from "next"
 
+// get page data from CMS
 const getData = async (lang: Lang) => {
     const query = groq`*[_type == "aboutMe"][0]{"title": title${lang}, "subTitle": subTitle${lang}, "text": text${lang}, "image": image}`
 
     return await client.fetch(query)
+}
+
+// meta data
+export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
+    const data = await getData(transformLocale(lang))
+    const text = lang === "en" ? "The Butcheress_ | About me" : "The Butcheress_ | Über mich"
+    const description = `The Butcheress_ | ${data?.text}`
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["about me"] : ["Ueber mich"]
+
+    return {
+        title: text,
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/ueber-mich`,
+            siteName: 'TheButcheress_',
+            locale: lang,
+            type: 'website',
+        },
+    }
 }
 
 const AboutMePage = async ({ params: { lang } }: ParamsProps) => {

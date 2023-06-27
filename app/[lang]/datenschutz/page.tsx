@@ -1,4 +1,6 @@
 import React, { ReactNode } from 'react'
+import { MetaDataProps } from "../page"
+import { Metadata } from "next"
 
 export const Headline = ({ children, title }: { children: ReactNode, title: string }) => {
     return (
@@ -11,6 +13,29 @@ export const Headline = ({ children, title }: { children: ReactNode, title: stri
 
 export const Text = ({ text }: { text: string }) => {
     return <p className="mb-2">{text}</p>
+}
+
+// meta data
+export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
+    const text = lang === "en" ? "The Butcheress_ | Data privacy" : "The Butcheress_ | Datenschutz"
+    const description = lang === "en" ? `The Butcheress_ | Data privacy` : `The Butcheress_ | Datenschutz`
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["data privacy"] : ["Datenschutz"]
+
+    return {
+        title: text,
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/datenschutz`,
+            siteName: 'TheButcheress_',
+            locale: lang,
+            type: 'article',
+        },
+    }
 }
 
 const DataPrivacyPage = () => {

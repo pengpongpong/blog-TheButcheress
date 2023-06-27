@@ -9,6 +9,7 @@ import { draftMode } from "next/headers"
 import BlogPost from "@/components/blog/BlogPost"
 import Preview from "@/components/preview/Preview"
 
+// query for travel blog by slug from CMS
 const travelPostQuery = (lang: Lang) => {
     return (
         groq`*[_type == "blog" && slug.current == $slug && category == "travel"][0]{
@@ -24,6 +25,7 @@ const travelPostQuery = (lang: Lang) => {
     )
 }
 
+// static paths
 export const generateStaticParams = async () => {
     const paths = await client.fetch(groq`*[_type == "travel" && defined(slug.current) && category == "travel"][].slug.current`)
 
@@ -32,14 +34,27 @@ export const generateStaticParams = async () => {
     }))
 }
 
+// meta data
 export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps): Promise<Metadata> => {
     const data = await client.fetch(travelPostQuery(transformLocale(lang)), { slug })
     const text = lang === "en" ? `The Butcheress_ | A blog about travel - ${data?.title}` : `The Butcheress_ | Ein Blog über Reisen - ${data?.title}`
     const description = `The Butcheress_ | ${data?.description}`
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["travel", "blog", "review"] : ["Reisen", "Blog", "Bericht"]
 
     return {
         title: text,
-        description: description
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/travel/${slug}`,
+            siteName: 'TheButcheress_',
+            locale: lang,
+            type: 'article',
+        },
     }
 }
 

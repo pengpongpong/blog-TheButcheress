@@ -3,10 +3,10 @@ import Link from 'next/link'
 export default function NotFound() {
     return (
         <main className="flex flex-col justify-center items-center">
-            <h2>Recipe not found!</h2>
-            <p>Could not find requested resource</p>
+            <h1>Oops...</h1>
+            <p>Leider konnte das Rezept nicht gefunden werden.</p>
             <p className="btn btn-primary">
-                View <Link href="/rezepte">all recipes</Link>
+                Zeige <Link href="/rezepte">alle Rezepte</Link>
             </p>
         </main>
     )

@@ -1,9 +1,9 @@
 import React, { lazy } from 'react'
 import Recipe from "./Recipe"
-import { client } from "@/sanity/lib/sanity-utils"
+import { client, urlFor } from "@/sanity/lib/sanity-utils"
 import { MetaDataProps, ParamsProps } from "../../page"
 import { transformLocale } from "@/components/utils/utils"
-import { Metadata, ResolvingMetadata } from "next"
+import { Metadata } from "next"
 import { draftMode } from "next/headers"
 import Preview from "@/components/preview/Preview"
 import RecipePreview from "./RecipePreview"
@@ -12,7 +12,7 @@ import { Lang, navQuery } from "@/sanity/lib/sanity-query"
 import Navbar from "@/components/navbar/Navbar"
 import { notFound } from "next/navigation"
 
-//get specific recipe
+// get recipe by slug
 const recipeQuery = (lang: Lang) => {
     return (groq`*[_type == "recipe" && slug.current == $slug][0]{
         ingredients[]{"title": title${lang},
@@ -31,6 +31,7 @@ const recipeQuery = (lang: Lang) => {
         `)
 }
 
+// static paths
 export const generateStaticParams = async () => {
     const paths = await client.fetch(groq`*[_type == "recipe" && defined(slug.current)][].slug.current`)
 
@@ -39,17 +40,37 @@ export const generateStaticParams = async () => {
     }))
 }
 
-export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps, parent: ResolvingMetadata): Promise<Metadata> => {
+// meta data
+export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps): Promise<Metadata> => {
     const pageQuery = recipeQuery(transformLocale(lang))
     const data = await client.fetch(pageQuery, { slug })
 
     const text = lang === "en" ? `The Butcheress_ | Recipes - ${data?.title}` : `The Butcheress_ | Rezepte - ${data?.title}`
     const description = `${data?.description} | The Butcheress_`
-
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["food", "recipe", `${data.title}`] : ["Essen", "Rezept", `${data.title}`]
 
     return {
         title: text,
-        description: `${description}`,
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/rezepte/${slug}`,
+            siteName: 'TheButcheress_',
+            images: [
+                {
+                    url: urlFor(data?.imageUrl).size(2560, 1440).auto("format").url(),
+                    width: 800,
+                    height: 500,
+                    alt: data.title
+                },
+            ],
+            locale: lang,
+            type: 'website',
+        },
     }
 }
 

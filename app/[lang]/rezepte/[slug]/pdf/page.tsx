@@ -6,16 +6,31 @@ import { groq } from "next-sanity";
 import { MetaDataProps, ParamsProps } from "@/app/[lang]/page";
 import { transformLocale } from "@/components/utils/utils";
 
-export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
+// meta data
+export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps): Promise<Metadata> => {
     const text = lang === "en" ? `The Butcheress_ | Download or print the recipe as PDF version` : `The Butcheress_ | Lade oder drucke das Rezept als PDF Version`
     const description = lang === "en" ? `The Butcheress_ | Download or print the recipe as PDF version` : `The Butcheress_ | Drucke das Rezept als PDF Version oder lade es downloade es.`
 
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
+    const keywords = lang === "en" ? ["food", "recipe", "pdf"] : ["Essen", "Rezept", "pdf"]
+
     return {
         title: text,
-        description: description
+        description: description,
+        keywords: keywords,
+        authors: [{ name: 'TheButcheress_' }],
+        openGraph: {
+            title: text,
+            description: description,
+            url: `${domain}/${lang}/rezepte/${slug}/pdf`,
+            siteName: 'TheButcheress_',
+            locale: lang,
+            type: 'website',
+        },
     }
 }
 
+// static paths
 export const generateStaticParams = async () => {
     const paths = await client.fetch(groq`*[_type == "recipe" && defined(slug.current)][].slug.current`)
 
@@ -30,7 +45,7 @@ const Index = async ({ params: { lang, slug } }: ParamsProps) => {
         "title": title${locale},
         "url": pdf.pdf${locale}.asset->url
         }`, { slug })
-        
+
     if (data) {
         return <iframe src={`${data?.url}#view=fitH`} title={data?.title} width={"100%"} height={"100%"} />
     } else {

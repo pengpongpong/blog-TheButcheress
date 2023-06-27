@@ -92,15 +92,15 @@ const Recipe = ({ pageData, lang }: RecipeProps) => {
                             </h1>
                             <div className="flex flex-row whitespace-pre lg:gap-8">
                                 <CookingTime
-                                    hours={pageData?.prepTime.hours}
-                                    minutes={pageData?.prepTime.minutes}
+                                    hours={pageData?.prepTime?.hours}
+                                    minutes={pageData?.prepTime?.minutes}
                                     lang={lang}
                                     title={lang === "en" ? "Preparation" : "Vorbereitung"}
                                     styling={"text-center mr-4 lg:mr-0"}
                                 />
                                 <CookingTime
-                                    hours={pageData?.totalTime.hours}
-                                    minutes={pageData?.totalTime.minutes}
+                                    hours={pageData?.totalTime?.hours}
+                                    minutes={pageData?.totalTime?.minutes}
                                     lang={lang}
                                     title={lang === "en" ? "Total" : "Gesamt"}
                                     styling={"border-r-2 border-l-2 border-dashed pl-4 pr-4 lg:pl-8 lg:pr-8 text-center"}
@@ -115,7 +115,7 @@ const Recipe = ({ pageData, lang }: RecipeProps) => {
                         </div>
                     </div>
                     <picture className="mt-4 w-full lg:mt-0">
-                        {pageData?.imageUrl ? < Image width={2560} height={1440} loading="lazy" src={pageData?.imageUrl} alt={pageData?.title} /> : ""}
+                        {pageData?.imageUrl ? < Image width={800} height={500} loading="lazy" src={pageData?.imageUrl} alt={pageData?.title} /> : ""}
                     </picture>
                 </section>
                 <section className="mt-8 flex flex-col gap-8 lg:mx-16 lg:my-20 lg:mt-12 lg:flex-row lg:gap-20">

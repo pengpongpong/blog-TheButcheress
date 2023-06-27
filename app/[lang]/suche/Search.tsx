@@ -33,6 +33,7 @@ const Search = ({ lang }: { lang: Locale }) => {
         useSearchStore.getState().setLoading(current)
     }
 
+    // set input 
     const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         if (e.target.value === "") {
             setSearch("")
@@ -41,6 +42,7 @@ const Search = ({ lang }: { lang: Locale }) => {
         }
     }
 
+    // fetch data is search input
     useEffect(() => {
         if (search !== "") {
             setLoading(true)
@@ -59,6 +61,7 @@ const Search = ({ lang }: { lang: Locale }) => {
 
     const inputRef = useRef<HTMLInputElement>(null)
 
+    // prevent enter key default for preventing refresh
     useEffect(() => {
         if (inputRef.current) {
             inputRef.current.addEventListener("keypress", (event) => {
