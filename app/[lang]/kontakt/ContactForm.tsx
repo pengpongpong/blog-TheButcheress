@@ -1,6 +1,6 @@
 "use client"
 import { TextField, ThemeProvider, createTheme } from "@mui/material";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -34,6 +34,7 @@ const Error = ({ text }: { text?: string }) => {
 }
 
 const ContactForm = ({ lang }: { lang: Locale }) => {
+    const [message, setMessage] = useState<string>("")
     const nameErrorText = lang === "en" ? "Please enter name" : "Bitte Name eingeben"
     const emailErrorText = lang === "en" ? "Please enter valid email" : "Bitte gültige Email eingeben"
     const messageErrorText = lang === "en" ? "Please enter a message" : "Bitte hinterlasse mir eine Nachricht"
@@ -65,7 +66,7 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
     const onSubmit = handleSubmit((data) => {
         fetch("/de/kontakt/api", { method: "POST", body: JSON.stringify(data) })
             .then(res => res.json())
-            .then(result => console.log(result))
+            .then(result => setMessage(result.message))
     });
 
     //clear form after success submit
@@ -83,12 +84,13 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
 
                 <TextField style={{ marginBottom: "1rem" }} {...register("email")} id="outlined-basic" label="Email" variant="outlined" />
                 {errors?.email && <Error text={errors?.email.message} />}
-                
+
                 <TextField style={{ marginBottom: "1rem" }} {...register("textField")} label={lang === "en" ? "Message" : "Nachricht"} multiline rows={7} />
                 {errors?.textField && <Error text={errors?.textField.message} />}
             </ThemeProvider>
 
             <input type="submit" className="w-full py-2 border border-grey hover:border-neutral text-lg font-bold rounded cursor-pointer hover:bg-primary transition duration-300" defaultValue={lang === "en" ? "Submit" : "Abschicken"} />
+            {message ? <span className="my-4 font-text text-success text-center">{message}</span> : ""}
         </form>
     );
 }

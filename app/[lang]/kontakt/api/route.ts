@@ -1,27 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-const nodemailer = require("nodemailer");
-const aws = require("@aws-sdk/client-ses");
-
-const ses = new aws.SES({
-    // apiVersion: "2010-12-01",
-    region: "eu-central-1",
-    credentials: {
-        accessKeyId: process.env.SES_AWS_ACCESS_KEY,
-        secretAccessKey: process.env.SES_AWS_SECRET_ACCESS_KEY
-    }
-});
-
-// create Nodemailer SES transporter
-const transporter = nodemailer.createTransport({
-    SES: { ses, aws },
-});
+import { transporter } from "../../api/newsletter/subscribe/route";
 
 export const POST = async (req: NextRequest) => {
     const data = await req.json()
     const { name, email, textField } = data
 
+    // if missing fields return error
     if (!name || !email || !textField) return NextResponse.json({ message: "Missing fields" }, { status: 400 })
 
+    // send email
     transporter.sendMail(
         {
             from: process.env.NEXT_PUBLIC_EMAIL_FROM,
@@ -56,5 +43,5 @@ export const POST = async (req: NextRequest) => {
         }
     )
 
-    return NextResponse.json({ message: "success" }, { status: 201 })
+    return NextResponse.json({ message: "Successfully submitted!" }, { status: 201 })
 }
