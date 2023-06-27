@@ -151,7 +151,7 @@ export const POST = async (req: NextRequest) => {
                 <a href="" rel="noopener noreferrer" target="_blank"><img src="https://res.cloudinary.com/pengpengong/image/upload/v1687794395/TheButcheress_%20Blog/bxl-youtube_ze1lwx.svg" alt="youtube" /></a>
                 <a href="" rel="noopener noreferrer" target="_blank"><img src="https://res.cloudinary.com/pengpengong/image/upload/v1687794395/TheButcheress_%20Blog/bxl-twitter_idz0lh.svg" alt="twitter" /></a>
             </div>
-            <p>Copyright &copy; <span id="year">2023</span> TheButcheress_ - <a href="${domain}/de/newsletter/unsubscribe" target="_blank" rel="noopener noreferrer">Newsletter abmelden</a></p>
+            <p>Copyright &copy; <span id="year">2023</span> TheButcheress_</p>
             <script>
                 const time = new Date().getFullYear()
                 const span = document.getElementById("year")
