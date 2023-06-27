@@ -39,15 +39,20 @@ function ImageSlider({ list }: { list: ImageSliderProps[] }) {
         320: {
           initialSlide: 1,
           slidesPerView: 1,
-          spaceBetween: 20,
-        },
-        480: {
-          initialSlide: 2,
-          slidesPerView: 2,
-          spaceBetween: 10,
+          spaceBetween: 0,
         },
         640: {
-          initialSlide: 4,
+          initialSlide: 2,
+          slidesPerView: 2,
+          spaceBetween: 0,
+        },
+        770: {
+          initialSlide: 2,
+          slidesPerView: 3,
+          spaceBetween: 0,
+        },
+        1280: {
+          initialSlide: 3,
           slidesPerView: 4,
           spaceBetween: 10,
         },

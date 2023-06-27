@@ -36,14 +36,21 @@ const Card = ({ title, description, imageUrl, url, blog }: CardData & { blog?: s
     );
 }
 
-//display cards
+// display cards
 const CardContainer = ({ data, blog }: { data?: CardData[], blog?: string }) => {
     const items: Array<Array<CardData>> = [[], [], [], []]
+    const itemsMidScreen: Array<Array<CardData>> = [[], []]
 
-    //split data into 4 arrays for styling reason
+    // split data into 4 arrays for styling reason desktop
     data?.map((obj, index) => {
         const ArrayIndex = index % 4
         items[ArrayIndex].push(obj)
+    })
+
+    // split data into 2 arrays for styling reason tablet
+    data?.map((obj, index) => {
+        const ArrayIndex = index % 2
+        itemsMidScreen[ArrayIndex].push(obj)
     })
 
     return (
@@ -64,8 +71,24 @@ const CardContainer = ({ data, blog }: { data?: CardData[], blog?: string }) => 
                     }
                 })}
             </ul>
+            {/* tablet view */}
+            <ul className="hidden md:flex lg:hidden w-full flex-row gap-8 justify-center mx-auto list-none">
+                {itemsMidScreen.map((item, index) => {
+                    if (item.length) {
+                        return (<li key={index}>
+                            <ul className="list-none">
+                                {item.map(obj => (
+                                    <li key={obj.url} className="flex justify-center items-center">
+                                        <Card blog={blog} title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} />
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>)
+                    }
+                })}
+            </ul>
             {/* mobile view */}
-            <ul className="lg:hidden w-full flex flex-col justify-center list-none">
+            <ul className="md:hidden w-full flex flex-col justify-center list-none">
                 {data?.map(item => {
                     if (item.url) {
                         return (

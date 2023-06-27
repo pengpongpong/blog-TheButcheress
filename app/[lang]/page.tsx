@@ -67,7 +67,6 @@ export default async function HomePage({ params: { lang } }: ParamsProps) {
   const { isEnabled } = draftMode()
   const pageQuery = homeQuery(transformLocale(lang))
   const data = !isEnabled ? await client.fetch(pageQuery) : ""
-
   const navData = await client.fetch(navQuery(transformLocale(lang)))
 
   return isEnabled ? (
@@ -80,8 +79,8 @@ export default async function HomePage({ params: { lang } }: ParamsProps) {
     </>
   ) :
     <>
-      <Navbar navData={navData} lang={lang} />
-      <Home pageData={data} lang={lang} />
-      <Footer lang={lang} />
+        <Navbar navData={navData} lang={lang} />
+        <Home pageData={data} lang={lang} />
+        <Footer lang={lang} />
     </>
 }

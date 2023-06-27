@@ -2,7 +2,7 @@ import { transformLocale } from "@/components/utils/utils"
 import { client } from "@/sanity/lib/sanity-utils"
 import { Metadata } from "next"
 import { groq } from "next-sanity"
-import React from 'react'
+import React, { lazy } from 'react'
 import { MetaDataProps, ParamsProps } from "../page"
 import { Lang } from "@/sanity/lib/sanity-query"
 import BlogContainer from "@/components/blog/BlogContainer"
@@ -40,6 +40,9 @@ const blogPostsQuery = (lang: Lang) => {
     )
 }
 
+const Footer = lazy(() => import("@/components/footer/Footer"))
+
+
 const BlogPosts = async ({ params: { lang } }: ParamsProps) => {
     const data = await client.fetch(blogPostsQuery(transformLocale(lang)))
 
@@ -50,6 +53,7 @@ const BlogPosts = async ({ params: { lang } }: ParamsProps) => {
                 blogData={data?.blogs}
                 blogType="blog"
             />
+            <Footer lang={lang}/>
         </>
     )
 }

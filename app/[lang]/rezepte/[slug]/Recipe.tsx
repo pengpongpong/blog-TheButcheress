@@ -87,7 +87,7 @@ const Recipe = ({ pageData, lang }: RecipeProps) => {
                             <SocialShare lang={lang} title={pageData?.title} styles={styles}/>
                         </div>
                         <div className="mb-4 lg:mb-0 flex flex-col items-center justify-between">
-                            <h1 className="m-4 mb-8 text-4xl tracking-wide lg:mt-8 lg:text-6xl">
+                            <h1 className="m-4 mb-8 text-4xl tracking-wide lg:mt-8 md:text-5xl lg:text-6xl">
                                 {pageData?.title}
                             </h1>
                             <div className="flex flex-row whitespace-pre lg:gap-8">
@@ -118,9 +118,9 @@ const Recipe = ({ pageData, lang }: RecipeProps) => {
                         {pageData?.imageUrl ? < Image width={800} height={500} loading="lazy" src={pageData?.imageUrl} alt={pageData?.title} /> : ""}
                     </picture>
                 </section>
-                <section className="mt-8 flex flex-col gap-8 lg:mx-16 lg:my-20 lg:mt-12 lg:flex-row lg:gap-20">
-                    <section className="m-4 h-min w-auto bg-primary p-4 pt-8 font-text lg:w-2/5 lg:p-10">
-                        <h2 className="mb-8 text-3xl lg:text-4xl">{lang === "en" ? "Ingredients" : "Zutaten"}</h2>
+                <section className="m-4 mt-8 flex flex-col gap-8 md:m-8 lg:mx-16 lg:my-20 lg:mt-12 lg:flex-row lg:gap-20">
+                    <section className="h-min w-auto bg-primary p-4 pt-8 font-text md:p-8 lg:w-2/5 lg:p-10">
+                        <h2 className="mb-8 text-3xl md:text-4xl">{lang === "en" ? "Ingredients" : "Zutaten"}</h2>
                         <RecipeTable recipe={pageData?.ingredients} />
                     </section>
                     <Steps list={pageData?.instructions} />

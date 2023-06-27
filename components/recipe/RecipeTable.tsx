@@ -3,13 +3,13 @@ import React from "react";
 
 
 const RecipeTable = ({ recipe }: { recipe: Ingredients[] }) => (
-  <>
+  <div className="md:flex md:gap-8 md:justify-center lg:block">
     {recipe?.map((obj) => (
       <table className="mb-8 w-full" key={obj.title}>
         <thead>
           <tr>
             <th
-              className="pb-4 text-left text-lg tracking-widest lg:text-xl"
+              className="pb-4 text-left text-lg tracking-widest md:text-xl"
               colSpan={2}
             >
               {obj.title.toUpperCase()}
@@ -30,7 +30,7 @@ const RecipeTable = ({ recipe }: { recipe: Ingredients[] }) => (
         </tbody>
       </table>
     ))}
-  </>
+  </div>
 );
 
 export default RecipeTable;

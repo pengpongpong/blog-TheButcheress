@@ -106,10 +106,10 @@ const Home = ({ pageData, lang }: HomeProps) => {
                     <div className="flex flex-col gap-4 lg:flex-row lg:gap-8">
                         <picture className="flex w-full items-center justify-end">
                             <Image
-                                width={400}
+                                width={500}
                                 height={500}
                                 loading="lazy"
-                                className="h-[20rem] w-full object-cover lg:h-[32rem] lg:w-[25rem]"
+                                className="hidden object-cover lg:block lg:h-[32rem] lg:w-[25rem]"
                                 src={urlFor(pageData?.recipe.image.leftImage).url()}
                                 alt=""
                             />
@@ -119,11 +119,11 @@ const Home = ({ pageData, lang }: HomeProps) => {
                                 width={500}
                                 height={500}
                                 loading="lazy"
-                                className="h-[15rem] w-full object-cover lg:h-[28rem] lg:w-[28rem]"
+                                className="h-[15rem] w-full object-cover md:h-[25rem] lg:h-[30rem] lg:w-[28rem]"
                                 src={urlFor(pageData?.recipe.image.middleImage).url()}
                                 alt=""
                             />
-                            <p className="m-6 text-center text-lg text-neutral lg:m-8 lg:text-2xl">
+                            <p className="m-6 text-center text-lg text-neutral md:m-8 lg:text-2xl">
                                 {pageData?.recipe.content.content}
                             </p>
                             <Link
@@ -137,7 +137,7 @@ const Home = ({ pageData, lang }: HomeProps) => {
                             <Image
                                 width={500}
                                 height={500}
-                                className="h-[15rem] w-full object-cover lg:h-[32rem] lg:w-[25rem]"
+                                className="hidden object-cover lg:block lg:h-[32rem] lg:w-[25rem]"
                                 src={urlFor(pageData?.recipe.image.rightImage).url()}
                                 alt=""
                             />

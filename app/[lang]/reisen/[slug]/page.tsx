@@ -59,6 +59,7 @@ export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps
 }
 
 const BlogPreview = lazy(() => import("@/components/blog/BlogPreview"))
+const Footer = lazy(() => import("@/components/footer/Footer"))
 
 const TravelPost = async ({ params: { lang, slug } }: ParamsProps) => {
     const { isEnabled } = draftMode()
@@ -73,6 +74,7 @@ const TravelPost = async ({ params: { lang, slug } }: ParamsProps) => {
     ) :
         <>
             <BlogPost pageData={data} lang={lang} />
+            <Footer lang={lang} tags={data?.tags} />
         </>
 }
 

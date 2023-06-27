@@ -38,15 +38,15 @@ const Footer = ({ tags, lang }: { tags?: TagsProps[], lang: "de" | "en" }) => {
   return (
     <>
       {tags ? <Tags tags={tags} /> : ""}
-      <footer className="bg-base-200 p-8 font-text text-neutral md:px-16 md:py-12">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:gap-0">
-          <div className="flex justify-between md:flex-col md:justify-start">
+      <footer className="bg-base-200 p-8 font-text text-neutral lg:px-16 lg:py-12">
+        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:gap-0">
+          <div className="flex justify-between md:justify-around lg:flex-col lg:justify-start">
             <FooterLink url={"ueber-mich"} text={lang === "en" ? "About me" : "Über mich"} />
             <FooterLink url={"kontakt"} text={lang === "en" ? "Contact" : "Kontakt"} />
             <FooterLink url={"datenschutz"} text={lang === "en" ? "Data privacy" : "Datenschutz"} />
             <FooterLink url={"impressum"} text="Impressum" />
           </div>
-          <div className="flex flex-col text-center md:text-left">
+          <div className="flex flex-col text-center lg:text-left">
             <span className="footer-title">Social</span>
             <Socials />
           </div>

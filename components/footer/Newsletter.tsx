@@ -26,14 +26,14 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
     }
 
     return (
-        <div className="flex flex-col text-center md:text-left">
+        <div className="flex flex-col text-center lg:text-left">
             <span className="ml-2 footer-title">Newsletter</span>
-            <form className="flex flex-col gap-4 md:flex-row" onSubmit={onSubmit}>
+            <form className="flex flex-col gap-4 md:flex-row md:justify-center" onSubmit={onSubmit}>
                 <input
                     type="email"
                     name="email"
                     placeholder={lang === "en" ? "your@email.com" : "deine@email.com"}
-                    className="input-bordered input w-full pr-16"
+                    className="input-bordered input w-full pr-16 max-w-lg"
                     autoComplete="email"
                     ref={newsletterInput}
                 />

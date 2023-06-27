@@ -94,7 +94,7 @@ const RecipePage = async ({ params: { lang, slug } }: ParamsProps) => {
         <>
             <Navbar navData={navData} lang={lang} />
             <Recipe pageData={data} lang={lang} />
-            <Footer lang={lang} />
+            <Footer lang={lang} tags={data?.tags}/>
         </>
 }
 

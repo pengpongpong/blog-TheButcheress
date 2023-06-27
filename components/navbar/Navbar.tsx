@@ -5,7 +5,7 @@ import LanguageSwitch from "../language-switch/LanguageSwitch";
 import SearchIcon from "/public/icons/bx-search.svg"
 import Image from "next/image";
 import Socials from "../socials/Socials";
-import MobileNav, { SubMenu } from "./MobileNav";
+import MobileNav from "./MobileNav";
 import { Locale } from "@/app/[lang]/HomePage";
 
 
@@ -169,15 +169,13 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
   return (
     <>
       {/* mobile navbar */}
-      <header className="lg:hidden navbar p-0 m-4 w-auto flex flex-col gap-8">
+      <header className="xl:hidden navbar p-0 m-4 w-auto flex flex-col gap-8 md:m-8">
         <nav className="flex w-full justify-between items-center">
           <Link href={`/${lang}`} className="font-headline text-4xl">
             TheButcheress_
           </Link>
           <nav>
-            <MobileNav >
-              <SubMenu list={structure} />
-            </MobileNav>
+            <MobileNav list={structure} />
           </nav>
         </nav>
         <Socials />
@@ -188,7 +186,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
       </header>
 
       {/* desktop navbar */}
-      <header className="hidden lg:flex navbar relative z-10 w-auto flex-col m-8">
+      <header className="hidden xl:flex navbar relative z-10 w-auto flex-col m-8">
         <nav className="w-full mb-4 justify-end">
           <nav className="mr-5 flex justify-center items-center gap-8">
             <Link href="/suche"><Image alt="" src={SearchIcon} /></Link>
