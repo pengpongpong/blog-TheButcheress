@@ -12,9 +12,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     if (session) {
         const data = await req.json()
         const { emails, subject, body, style } = data
-        const domain = process.env.NEXTAUTH_URL // get domain for adding to unsubscribe link in mail
+        const domain = process.env.NEXT_PUBLIC_DOMAIN // get domain for adding to unsubscribe link in mail
         const year = new Date().getFullYear() // get year for footer copyright
-        console.log(emails)
 
         if (!emails) return NextResponse.json({ message: "No recipients!" }, { status: 400 })
 

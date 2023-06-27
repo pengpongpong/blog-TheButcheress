@@ -72,7 +72,7 @@ export const POST = async (req: NextRequest) => {
 
     // get ID from saved data in database
     const { _id } = emailData
-    const domain = process.env.NEXTAUTH_URL // get domain for adding to confirmation link in mail
+    const domain = `${process.env.NEXT_PUBLIC_DOMAIN}`// get domain for adding to confirmation link in mail
 
     // mail template to send
     const mailHtml = `
