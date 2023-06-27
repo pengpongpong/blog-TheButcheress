@@ -169,7 +169,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
   return (
     <>
       {/* mobile navbar */}
-      <header className="lg:hidden navbar m-4 w-auto flex flex-col gap-8">
+      <header className="lg:hidden navbar p-0 m-4 w-auto flex flex-col gap-8">
         <nav className="flex w-full justify-between items-center">
           <Link href={`/${lang}`} className="font-headline text-4xl">
             TheButcheress_

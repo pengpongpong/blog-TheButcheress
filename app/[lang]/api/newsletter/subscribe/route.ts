@@ -58,7 +58,11 @@ export const POST = async (req: NextRequest) => {
     const checkEmailData = await getEmail(email)
 
     // if data then already registered and return
-    if (checkEmailData.length) return NextResponse.json({ message: "Email already registered!" }, { status: 200 })
+    if (checkEmailData.length) {
+        if (checkEmailData[0].active === "pending") return NextResponse.json({ message: "Email already submitted. Please check inbox!" }, { status: 200 })
+        if (checkEmailData[0].active === "blocked") return NextResponse.json({ message: "Email blocked, please first unsubscribe!" }, { status: 200 })
+        if (checkEmailData[0].active === "active") return NextResponse.json({ message: "Email already registered!" }, { status: 200 })
+    }
 
     // save email data to database
     const emailData = await saveEmail(email)

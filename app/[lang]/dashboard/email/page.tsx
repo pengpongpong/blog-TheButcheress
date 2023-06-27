@@ -1,12 +1,12 @@
 import React from 'react'
 import { groq } from "next-sanity"
 import { client } from "@/sanity/lib/sanity-utils"
-import EmailContainer from "./EmailContainer"
 
 import { getServerSession } from "next-auth/next"
 import { authOption } from "../../api/auth/[...nextauth]/route"
 import SignIn from "@/components/auth/SignIn"
 import Link from "next/link"
+import CardContainer from "@/components/card/Card"
 
 const getData = async () => {
     const query = (groq`*[_type == "emailContent"]{
@@ -24,10 +24,14 @@ const EmailsPage = async () => {
     if (session) {
         const data = await getData()
         return (
-            <main className="mx-8 flex flex-col justify-center items-center gap-8">
-                <h1 className="text-6xl text-center font-text">Alle Emails</h1>
-                <Link className="btn btn-primary" href="/de/dashboard">Back to dashboard</Link>
-                <EmailContainer session={session} data={data} />
+            <main className="m-8">
+                <header>
+                    <h1 className="mb-16 text-6xl text-center font-text">Alle Emails</h1>
+                </header>
+                <section className="flex flex-col justify-center items-center gap-8">
+                    <Link className="btn btn-primary" href="/de/dashboard">Back to dashboard</Link>
+                    <CardContainer blog="email" data={data} />
+                </section>
             </main>
         )
     }

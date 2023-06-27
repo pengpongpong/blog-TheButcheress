@@ -8,7 +8,7 @@ import { Session } from "next-auth"
 const SignOut = ({session}: {session: Session}) => {
     return (
         <main className="flex flex-col justify-center items-center gap-8">
-            <p>Signed in as {session?.user?.email}</p>
+            <p>Benutzer: {session?.user?.email}</p>
             <Link className="btn btn-primary" href="/de/dashboard/email">Go to Email</Link>
             <button className="btn btn-warning" onClick={() => signOut()}>Logout</button>
         </main>

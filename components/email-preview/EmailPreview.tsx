@@ -1,6 +1,6 @@
 "use client"
-import React, { ReactNode, useEffect, useState } from 'react'
-import { PortableTextBlock, PortableTextInput } from "sanity"
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import { PortableTextBlock } from "sanity"
 import Image from "next/image"
 
 import { urlFor } from "@/sanity/lib/sanity-utils"
@@ -12,12 +12,8 @@ import { toHTML } from '@portabletext/to-html'
 import { SanityImageAssetDocument } from "@sanity/client";
 import { LinkExternBlogDecorator, LinkInternBlogDecorator, getHref } from "@/sanity/decorators/decorators"
 import { PortableText } from "@portabletext/react"
+import { checkEmail } from "../footer/Newsletter"
 
-interface Attachments {
-    filename: string;
-    path: string;
-    cid: string
-}
 interface LinkInterface {
     tags?: { _ref: string, _type: 'reference' },
     recipe?: { _ref: string, _type: 'reference' },
@@ -26,10 +22,17 @@ interface LinkInterface {
     _key: string
 }
 
+interface Emails {
+    _id: string;
+    email: string;
+    active: "active";
+    _v: number
+}
+
 // components for live view
 const portableComponents = {
     types: {
-        image: ({ value }: { value: any }) => <Image style={{ width: "auto", height: "auto" }} width={600} height={400} loading="lazy" src={urlFor(value).size(600, 400).auto("format").url()} alt={""} />
+        image: ({ value }: { value: any }) => <Image width={750} height={500} loading="lazy" src={urlFor(value).size(750, 500).auto("format").url()} alt={""} />
     },
     block: {
         h1: ({ children }: { children?: ReactNode }) => <h2 className="h1">{children}</h2>,
@@ -51,8 +54,12 @@ const portableComponents = {
         underline: ({ children }: { children?: ReactNode }) => <span className="underline">{children}</span>,
         "strike-through": ({ children }: { children?: ReactNode }) => <span className="strike">{children}</span>,
     },
+    list: {
+        bullet: ({ children }: { children?: ReactNode }) => <ul className="bulletList" >{children}</ul>,
+        number: ({ children }: { children?: ReactNode }) => <ol className="numberList" >{children}</ol>,
+    },
     listItem: {
-        bullet: ({ children }: { children?: ReactNode }) => <li className="bulletItem" > {children}</ li>,
+        bullet: ({ children }: { children?: ReactNode }) => <li className="bulletItem" >{children}</li>,
         number: ({ children }: { children?: ReactNode }) => <li className="numberItem">{children}</li>,
     },
 }
@@ -87,6 +94,9 @@ const LinkExternEmailDecorator = (value: LinkInterface, text: string) => {
 
 const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: string }) => {
     const [message, setMessage] = useState<string>("")
+    const [emails, setEmails] = useState<Array<Emails>>()
+    const [error, setError] = useState<string>("")
+    const inputRef = useRef<HTMLInputElement>(null)
 
     // Email Content
     const htmlData = toHTML(body, {
@@ -95,23 +105,26 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
                 image: (value: { value: SanityImageAssetDocument }) => html`<img src="${urlFor(value.value).size(600, 400).auto("format").url()}" alt="" />` as string,
             },
             block: {
-                h1: (value) => html`<h1 class="h1">${value.children}</h1>` as string,
-                h2: (value) => html`<h2 class="h2">${value.children}</h2>` as string,
-                h3: (value) => html`<h3 class="h3">${value.children}</h3>` as string,
-                h4: (value) => html`<h4 class="h4">${value.children}</h4>` as string,
-                normal: (value) => {
-                    return "<p class=\"text\">".concat(value.children!, "</p>")
-                },
-                blockquote: (value) => html`<blockquote class="quote">${value.children}</blockquote>` as string,
-                "noParent": (value) => html`${value.children}` as string,
+                h1: (value) => "<h1 class='h1'>".concat(value.children!, "</h1>"),
+                h2: (value) => "<h2 class='h2'>".concat(value.children!, "</h2>"),
+                h3: (value) => "<h3 class='h3'>".concat(value.children!, "</h3>"),
+                h4: (value) => "<h4 class='h4'>".concat(value.children!, "</h4>"),
+                normal: (value) => "<p class='text'>".concat(value.children!, "</p>"),
+                blockquote: (value) => "<blockquote class='quote'>".concat(value.children!, "</blockquote>"),
+                noParent: (value) => html`${value.children}` as string,
             },
             marks: {
                 link: ({ value, text }) => LinkExternEmailDecorator(value, text),
                 recipeLink: ({ value, text }) => LinkInternEmailDecorator(value, text),
-                strong: ({ children }) => html`<span class="strong">${children}</span>` as any,
+                strong: ({ children }) => html`<span class="strong">${children}</span>` as string,
                 em: ({ text }) => html`<span class="em">${text}</span>` as string,
                 underline: ({ text }) => html`<span class="underline">${text}</span>` as string,
                 "strike-through": ({ text }) => html`<span class="strike">${text}</span>` as string,
+            },
+            list: {
+                bullet: (value) => "<ul class='bulletList'>".concat(value.children!, "</ul>"),
+                number: (value) => "<ol class='numberList'>".concat(value.children!, "</ol>"),
+
             },
             listItem: {
                 bullet: ({ children }) => html`<li class="bulletItem">${children}</li>` as string,
@@ -121,26 +134,13 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
         },
     })
 
-    // get images for email attachment
-    // const images = body.filter((obj: PortableTextBlock) => obj._type === "image")
-
-    // format structure for node-mailer
-    // const attachments: Attachments[] = images.map(obj => {
-    //     const url = urlFor(obj).size(400, 300).auto("format").url()
-    //     return {
-    //         filename: "image.jpg",
-    //         path: url,
-    //         cid: url
-    //     }
-    // })
-
     // styles for html
     const style = `
     <style>
         html {
             background-color: #FBF7F0;
-            // white-space: pre-line;
             font-family: Josefin Slab;
+            white-space: pre-line;
         }
         .h1, .h2, .h3, .h4 {
             margin: 1.5rem 0;
@@ -164,6 +164,15 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
         .text {
             font-size: 1.5rem;
         }
+        .strong {
+            font-weight: bold;
+        }
+        .em {
+            font-style: italic;
+        }
+        .strike {
+            text-decoration: line-through;
+        }
         .quote {
             margin: 2rem;
             padding: 2rem;
@@ -178,12 +187,14 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
             font-style: italic;
             font-size: 1.5rem;
         }
-        ul {
+        .bulletList {
             list-style-type: circle;
+            list-style-position: inside;
             font-size: 1.5rem;
         }
-        ol {
+        .numberList {
             list-style-type: upper-roman;
+            list-style-position: inside;
             font-size: 1.5rem;
         }
         .underline {
@@ -192,41 +203,62 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
         img {
             margin: 2rem 0;
         }
-        span {
-            font-size: 1.5rem;
-        }
-        .strong {
-            font-weight: bold;
-        }
-        .em {
-            font-style: italic;
-        }
-        .strike {
-            text-decoration: line-through;
+        .footer {
+            font-size: 1rem;
+            text-align: center;
         }
     </style>
     `
 
-    // send emails and submit data to API
+    // send email and submit data to API
     const onSubmit = () => {
+        const email = inputRef?.current?.value ?? ""
+        if (!emails && !email) return setError("No email found!") // if no email or input email then return error
+        if (!checkEmail.test(email!)) return setError("Invalid email!") // if wrong email format then return error
+
         const data = {
             subject: title,
+            emails: emails ?? [{ email: inputRef?.current?.value }],
             body: htmlData,
-            // attachments: attachments,
             style: style
+            // attachments: attachments,
         }
 
         fetch("/de/dashboard/api", { method: "POST", body: JSON.stringify(data) })
             .then(res => res.json())
-            .then(response => setMessage(response.message))
+            .then(response => {
+                setError("")
+                return setMessage(response.message)
+            })
     }
 
+
+    // get recipients
+    const getEmails = () => {
+        fetch("/de/dashboard/api", { method: "GET" })
+            .then(res => res.json())
+            .then(response => {
+                if (response.message === "Error") {
+                    setError(response.error)
+                } else {
+                    setEmails(response.emails)
+                }
+            })
+    }
+
+
     return (
-        <main className="max-w-4xl mx-auto flex flex-col justify-center items-center font-text">
-            <button className="btn btn-primary mb-8" onClick={onSubmit}>Email senden</button>
+        <main className="max-w-4xl mx-auto flex flex-col gap-4 justify-center items-center font-text">
+            <input type="text" className="input input-bordered w-2/5" placeholder="Enter email" ref={inputRef} />
+            <div className="flex gap-4">
+                <button className="btn btn-primary" onClick={getEmails}>Emails holen</button>
+                <button className="btn btn-primary" onClick={onSubmit}>Email senden</button>
+            </div>
+
             {message ? <span className="m-4 font-bold">{message}</span> : ""}
+            {error ? <span className="m-4 font-bold text-error">{error}</span> : ""}
+            {emails ? <span className="m-4 font-bold text-info">Email-Count: {emails.length}</span> : ""}
             <div dangerouslySetInnerHTML={{ __html: style }}></div>
-            {/* <div dangerouslySetInnerHTML={{ __html: htmlData }}></div> */}
             <article className="w-[750px] border whitespace-pre-line" >
                 <PortableText
                     value={body}

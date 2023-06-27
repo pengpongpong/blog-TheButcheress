@@ -2,6 +2,8 @@
 import React, { FormEvent, useRef, useState } from 'react'
 import { Locale } from "@/app/[lang]/HomePage"
 
+export const checkEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
 const Newsletter = ({ lang }: { lang: Locale }) => {
     const newsletterInput = useRef<HTMLInputElement>(null)
     const [message, setMessage] = useState<string>("")
@@ -10,7 +12,6 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const email = newsletterInput?.current?.value
-        const checkEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
         if (checkEmail.test(email!)) {
             fetch("/de/api/newsletter/subscribe", { method: "POST", body: JSON.stringify({ email }) })
@@ -27,13 +28,13 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
     return (
         <div className="flex flex-col text-center md:text-left">
             <span className="ml-2 footer-title">Newsletter</span>
-            <form className="flex flex-col gap-4 md:flex-row"  onSubmit={onSubmit}>
+            <form className="flex flex-col gap-4 md:flex-row" onSubmit={onSubmit}>
                 <input
                     type="email"
                     name="email"
                     placeholder={lang === "en" ? "your@email.com" : "deine@email.com"}
                     className="input-bordered input w-full pr-16"
-                    autoComplete="on"
+                    autoComplete="email"
                     ref={newsletterInput}
                 />
                 <button className="btn-outline btn hover:bg-primary hover:text-neutral">
