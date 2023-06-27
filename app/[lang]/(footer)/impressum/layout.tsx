@@ -1,13 +1,13 @@
 import Navbar from "@/components/navbar/Navbar"
 import { ReactNode, lazy } from "react"
-import { Locale } from "../(main-nav)/HomePage"
+import { Locale } from "../../(main-nav)/HomePage"
 import { client } from "@/sanity/lib/sanity-utils"
 import { transformLocale } from "@/components/utils/utils"
 import { navQuery } from "@/sanity/lib/sanity-query"
 
 const Footer = lazy(() => import("@/components/footer/Footer"))
 
-const ContactLayout = async ({ children, params }: { children: ReactNode, params: { lang: Locale } }) => {
+const DataPrivacyLayout = async ({ children, params }: { children: ReactNode, params: { lang: Locale } }) => {
     const navData = await client.fetch(navQuery(transformLocale(params.lang)))
 
     return (
@@ -19,4 +19,4 @@ const ContactLayout = async ({ children, params }: { children: ReactNode, params
     )
 }
 
-export default ContactLayout
+export default DataPrivacyLayout

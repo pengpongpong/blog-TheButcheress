@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar/Navbar"
 import { ReactNode, lazy } from "react"
-import { Locale } from "../(main-nav)/HomePage"
+import { Locale } from "../HomePage"
 import { client } from "@/sanity/lib/sanity-utils"
 import { transformLocale } from "@/components/utils/utils"
 import { navQuery } from "@/sanity/lib/sanity-query"
