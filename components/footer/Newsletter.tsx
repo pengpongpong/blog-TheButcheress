@@ -1,6 +1,6 @@
 "use client"
 import React, { FormEvent, useRef, useState } from 'react'
-import { Locale } from "@/app/[lang]/(main-nav)/HomePage"
+import { Locale } from "@/app/[lang]/HomePage"
 
 export const checkEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 

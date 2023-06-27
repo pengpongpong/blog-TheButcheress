@@ -1,5 +1,5 @@
 "use client"
-import { Locale } from "@/app/[lang]/(main-nav)/HomePage"
+import { Locale } from "@/app/[lang]/HomePage"
 import Link from "next/link"
 import React, { useEffect, useState } from 'react'
 import CookieModal from "./CookieModal"

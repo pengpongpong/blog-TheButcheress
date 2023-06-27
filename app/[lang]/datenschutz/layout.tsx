@@ -7,7 +7,7 @@ import { navQuery } from "@/sanity/lib/sanity-query"
 
 const Footer = lazy(() => import("@/components/footer/Footer"))
 
-const ContactLayout = async ({ children, params }: { children: ReactNode, params: { lang: Locale } }) => {
+const ImpressumLayout = async ({ children, params }: { children: ReactNode, params: { lang: Locale } }) => {
     const navData = await client.fetch(navQuery(transformLocale(params.lang)))
 
     return (
@@ -19,4 +19,4 @@ const ContactLayout = async ({ children, params }: { children: ReactNode, params
     )
 }
 
-export default ContactLayout
+export default ImpressumLayout

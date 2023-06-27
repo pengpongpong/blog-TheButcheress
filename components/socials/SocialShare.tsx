@@ -9,7 +9,7 @@ import FacebookIcon from "public/icons/share/bxl-facebook.svg"
 import TwitterIcon from "public/icons/share/bxl-twitter.svg"
 import WhatsappIcon from "public/icons/share/bxl-whatsapp.svg"
 import TelegramIcon from "public/icons/share/bxl-telegram.svg"
-import { Locale } from "@/app/[lang]/(main-nav)/HomePage";
+import { Locale } from "@/app/[lang]/HomePage";
 import { usePathname } from "next/navigation";
 
 interface SocialShareProps {
@@ -48,8 +48,7 @@ const SocialShareLink = ({ url, title, alt, dataAction, style, width = 24, heigh
 
 const SocialShare = ({ lang, title, blog, styles = { main: "", first: "", second: "", last: "", iconSize: 24 } }: SocialShareProps) => {
     const pathname = usePathname()
-    const domain = process.env.NEXTAUTH_URL
-    const url = `${domain + pathname}`
+    const url = `https://www.butcheress.me${pathname}`
     const textRecipe = lang === "en" ? "Check%20out%20this%20delicious%20recipe%21" : "Probiere%20dieses%20köstliche%20Rezept%20aus%21"
     const textBlog = lang === "en" ? "Check%20out%20this%20great%20blog%20post%21" : "Schau%20dir%20diesen%20tollen%20Blog%20Beitrag%20an%21"
 

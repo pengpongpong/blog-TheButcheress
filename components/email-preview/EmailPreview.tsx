@@ -13,7 +13,6 @@ import { SanityImageAssetDocument } from "@sanity/client";
 import { LinkExternBlogDecorator, LinkInternBlogDecorator, getHref } from "@/sanity/decorators/decorators"
 import { PortableText } from "@portabletext/react"
 import { checkEmail } from "../footer/Newsletter"
-import Loading from "../loading/Loading"
 
 interface LinkInterface {
     tags?: { _ref: string, _type: 'reference' },
@@ -96,7 +95,6 @@ const LinkExternEmailDecorator = (value: LinkInterface, text: string) => {
 const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: string }) => {
     const [message, setMessage] = useState<string>("")
     const [emails, setEmails] = useState<Array<Emails>>()
-    const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -216,7 +214,7 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
     const onSubmit = () => {
         const email = inputRef?.current?.value ?? ""
         if (!emails && !email) return setError("No email found!") // if no email or input email then return error
-        if (email && !checkEmail.test(email!)) return setError("Invalid email!") // if wrong email format then return error
+        if (!checkEmail.test(email!)) return setError("Invalid email!") // if wrong email format then return error
 
         const data = {
             subject: title,
@@ -226,12 +224,10 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
             // attachments: attachments,
         }
 
-        setLoading(true)
         fetch("/de/dashboard/api", { method: "POST", body: JSON.stringify(data) })
             .then(res => res.json())
             .then(response => {
                 setError("")
-                setLoading(false)
                 return setMessage(response.message)
             })
     }
@@ -239,16 +235,13 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
 
     // get recipients
     const getEmails = () => {
-        setLoading(true)
         fetch("/de/dashboard/api", { method: "GET" })
             .then(res => res.json())
             .then(response => {
                 if (response.message === "Error") {
                     setError(response.error)
-                    setLoading(false)
                 } else {
                     setEmails(response.emails)
-                    setLoading(false)
                 }
             })
     }
@@ -257,11 +250,11 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
     return (
         <main className="max-w-4xl mx-auto flex flex-col gap-4 justify-center items-center font-text">
             <input type="text" className="input input-bordered w-2/5" placeholder="Enter email" ref={inputRef} />
-            <div className="mb-4 flex gap-4">
+            <div className="flex gap-4">
                 <button className="btn btn-primary" onClick={getEmails}>Emails holen</button>
                 <button className="btn btn-primary" onClick={onSubmit}>Email senden</button>
             </div>
-            {loading ? <Loading /> : ""}
+
             {message ? <span className="m-4 font-bold">{message}</span> : ""}
             {error ? <span className="m-4 font-bold text-error">{error}</span> : ""}
             {emails ? <span className="m-4 font-bold text-info">Email-Count: {emails.length}</span> : ""}

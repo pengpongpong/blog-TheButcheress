@@ -6,7 +6,7 @@ import SearchIcon from "/public/icons/bx-search.svg"
 import Image from "next/image";
 import Socials from "../socials/Socials";
 import MobileNav, { SubMenu } from "./MobileNav";
-import { Locale } from "@/app/[lang]/(main-nav)/HomePage";
+import { Locale } from "@/app/[lang]/HomePage";
 
 
 //interface and data for dropdown menu

@@ -5,7 +5,7 @@ import { SanityImageSource } from "@sanity/image-url/lib/types/types"
 import { PortableTextBlock } from "sanity"
 import { TagsType } from "@/app/[lang]/rezepte/[slug]/Recipe"
 import SocialShare from "../socials/SocialShare"
-import { Locale } from "@/app/[lang]/(main-nav)/HomePage"
+import { Locale } from "@/app/[lang]/HomePage"
 import Blog from "./Blog"
 
 export interface BlogProps {

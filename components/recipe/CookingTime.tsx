@@ -1,4 +1,4 @@
-import { Locale } from "@/app/[lang]/(main-nav)/HomePage";
+import { Locale } from "@/app/[lang]/HomePage";
 import React, { ReactNode } from "react";
 
 type LocaleProps = {
