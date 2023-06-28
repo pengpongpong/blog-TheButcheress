@@ -29,9 +29,18 @@ export default async function RootLayout({
   params: { lang: Locale },
 }) {
 
+  const token = process.env.NEXT_PUBLIC_TINYBIRD
 
   return (
     <html lang={`${params.lang ?? "de"}`}>
+      <head>
+        <script defer
+          src="https://unpkg.com/@tinybirdco/flock.js"
+          data-host="https://api.tinybird.co"
+          data-token={token}>
+
+        </script>
+      </head>
       <body className="min-h-screen flex flex-col">
         {children}
         <CookieBanner lang={params.lang} />

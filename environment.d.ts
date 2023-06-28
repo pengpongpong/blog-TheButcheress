@@ -10,6 +10,7 @@ declare global {
             NEXTAUTH_URL: string;
             NEXT_PUBLIC_AWS_ACCESS_KEY: string;
             NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY: string
+            NEXT_PUBLIC_TINYBIRD: string
         }
     }
 }
