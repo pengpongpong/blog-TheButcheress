@@ -75,7 +75,7 @@ function ImageSlider({ list }: { list: ImageSliderProps[] }) {
 
   const diashowLinks: diashowType[] = list.map((obj, index) => {
     return {
-      imageSrc: urlFor(obj).size(600, 400).auto("format").url(),
+      imageSrc: urlFor(obj).size(1920, 1080).auto("format").url(),
       id: obj.asset._ref + index
     }
   })

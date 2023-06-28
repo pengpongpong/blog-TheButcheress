@@ -110,17 +110,17 @@ const Home = ({ pageData, lang }: HomeProps) => {
                                 height={500}
                                 loading="lazy"
                                 className="hidden object-cover lg:block lg:h-[32rem] lg:w-[25rem]"
-                                src={urlFor(pageData?.recipe.image.leftImage).url()}
+                                src={urlFor(pageData?.recipe.image.leftImage).size(1920, 1080).auto("format").url()}
                                 alt=""
                             />
                         </picture>
                         <div className="flex w-full flex-col items-center justify-center">
                             <Image
                                 width={500}
-                                height={500}
+                                height={600}
                                 loading="lazy"
                                 className="h-[15rem] w-full object-cover md:h-[25rem] lg:h-[30rem] lg:w-[28rem]"
-                                src={urlFor(pageData?.recipe.image.middleImage).url()}
+                                src={urlFor(pageData?.recipe.image.middleImage).width(500).height(600).size(1920, 1080).auto("format").url()}
                                 alt=""
                             />
                             <p className="m-6 text-center text-lg text-neutral md:m-8 lg:text-2xl">
@@ -138,7 +138,7 @@ const Home = ({ pageData, lang }: HomeProps) => {
                                 width={500}
                                 height={500}
                                 className="hidden object-cover lg:block lg:h-[32rem] lg:w-[25rem]"
-                                src={urlFor(pageData?.recipe.image.rightImage).url()}
+                                src={urlFor(pageData?.recipe.image.rightImage).size(1920, 1080).auto("format").url()}
                                 alt=""
                             />
                         </picture>
@@ -146,12 +146,12 @@ const Home = ({ pageData, lang }: HomeProps) => {
                 </section>
                 <section className="mx-8 my-16 mt-24 font-text lg:mx-16 lg:my-28 lg:mt-0">
                     <Image
-                        style={{ width: "auto", height: "auto" }}
+                        style={{ width: "100%", height: "auto" }}
                         width={1600}
                         height={720}
-                        loading="lazy"
+                        priority
                         className="h-[25rem] w-full object-cover lg:h-[45rem]"
-                        src={urlFor(pageData?.travel.image).url()}
+                        src={urlFor(pageData?.travel.image).size(1920, 1080).auto("format").url()}
                         alt="handara gate"
                     />
                     <div className="my-16 flex flex-col items-center justify-center font-text lg:flex-row">
