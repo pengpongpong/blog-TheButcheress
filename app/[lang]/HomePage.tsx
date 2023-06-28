@@ -146,6 +146,7 @@ const Home = ({ pageData, lang }: HomeProps) => {
                 </section>
                 <section className="mx-8 my-16 mt-24 font-text lg:mx-16 lg:my-28 lg:mt-0">
                     <Image
+                        style={{ width: "auto", height: "auto" }}
                         width={1600}
                         height={720}
                         loading="lazy"

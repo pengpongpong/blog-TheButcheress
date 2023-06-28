@@ -7,18 +7,6 @@
 @import "swiper/css";
 @import "swiper/css/navigation";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-[data-theme="light"] {
-  --color-default: #fbf7f0;
-}
-
-[data-theme="dark"] {
-  --color-default: #252b30;
-}
-
 .swiper {
   margin: 0;
   height: 300px;
