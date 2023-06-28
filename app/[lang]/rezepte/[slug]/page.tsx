@@ -48,7 +48,7 @@ export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps
     const text = lang === "en" ? `The Butcheress_ | Recipes - ${data?.title}` : `The Butcheress_ | Rezepte - ${data?.title}`
     const description = `${data?.description} | The Butcheress_`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
-    const keywords = lang === "en" ? ["food", "recipe", `${data.title}`] : ["Essen", "Rezept", `${data.title}`]
+    const keywords = lang === "en" ? ["food", "recipe", `${data?.title}`] : ["Essen", "Rezept", `${data?.title}`]
 
     return {
         title: text,
@@ -65,7 +65,7 @@ export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps
                     url: urlFor(data?.imageUrl).size(2560, 1440).auto("format").url(),
                     width: 800,
                     height: 500,
-                    alt: data.title
+                    alt: data?.title
                 },
             ],
             locale: lang,
@@ -94,7 +94,7 @@ const RecipePage = async ({ params: { lang, slug } }: ParamsProps) => {
         <>
             <Navbar navData={navData} lang={lang} />
             <Recipe pageData={data} lang={lang} />
-            <Footer lang={lang} tags={data?.tags}/>
+            <Footer lang={lang} tags={data?.tags} />
         </>
 }
 

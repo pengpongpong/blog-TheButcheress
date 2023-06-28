@@ -26,7 +26,7 @@ const Tags = ({ tags }: { tags: TagsProps[] }) => {
 
 const FooterLink = ({ text, url }: { text: string, url: string }) => {
   return (
-    <Link href={`/${url}`} className="mb-2 link-hover link underline">
+    <Link href={`/${url}`} className="mb-2 link-hover link underline md:text-lg">
       {text}
     </Link>
   );

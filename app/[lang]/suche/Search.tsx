@@ -8,12 +8,14 @@ import Loading from "@/components/loading/Loading"
 import { useSearchStore } from "@/components/utils/store"
 
 const getData = async (query: string) => {
+    const formattedQuery = query.split(" ").map(obj => (`"${obj}*"`))
+    
     const searchQuery = groq`*[
-        (_type in ["recipe", "blog"] && (tags[]->titleDE match $query || tags[]->titleEN match $query)) || 
-        (_type in ["recipe", "blog"] && [titleDE, titleEN] match $query)
-        ]{"title": titleDE, "description": description.descriptionDE, "url": slug.current, "imageUrl": image}`
+        (_type in ["recipe", "blog"] && (tags[]->titleDE match [${formattedQuery}]|| tags[]->titleEN match [${formattedQuery}])) || 
+        (_type in ["recipe", "blog"] && [titleDE, titleEN] match [${formattedQuery}])
+        ]{"title": titleDE, "description": description.descriptionDE, "url": slug.current, "imageUrl": image, "type": _type, "blogCategory": category}`
 
-    return await client.fetch(searchQuery, { query: query })
+    return await client.fetch(searchQuery)
 }
 
 const Search = ({ lang }: { lang: Locale }) => {
@@ -38,7 +40,7 @@ const Search = ({ lang }: { lang: Locale }) => {
         if (e.target.value === "") {
             setSearch("")
         } else {
-            setSearch(`${e.target.value}*`)
+            setSearch(`${e.target.value}`)
         }
     }
 

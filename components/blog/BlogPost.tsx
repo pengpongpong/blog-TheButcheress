@@ -43,12 +43,12 @@ const BlogPost = ({ pageData, lang }: BlogProps) => {
     return (
         <>
             <header className="m-8 lg:mt-16 lg:ml-16 lg:mr-16 text-center">
-                <h1 className="mx-auto mb-8 lg:mb-20 font-text text-6xl lg:text-8xl">
+                <h1 className="mx-auto mb-8 lg:mb-20 font-text text-5xl lg:text-8xl">
                     {pageData?.title}
                 </h1>
                 {pageData?.image ? <Image className="mx-auto" priority style={{ width: "auto", height: "auto" }} width={1000} height={600} src={urlFor(pageData?.image).size(2560, 1440).auto("format").url()} alt="Blog image" /> : ""}
                 <SocialShare blog lang={lang} title={pageData?.title} styles={styles} />
-                <address className="mt-8 flex flex-col justify-center items-center text-md font-text">
+                <address className="mt-8 flex flex-col justify-center items-center text-lg font-text">
                     <p>{lang === "en" ? "Published" : "Veröffentlicht am"} <time dateTime="YYYY-MM-DD">{publishedDate}</time></p>
                     <p>{lang === "en" ? "Last updated on" : "Zuletzt geändert am"} <time dateTime="YYYY-MM-DD">{updatedDate}</time></p>
                     <p>{lang === "en" ? "By" : "Von"} {pageData?.author}</p>

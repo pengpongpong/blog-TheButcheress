@@ -1,3 +1,4 @@
+import { Locale } from "@/app/[lang]/HomePage";
 import { connectToDatabase, db } from "@/components/utils/db";
 import EmailModel from "@/models/EmailModel";
 import { NextRequest, NextResponse } from "next/server";
@@ -49,26 +50,26 @@ const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0
 
 export const POST = async (req: NextRequest) => {
     const data = await req.json()
-    const { email }: { email: string } = data
+    const { email, lang }: { email: string, lang: Locale } = data
 
     // check if right email format
-    if (!emailRegex.test(email)) return NextResponse.json({ message: "Invalid email" }, { status: 400 })
+    if (!emailRegex.test(email)) return NextResponse.json({ message: lang === "en" ? "Invalid email" : "Ungültige Email" }, { status: 400 })
 
     // get email data on database
     const checkEmailData = await getEmail(email)
 
     // if data then already registered and return
     if (checkEmailData.length) {
-        if (checkEmailData[0].active === "pending") return NextResponse.json({ message: "Email already submitted. Please check inbox!" }, { status: 200 })
-        if (checkEmailData[0].active === "blocked") return NextResponse.json({ message: "Email blocked, please first unsubscribe!" }, { status: 200 })
-        if (checkEmailData[0].active === "active") return NextResponse.json({ message: "Email already registered!" }, { status: 200 })
+        if (checkEmailData[0].active === "pending") return NextResponse.json({ message: lang === "en" ? "Email already submitted. Please check inbox!" : "Email bereits übermittelt. Bitte Mailbox checken!" }, { status: 200 })
+        if (checkEmailData[0].active === "blocked") return NextResponse.json({ message: lang === "en" ? "Email blocked. Please fill contact form!" : "Email leider geblockt. Bitte fülle das Kontaktformular aus! " }, { status: 200 })
+        if (checkEmailData[0].active === "active") return NextResponse.json({ message: lang === "en" ? "Email already registered!" : "Email bereits registriert!" }, { status: 200 })
     }
 
     // save email data to database
     const emailData = await saveEmail(email)
 
     // if no data returned from saving, then return error
-    if (!emailData) return NextResponse.json({ message: "Could not save email" }, { status: 500 })
+    if (!emailData) return NextResponse.json({ message: lang === "en" ? "Could not save email. Please try again!" : "Konnte Email nicht übermitteln. Bitte wiederholen!" }, { status: 500 })
 
     // get ID from saved data in database
     const { _id } = emailData
@@ -175,12 +176,12 @@ export const POST = async (req: NextRequest) => {
             if (err) {
                 console.error(err);
                 reject(err);
-                return NextResponse.json({ message: "Could not send email", error: err }, { status: 500 })
+                return NextResponse.json({ message: lang === "en" ? "Could not send email. Please try again!" : "Konnte Email nicht senden. Bitter wiederholen!", error: err }, { status: 500 })
             } else {
                 resolve(info);
             }
         });
     });
 
-    return NextResponse.json({ message: "Success! Please check inbox", emailData }, { status: 201 })
+    return NextResponse.json({ message: lang === "en" ? "Successfully submitted. Please check inbox!" : "Erfolgreich übermittelt. Bitte Mailbox checken!", emailData }, { status: 201 })
 }

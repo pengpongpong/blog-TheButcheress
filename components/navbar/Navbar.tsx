@@ -169,7 +169,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
   return (
     <>
       {/* mobile navbar */}
-      <header className="xl:hidden navbar p-0 m-4 w-auto flex flex-col gap-8 md:m-8">
+      <header className="xl:hidden navbar m-4 mt-8 w-auto flex flex-col gap-8 md:m-8">
         <nav className="flex w-full justify-between items-center">
           <Link href={`/${lang}`} className="font-headline text-4xl">
             TheButcheress_
@@ -180,7 +180,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
         </nav>
         <Socials />
         <nav className="flex justify-center items-center gap-8">
-          <Link href="/suche"><Image alt="" src={SearchIcon} /></Link>
+          <Link href="/suche"><Image alt="" style={{width: "24", height: "24"}} src={SearchIcon} /></Link>
           <LanguageSwitch />
         </nav>
       </header>
@@ -189,7 +189,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
       <header className="hidden xl:flex navbar relative z-10 w-auto flex-col m-8">
         <nav className="w-full mb-4 justify-end">
           <nav className="mr-5 flex justify-center items-center gap-8">
-            <Link href="/suche"><Image alt="" src={SearchIcon} /></Link>
+            <Link href="/suche"><Image width={30} height={30} src={SearchIcon} alt=""/></Link>
             <Socials />
             <LanguageSwitch />
           </nav>

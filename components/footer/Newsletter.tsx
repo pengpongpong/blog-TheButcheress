@@ -14,7 +14,7 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
         const email = newsletterInput?.current?.value
 
         if (checkEmail.test(email!)) {
-            fetch("/de/api/newsletter/subscribe", { method: "POST", body: JSON.stringify({ email }) })
+            fetch("/de/api/newsletter/subscribe", { method: "POST", body: JSON.stringify({ email, lang }) })
                 .then(res => res.json())
                 .then(result => {
                     setMessage(result.message)

@@ -2,11 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { transporter } from "../../api/newsletter/subscribe/route";
 
 export const POST = async (req: NextRequest) => {
-    const data = await req.json()
+    const formData = await req.json()
+    const { data, lang } = formData
     const { name, email, textField } = data
 
     // if missing fields return error
-    if (!name || !email || !textField) return NextResponse.json({ message: "Missing fields" }, { status: 400 })
+    if (!name || !email || !textField) return NextResponse.json({ message: lang === "en" ? "Please fill in all fields!" : "Bitte fülle alle Felder aus!" }, { status: 400 })
 
     // send email
     transporter.sendMail(
@@ -39,9 +40,9 @@ export const POST = async (req: NextRequest) => {
         },
         (err: any, info: any) => {
             console.log(info.envelope)
-            if (err) return NextResponse.json({ message: "Could not send email", error: err }, { status: 500 })
+            if (err) return NextResponse.json({ message: lang === "en" ? "Could not submit contact request. Please try again!" : "Konnte Kontaktanfrage nicht übermitteln. Bitte wiederholen!", error: err }, { status: 500 })
         }
     )
 
-    return NextResponse.json({ message: "Successfully submitted!" }, { status: 201 })
+    return NextResponse.json({ message: lang === "en" ? "Successfully submitted contact request!" : "Erfolgreich Kontaktanfrage übermittelt!" }, { status: 201 })
 }

@@ -6,7 +6,7 @@ import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Locale } from "../HomePage";
 
-//theme for text inputs
+// theme for text inputs
 const theme = createTheme({
     components: {
         // Name of the component
@@ -16,6 +16,7 @@ const theme = createTheme({
                 root: {
                     // Some CSS
                     fontFamily: "Josefin Slab",
+                    fontSize: "1.1rem"
                 },
             },
         },
@@ -23,6 +24,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     fontFamily: "Josefin Slab",
+                    fontSize: "1.1rem"
                 }
             }
         }
@@ -39,7 +41,7 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
     const emailErrorText = lang === "en" ? "Please enter valid email" : "Bitte gültige Email eingeben"
     const messageErrorText = lang === "en" ? "Please enter a message" : "Bitte hinterlasse mir eine Nachricht"
 
-    //validation schema
+    // validation schema
     const schema = yup
         .object({
             name: yup.string().required(nameErrorText),
@@ -62,14 +64,21 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
         }
     })
 
-    //submit form
+    // submit form
     const onSubmit = handleSubmit((data) => {
-        fetch("/de/kontakt/api", { method: "POST", body: JSON.stringify(data) })
+        fetch("/de/kontakt/api", { method: "POST", body: JSON.stringify({data, lang}) })
             .then(res => res.json())
-            .then(result => setMessage(result.message))
+            .then(result => {
+                if (result.message === "success") {
+                    const successMessage = lang === "en" ? "Succesfully submitted!" : "Erfolgreich übermittelt!"
+                    setMessage(successMessage)
+                } else {
+                    setMessage(result.message)
+                }
+            })
     });
 
-    //clear form after success submit
+    // clear form after success submit
     useEffect(() => {
         if (isSubmitSuccessful) {
             reset()
@@ -77,9 +86,9 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
     }, [isSubmitSuccessful, reset])
 
     return (
-        <form onSubmit={onSubmit} className="mx-4 lg:mx-auto w-auto lg:w-1/3 flex flex-col font-text">
+        <form onSubmit={onSubmit} className="mx-4 md:mx-8 lg:mx-auto w-auto lg:w-3/5 xl:w-2/5 flex flex-col font-text">
             <ThemeProvider theme={theme}>
-                <TextField style={{ marginBottom: "1rem" }} {...register("name")} id="outlined-basic" label="Name" variant="outlined" className="font-text" inputProps={{ classes: { input: "font-headline" } }} />
+                <TextField style={{ marginBottom: "1rem" }} {...register("name")} id="outlined-basic" label="Name" variant="outlined" inputProps={{ classes: { input: "font-headline" } }} />
                 {errors?.name && <Error text={errors?.name.message} />}
 
                 <TextField style={{ marginBottom: "1rem" }} {...register("email")} id="outlined-basic" label="Email" variant="outlined" />
