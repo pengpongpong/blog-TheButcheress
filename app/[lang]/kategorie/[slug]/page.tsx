@@ -24,6 +24,7 @@ const categoryQuery = (lang: Lang) => {
         "description": description.description${lang},
         "imageUrl": image,
         "url": slug.current,
+        "type": _type,
         _updatedAt
         } | order(_updatedAt desc)}`
     )
@@ -44,7 +45,7 @@ export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps
     const text = lang === "en" ? `The Butcheress_ | Food category - ${data?.title}` : `The Butcheress_ | Nahrung Kategorie - ${data?.title}`
     const description = `The Butcheress_ | ${data?.description}`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
-    const keywords = lang === "en" ? ["food", "recipes", "tags", `${data.title}`] : ["Essen", "Rezepte", "Tags", `${data.title}`]
+    const keywords = lang === "en" ? ["food", "recipes", "tags", `${data?.title}`] : ["Essen", "Rezepte", "Tags", `${data?.title}`]
 
     return {
         title: text,
@@ -70,7 +71,7 @@ const CategoryPage = async ({ params: { lang, slug } }: ParamsProps) => {
     const data = await client.fetch(categoryQuery(transformLocale(lang)), { slug })
 
     // if (!data) return notFound()
-    
+
     return isEnabled ? (
         <>
             <PreviewSuspense fallback="Ladet Preview...">

@@ -38,6 +38,5 @@ next-env.d.ts
 /__todo__
 *.todo
 
-/other
-
-test.json
+# cypress
+cypress.env.json

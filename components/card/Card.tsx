@@ -13,7 +13,7 @@ export interface CardData {
     blogCategory?: "blog" | "travel";
 }
 
-const Card = ({ title, description, imageUrl, url, blog, type, blogCategory }: CardData & { blog?: string }) => {
+const Card = ({ title, description, imageUrl, url, type, blogCategory }: CardData & { blog?: string }) => {
     let linkHref;
 
     if (type === "recipe") {

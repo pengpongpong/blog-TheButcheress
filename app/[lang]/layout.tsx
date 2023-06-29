@@ -2,6 +2,7 @@ import { ReactNode } from "react"
 import "./globals.css"
 import { Locale } from "./HomePage"
 import CookieBanner from "@/components/cookie-banner/CookieBanner"
+import Script from "next/script"
 
 export const metadata = {
   robots: {
@@ -34,12 +35,13 @@ export default async function RootLayout({
   return (
     <html lang={`${params.lang ?? "de"}`}>
       <head>
-        <script defer
+        <Script
+          defer
           src="https://unpkg.com/@tinybirdco/flock.js"
           data-host="https://api.tinybird.co"
-          data-token={token}>
-
-        </script>
+          data-token={token}
+          id="tinybird"
+        />
       </head>
       <body className="min-h-screen flex flex-col">
         {children}
