@@ -129,7 +129,7 @@ const MobileNav = ({ list }: MenuListType) => {
     return (
         <>
             {/* hamburger menu button */}
-            <button className="w-16 btn btn-square glass" onClick={handleOpen}>
+            <button className="w-16 btn btn-square glass" aria-label="open navigation menu" role="navigation" onClick={handleOpen}>
                 <svg
                     className="fill-black"
                     xmlns="http://www.w3.org/2000/svg"

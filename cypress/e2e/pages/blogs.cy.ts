@@ -1,6 +1,6 @@
 // check blogs page
 
-describe("visit all blogs page", () => {
+describe("visit all-blogs page", () => {
     beforeEach(() => {
         cy.visit(`${Cypress.env("PUBLIC_DOMAIN")}/de/blog`)
     })

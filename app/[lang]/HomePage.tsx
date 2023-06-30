@@ -110,7 +110,7 @@ const Home = ({ pageData, lang }: HomeProps) => {
                                 height={500}
                                 loading="lazy"
                                 className="hidden object-cover lg:block lg:h-[32rem] lg:w-[25rem]"
-                                src={urlFor(pageData?.recipe.image.leftImage).size(1920, 1080).auto("format").url()}
+                                src={urlFor(pageData?.recipe.image.leftImage).size(2560, 1440).auto("format").url()}
                                 alt=""
                             />
                         </picture>
@@ -120,7 +120,7 @@ const Home = ({ pageData, lang }: HomeProps) => {
                                 height={600}
                                 loading="lazy"
                                 className="h-[15rem] w-full object-cover md:h-[25rem] lg:h-[30rem] lg:w-[28rem]"
-                                src={urlFor(pageData?.recipe.image.middleImage).width(500).height(600).size(1920, 1080).auto("format").url()}
+                                src={urlFor(pageData?.recipe.image.middleImage).size(2560, 1440).auto("format").url()}
                                 alt=""
                             />
                             <p className="m-6 text-center text-lg text-neutral md:m-8 lg:text-2xl">
@@ -138,7 +138,7 @@ const Home = ({ pageData, lang }: HomeProps) => {
                                 width={500}
                                 height={500}
                                 className="hidden object-cover lg:block lg:h-[32rem] lg:w-[25rem]"
-                                src={urlFor(pageData?.recipe.image.rightImage).size(1920, 1080).auto("format").url()}
+                                src={urlFor(pageData?.recipe.image.rightImage).size(2560, 1440).auto("format").url()}
                                 alt=""
                             />
                         </picture>
@@ -147,12 +147,12 @@ const Home = ({ pageData, lang }: HomeProps) => {
                 <section className="mx-8 my-16 mt-24 font-text lg:mx-16 lg:my-28 lg:mt-0">
                     <Image
                         style={{ width: "100%", height: "auto" }}
-                        width={1600}
-                        height={720}
+                        width={2560}
+                        height={1440}
                         priority
                         className="h-[25rem] w-full object-cover lg:h-[45rem]"
-                        src={urlFor(pageData?.travel.image).size(1920, 1080).auto("format").url()}
-                        alt="handara gate"
+                        src={urlFor(pageData?.travel.image).size(2560, 1440).auto("format").url()}
+                        alt="travel image"
                     />
                     <div className="my-16 flex flex-col items-center justify-center font-text lg:flex-row">
                         <h2 className="w-full text-center text-6xl text-primary lg:text-8xl">

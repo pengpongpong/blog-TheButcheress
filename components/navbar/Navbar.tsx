@@ -180,7 +180,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
         </nav>
         <Socials />
         <nav className="flex justify-center items-center gap-8">
-          <Link href="/suche"><Image alt="" style={{width: "24", height: "24"}} src={SearchIcon} /></Link>
+          <Link href="/suche"><Image alt="search icon" style={{width: "24", height: "24"}} src={SearchIcon} /></Link>
           <LanguageSwitch />
         </nav>
       </header>
@@ -189,7 +189,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
       <header className="hidden xl:flex navbar relative z-10 w-auto flex-col m-8">
         <nav className="w-full mb-4 justify-end">
           <nav className="mr-5 flex justify-center items-center gap-8">
-            <Link href="/suche"><Image width={30} height={30} src={SearchIcon} alt=""/></Link>
+            <Link href="/suche"><Image width={30} height={30} src={SearchIcon} alt="search icon"/></Link>
             <Socials />
             <LanguageSwitch />
           </nav>
