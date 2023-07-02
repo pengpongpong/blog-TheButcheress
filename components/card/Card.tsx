@@ -9,11 +9,11 @@ export interface CardData {
     description: string;
     imageUrl: SanityImageAssetDocument;
     url: string;
-    type: string;
+    type?: string;
     blogCategory?: "blog" | "travel";
 }
 
-const Card = ({ title, description, imageUrl, url, type, blogCategory }: CardData & { blog?: string }) => {
+const Card = ({ title, description, imageUrl, url, type, blogCategory }: CardData) => {
     let linkHref;
 
     if (type === "recipe") {
@@ -22,6 +22,8 @@ const Card = ({ title, description, imageUrl, url, type, blogCategory }: CardDat
         linkHref = `blog/${url}`
     } else if (type === "blog" && blogCategory === "travel") {
         linkHref = `reisen/${url}`
+    } else if (type === "email") {
+        linkHref = `dashboard/email/${url}`
     }
 
     return (
@@ -36,7 +38,7 @@ const Card = ({ title, description, imageUrl, url, type, blogCategory }: CardDat
 }
 
 // display cards
-const CardContainer = ({ data, blog }: { data?: CardData[], blog?: string }) => {
+const CardContainer = ({ data, type }: { data?: CardData[], type?: string }) => {
     const items: Array<Array<CardData>> = [[], [], [], []]
     const itemsMidScreen: Array<Array<CardData>> = [[], []]
 
@@ -62,7 +64,7 @@ const CardContainer = ({ data, blog }: { data?: CardData[], blog?: string }) => 
                             <ul className="list-none">
                                 {item.map(obj => (
                                     <li key={obj.url} className="flex justify-center items-center">
-                                        <Card blog={blog} title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={obj.type} blogCategory={obj?.blogCategory} />
+                                        <Card title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={type} blogCategory={obj?.blogCategory} />
                                     </li>
                                 ))}
                             </ul>
@@ -78,7 +80,7 @@ const CardContainer = ({ data, blog }: { data?: CardData[], blog?: string }) => 
                             <ul className="list-none">
                                 {item.map(obj => (
                                     <li key={obj.url} className="flex justify-center items-center">
-                                        <Card blog={blog} title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={obj.type} blogCategory={obj?.blogCategory} />
+                                        <Card title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={type} blogCategory={obj?.blogCategory} />
                                     </li>
                                 ))}
                             </ul>
@@ -92,7 +94,7 @@ const CardContainer = ({ data, blog }: { data?: CardData[], blog?: string }) => 
                     if (item.url) {
                         return (
                             <li key={item.url} className="flex justify-center items-center">
-                                <Card blog={blog} title={item.title} description={item.description} imageUrl={item.imageUrl} url={item.url} type={item.type} blogCategory={item?.blogCategory} />
+                                <Card title={item.title} description={item.description} imageUrl={item.imageUrl} url={item.url} type={type} blogCategory={item?.blogCategory} />
                             </li>
                         )
                     }

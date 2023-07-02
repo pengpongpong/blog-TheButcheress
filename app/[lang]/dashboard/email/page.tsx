@@ -30,7 +30,7 @@ const EmailsPage = async () => {
                 </header>
                 <section className="flex flex-col justify-center items-center gap-8">
                     <Link className="btn btn-primary" href="/de/dashboard">Back to dashboard</Link>
-                    <CardContainer blog="email" data={data} />
+                    <CardContainer type="email" data={data} />
                 </section>
             </main>
         )

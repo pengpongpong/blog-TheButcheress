@@ -16,7 +16,7 @@ const BlogContainer = ({title, blogData, blogType}: BlogContainerProps) => {
                 </h1>
             </header>
             <main>
-                <CardContainer blog={blogType} data={blogData} />
+                <CardContainer type={blogType} data={blogData} />
             </main>
         </>
     )
