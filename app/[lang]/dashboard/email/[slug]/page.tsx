@@ -11,6 +11,7 @@ import React from 'react'
 //!adding main image to email?
 const EmailPage = async ({ params: { slug } }: ParamsProps) => {
     const session = await getServerSession(authOption)
+    const domain = process.env.NEXT_PUBLIC_DOMAIN
 
     if (session) {
         const data = await client.fetch(groq`*[_type == "emailContent" && slug.current == $slug][0]{
@@ -27,7 +28,7 @@ const EmailPage = async ({ params: { slug } }: ParamsProps) => {
         )
     }
     return (
-        <SignIn callbackUrl={`/de/api/auth/signin?callbackUrl=${process.env.NEXT_PUBLIC_DOMAIN}/de/dashboard/email/${slug}`} />
+        <SignIn callbackUrl={`/de/dashboard/email/${slug}`} />
     )
 }
 
