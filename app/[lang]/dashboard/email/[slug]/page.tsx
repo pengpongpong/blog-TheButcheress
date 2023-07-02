@@ -27,7 +27,7 @@ const EmailPage = async ({ params: { slug } }: ParamsProps) => {
         )
     }
     return (
-        <SignIn callbackUrl={`/de/api/auth/signin?callbackUrl=/de/dashboard/email/${slug}`} />
+        <SignIn callbackUrl={`/de/api/auth/signin?callbackUrl=${process.env.NEXT_PUBLIC_DOMAIN}/de/dashboard/email/${slug}`} />
     )
 }
 
