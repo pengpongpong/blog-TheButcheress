@@ -36,6 +36,26 @@ export const authOption = {
             }
         })
     ],
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }: any) {
+            const isAllowedToSignIn = true
+            if (isAllowedToSignIn) {
+                return true
+            } else {
+                // Return false to display a default error message
+                return false
+                // Or you can return a URL to redirect to:
+                // return '/unauthorized'
+            }
+        },
+        async redirect({ url, baseUrl }: any) {
+            // Allows relative callback URLs
+            if (url.startsWith("/")) return `${baseUrl}${url}`
+            // Allows callback URLs on the same origin
+            else if (new URL(url).origin === baseUrl) return url
+            return baseUrl
+        }
+    }
 }
 
 const handler = NextAuth(authOption)
