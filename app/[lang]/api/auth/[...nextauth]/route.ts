@@ -17,7 +17,6 @@ const getUserData = async (credentials: Record<"username" | "password", string> 
 
 // options for next-auth
 export const authOption = {
-    site: process.env.NEXT_PUBLIC_NEXTAUTH_URL,
     providers: [
         CredentialsProvider({
             name: "Login Daten",
@@ -37,7 +36,8 @@ export const authOption = {
             }
         })
     ],
-    secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET
+    secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
+    debug: true,
 }
 
 const handler = NextAuth(authOption)
