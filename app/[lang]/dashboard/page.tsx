@@ -16,7 +16,7 @@ const Dashboard = async ({ params: { lang } }: ParamsProps) => {
     }
 
     return (
-        <SignIn callbackUrl={`/de/dashboard`}/>
+        <SignIn callbackUrl={`/de/api/auth/signin?callbackUrl=/de/dashboard`}/>
     )
 
 }

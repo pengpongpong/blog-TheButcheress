@@ -37,7 +37,7 @@ const EmailsPage = async () => {
     }
 
     return (
-        <SignIn callbackUrl={`/de/dashboard/email`} />
+        <SignIn callbackUrl={`/de/api/auth/signin?callbackUrl=/de/dashboard/email`} />
     )
 }
 
