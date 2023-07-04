@@ -6,7 +6,7 @@ import { urlFor } from "@/sanity/lib/sanity-utils";
 
 import Image from "next/image";
 
-export interface ImageSliderProps  {
+export interface ImageSliderProps {
   _type: "imageSlide";
   _key: string;
   asset: {
@@ -81,10 +81,9 @@ function ImageSlider({ list }: { list: ImageSliderProps[] }) {
   })
 
   const swiperEl = diashowLinks.map((obj) => (
-    <picture className="swiper-slide" key={obj.id}>
-      <Image src={obj.imageSrc} width={425} height={300} alt="" />
-    </picture>
+    <Image className="swiper-slide" key={obj.id} src={obj.imageSrc} width={400} height={300} style={{ objectFit: "cover" }} alt="" />
   ));
+  
   return (
     <div className="swiper">
       <div className="swiper-wrapper">{swiperEl}</div>
