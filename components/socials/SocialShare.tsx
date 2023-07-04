@@ -3,12 +3,12 @@ import React from 'react'
 import Link from "next/link";
 import Image from "next/image";
 
-import PrinterIcon from "public/icons/share/bx-printer.svg"
-import MailIcon from "public/icons/share/bx-envelope.svg"
-import FacebookIcon from "public/icons/share/bxl-facebook.svg"
-import TwitterIcon from "public/icons/share/bxl-twitter.svg"
-import WhatsappIcon from "public/icons/share/bxl-whatsapp.svg"
-import TelegramIcon from "public/icons/share/bxl-telegram.svg"
+import PrinterIcon from "/public/icons/share/bx-printer.svg"
+import MailIcon from "/public/icons/share/bx-envelope.svg"
+import FacebookIcon from "/public/icons/share/bxl-facebook.svg"
+import TwitterIcon from "/public/icons/share/bxl-twitter.svg"
+import WhatsappIcon from "/public/icons/share/bxl-whatsapp.svg"
+import TelegramIcon from "/public/icons/share/bxl-telegram.svg"
 import { Locale } from "@/app/[lang]/HomePage";
 import { usePathname } from "next/navigation";
 

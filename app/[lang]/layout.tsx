@@ -32,7 +32,7 @@ export default async function RootLayout({
   params: { lang: Locale },
 }) {
 
-  const token = process.env.NEXT_PUBLIC_TINYBIRD
+  // const token = process.env.NEXT_PUBLIC_TINYBIRD
   // const cookieStore = cookies()
   // console.log(cookieStore.getAll())
 

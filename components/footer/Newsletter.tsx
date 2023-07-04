@@ -32,6 +32,7 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
                 <input
                     type="email"
                     name="email"
+                    id="newsletterInput"
                     placeholder={lang === "en" ? "your@email.com" : "deine@email.com"}
                     className="input-bordered input w-full pr-16 max-w-lg"
                     autoComplete="email"
