@@ -76,7 +76,7 @@ const Search = ({ lang }: { lang: Locale }) => {
     return (
         <>
             <input ref={inputRef} type="text" placeholder={lang === "en" ? "Enter search here" : "Gib Suche hier ein"} className="mb-12 w-4/5 lg:w-2/5 mx-auto max-w-content input input-bordered " onChange={onChange} />
-            {loading ? <Loading /> : <CardContainer data={data} />}
+            {loading ? <Loading /> : <CardContainer data={data} type="recipe"/>}
         </>
     )
 }

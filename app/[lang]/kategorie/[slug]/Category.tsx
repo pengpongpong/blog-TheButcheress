@@ -23,7 +23,7 @@ function Category({ pageData }: CategoryProps) {
                 <p className="font-text text-base lg:text-xl">{pageData?.description}</p>
             </header>
             <main className="m-8 lg:m-16 flex flex-col lg:flex-row gap-4 lg:gap-8 justify-center items-center flex-wrap">
-                <CardContainer data={pageData?.recipes} />
+                <CardContainer data={pageData?.recipes} type="recipe" />
             </main>
         </>
     )
