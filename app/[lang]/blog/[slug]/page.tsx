@@ -37,8 +37,8 @@ export const generateStaticParams = async () => {
 export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps): Promise<Metadata> => {
     const data = await client.fetch(blogQuery(transformLocale(lang)), { slug })
 
-    const text = lang === "en" ? `The Butcheress_ | A blog about food and recipes - ${data?.title}` : `The Butcheress_ | Ein Blog über Nahrung and Rezepte - ${data?.title}`
-    const description = `The Butcheress_ | ${data?.description}`
+    const text = lang === "en" ? `TheButcheress_ | A blog about food and recipes - ${data?.title}` : `TheButcheress_ | Ein Blog über Nahrung and Rezepte - ${data?.title}`
+    const description = `TheButcheress_ | ${data?.description}`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["food", "blog", "recipe"] : ["Essen", "Blog", "Rezept"]
 

@@ -45,8 +45,8 @@ export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps
     const pageQuery = recipeQuery(transformLocale(lang))
     const data = await client.fetch(pageQuery, { slug })
 
-    const text = lang === "en" ? `The Butcheress_ | Recipes - ${data?.title}` : `The Butcheress_ | Rezepte - ${data?.title}`
-    const description = `${data?.description} | The Butcheress_`
+    const text = lang === "en" ? `TheButcheress_ | Recipes - ${data?.title}` : `TheButcheress_ | Rezepte - ${data?.title}`
+    const description = `${data?.description} | TheButcheress_`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["food", "recipe", `${data?.title}`] : ["Essen", "Rezept", `${data?.title}`]
 

@@ -6,8 +6,8 @@ import Search from "./Search"
 
 // meta tags
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
-    const text = lang === "en" ? `The Butcheress_ | Search your favorite recipe or blog post` : `The Butcheress_ | Suche nach deinem liebsten Rezept oder Blog Beitrag`
-    const description = lang === "en" ? `The Butcheress_ | Search your favorite recipe or find the latest blog post` : `The Butcheress_ | Suche nach deinem liebsten Rezept oder finde den neursten Blog Beitrag`
+    const text = lang === "en" ? `TheButcheress_ | Search your favorite recipe or blog post` : `TheButcheress_ | Suche nach deinem liebsten Rezept oder Blog Beitrag`
+    const description = lang === "en" ? `TheButcheress_ | Search your favorite recipe or find the latest blog post` : `TheButcheress_ | Suche nach deinem liebsten Rezept oder finde den neursten Blog Beitrag`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["food", "recipes", "search"] : ["Essen", "Rezepte", "Suche"]
 

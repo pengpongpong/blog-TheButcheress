@@ -8,8 +8,8 @@ import { transformLocale } from "@/components/utils/utils";
 
 // meta data
 export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps): Promise<Metadata> => {
-    const text = lang === "en" ? `The Butcheress_ | Download or print the recipe as PDF version` : `The Butcheress_ | Lade oder drucke das Rezept als PDF Version`
-    const description = lang === "en" ? `The Butcheress_ | Download or print the recipe as PDF version` : `The Butcheress_ | Drucke das Rezept als PDF Version oder lade es downloade es.`
+    const text = lang === "en" ? `TheButcheress_ | Download or print the recipe as PDF version` : `TheButcheress_ | Lade oder drucke das Rezept als PDF Version`
+    const description = lang === "en" ? `TheButcheress_ | Download or print the recipe as PDF version` : `TheButcheress_ | Drucke das Rezept als PDF Version oder lade es downloade es.`
 
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["food", "recipe", "pdf"] : ["Essen", "Rezept", "pdf"]

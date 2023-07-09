@@ -6,8 +6,8 @@ import { Metadata } from "next"
 
 // meta data
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
-    const text = lang === "en" ? "The Butcheress_ | Imprint" : "The Butcheress_ | Impressum"
-    const description = lang === "en" ? `The Butcheress_ | Information about publisher and website` : `The Butcheress_ | Information über den Herausgeber und Webseite`
+    const text = lang === "en" ? "TheButcheress_ | Imprint" : "TheButcheress_ | Impressum"
+    const description = lang === "en" ? `TheButcheress_ | Information about publisher and website` : `TheButcheress_ | Information über den Herausgeber und Webseite`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["imprint"] : ["Impressum"]
 

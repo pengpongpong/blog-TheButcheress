@@ -17,8 +17,8 @@ export const Text = ({ text }: { text: string }) => {
 
 // meta data
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
-    const text = lang === "en" ? "The Butcheress_ | Data privacy" : "The Butcheress_ | Datenschutz"
-    const description = lang === "en" ? `The Butcheress_ | Data privacy` : `The Butcheress_ | Datenschutz`
+    const text = lang === "en" ? "TheButcheress_ | Data privacy" : "TheButcheress_ | Datenschutz"
+    const description = lang === "en" ? `TheButcheress_ | Data privacy` : `TheButcheress_ | Datenschutz`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["data privacy"] : ["Datenschutz"]
 

@@ -23,8 +23,8 @@ const tagsQuery = (lang: Lang) => {
 
 // meta data
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
-    const text = lang === "en" ? `The Butcheress_ | Recipes by tags` : `The Butcheress_ | Rezepte nach Tags und Präferenzen`
-    const description = lang === "en" ? `The Butcheress_ | A collection of recipes based on preferences` : `The Butcheress_ | Eine Sammlung von Rezepten basierend auf eigene Präferenzen`
+    const text = lang === "en" ? `TheButcheress_ | Recipes by tags` : `TheButcheress_ | Rezepte nach Tags und Präferenzen`
+    const description = lang === "en" ? `TheButcheress_ | A collection of recipes based on preferences` : `TheButcheress_ | Eine Sammlung von Rezepten basierend auf eigene Präferenzen`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["food", "recipes", "tags", "search"] : ["Essen", "Rezepte", "Tags", "Suche"]
 

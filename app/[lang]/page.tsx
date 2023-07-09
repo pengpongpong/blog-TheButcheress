@@ -35,7 +35,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang } = params
   const data = await client.fetch(homeQuery(transformLocale(lang)))
-  const text = lang === "en" ? "The Butcheress_ | A blog about food, recipes and travel" : "The Butcheress_ | Ein Blog über Nahrung, Rezepte und Reisen"
+  const text = lang === "en" ? "TheButcheress_ | A blog about food, recipes and travel" : "TheButcheress_ | Ein Blog über Nahrung, Rezepte und Reisen"
   const domain = process.env.NEXT_PUBLIC_DOMAIN
 
   const keywords = lang === "en" ? ["blog", "food", "travel"] : ["Blog", "Essen", "Reisen"]

@@ -5,8 +5,8 @@ import { Metadata } from "next"
 
 // meta tags
 export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps): Promise<Metadata> => {
-    const text = lang === "en" ? `The Butcheress_ | Newsletter unsubscribe` : `The Butcheress_ | Newsletter Abmeldung`
-    const description = lang === "en" ? `The Butcheress_ | Unsubscribe for newsletter` : `The Butcheress_ | Abmeldung vom Newsletter`
+    const text = lang === "en" ? `TheButcheress_ | Newsletter unsubscribe` : `TheButcheress_ | Newsletter Abmeldung`
+    const description = lang === "en" ? `TheButcheress_ | Unsubscribe for newsletter` : `TheButcheress_ | Abmeldung vom Newsletter`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["food", "recipes", "travel", "newsletter", "unsubscribe"] : ["Essen", "Rezepte", "Reisen", "Newsletter", "Abmeldung"]
 

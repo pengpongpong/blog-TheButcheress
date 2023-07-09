@@ -17,8 +17,8 @@ const getData = async (lang: Lang) => {
 // meta data
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
     const data = await getData(transformLocale(lang))
-    const text = lang === "en" ? "The Butcheress_ | About me" : "The Butcheress_ | Über mich"
-    const description = `The Butcheress_ | ${data?.text}`
+    const text = lang === "en" ? "TheButcheress_ | About me" : "TheButcheress_ | Über mich"
+    const description = `TheButcheress_ | ${data?.text}`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["about me"] : ["Ueber mich"]
 

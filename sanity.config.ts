@@ -210,6 +210,19 @@ export const devStructure: DefaultDocumentNodeResolver = (S, { schemaType, docum
                         })
                         .title('Preview'),
                 ])
+        case `aboutMe`:
+            return S.document()
+                .schemaType('aboutMe')
+                .documentId(`${documentId}`)
+                .views([
+                    S.view.form(),
+                    S.view
+                        .component(Iframe)
+                        .options({
+                            url: `http://localhost:3000/de/api/preview?about-me`,
+                        })
+                        .title('Preview'),
+                ])
         default:
             return S.document().views([S.view.form()])
     }

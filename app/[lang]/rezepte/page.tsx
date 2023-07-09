@@ -24,8 +24,8 @@ const recipesQuery = (lang: Lang) => {
 // meta data
 export const generateMetadata = async ({ params }: MetaDataProps): Promise<Metadata> => {
     const { lang } = params
-    const text = lang === "en" ? `The Butcheress_ | All recipes` : `The Butcheress_ | Alle Rezepte`
-    const description = lang === "en" ? `The Butcheress_ | Browse through all delicious recipes` : `The Butcheress_ | Stöbere durch alle tollen Rezepte`
+    const text = lang === "en" ? `TheButcheress_ | All recipes` : `TheButcheress_ | Alle Rezepte`
+    const description = lang === "en" ? `TheButcheress_ | Browse through all delicious recipes` : `TheButcheress_ | Stöbere durch alle tollen Rezepte`
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["food", "recipes", "collection"] : ["Essen", "Rezepte", "Sammlung"]
 

@@ -9,8 +9,8 @@ import BlogContainer from "@/components/blog/BlogContainer"
 
 // meta data
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
-    const text = lang === "en" ? "The Butcheress_ | A Collection to all blog posts about food and recipes" : "The Butcheress_ | Eine Sammlung zu allen Blog Beiträgen über Nahrung und Rezepte"
-    const description = lang === "en" ? "The Butcheress_ | Blog collection about food and recipes" : "The Butcheress_ | Blog Sammlung über Nahrung und Rezepte"
+    const text = lang === "en" ? "TheButcheress_ | A Collection to all blog posts about food and recipes" : "TheButcheress_ | Eine Sammlung zu allen Blog Beiträgen über Nahrung und Rezepte"
+    const description = lang === "en" ? "TheButcheress_ | Blog collection about food and recipes" : "TheButcheress_ | Blog Sammlung über Nahrung und Rezepte"
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["food", "blog", "collection"] : ["Essen", "Blog", "Sammlung"]
 

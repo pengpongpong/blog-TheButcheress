@@ -5,8 +5,8 @@ import { MetaDataProps, ParamsProps } from "../page"
 
 // meta data
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
-    const text = lang === "en" ? "The Butcheress_ | Contact form" : "The Butcheress_ | Kontakt Formular"
-    const description = lang === "en" ? "The Butcheress_ | Contact form" : "The Butcheress_ | Kontakt Formular"
+    const text = lang === "en" ? "TheButcheress_ | Contact form" : "TheButcheress_ | Kontakt Formular"
+    const description = lang === "en" ? "TheButcheress_ | Contact form" : "TheButcheress_ | Kontakt Formular"
     const domain = process.env.NEXT_PUBLIC_DOMAIN
     const keywords = lang === "en" ? ["contact me"] : ["Kontaktiere mich"]
 

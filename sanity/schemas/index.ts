@@ -13,7 +13,8 @@ import blog from "./documents/blog";
 import blockContentEmail from "./components/blockContentEmail";
 import emailContent from "./documents/emailContent";
 import aboutMe from "./documents/aboutMe";
-
+import impressum from "./documents/impressum";
+import impressumContent from "./components/impressumContent";
 
 export const schemaTypes = [
   recipe,
@@ -30,5 +31,7 @@ export const schemaTypes = [
   blog,
   blockContentEmail,
   emailContent,
-  aboutMe
+  aboutMe,
+  impressum,
+  impressumContent
 ];
