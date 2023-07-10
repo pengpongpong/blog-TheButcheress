@@ -15,6 +15,8 @@ import emailContent from "./documents/emailContent";
 import aboutMe from "./documents/aboutMe";
 import impressum from "./documents/impressum";
 import impressumContent from "./components/impressumContent";
+import privacyPolicy from "./documents/privacyPolicy";
+import privacyPolicyContent from "./components/privacyPolicyContent";
 
 export const schemaTypes = [
   recipe,
@@ -33,5 +35,7 @@ export const schemaTypes = [
   emailContent,
   aboutMe,
   impressum,
-  impressumContent
+  impressumContent,
+  privacyPolicy,
+  privacyPolicyContent
 ];

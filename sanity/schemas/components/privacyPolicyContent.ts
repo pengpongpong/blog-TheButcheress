@@ -1,7 +1,7 @@
 import { defineType, defineField } from "sanity";
 
 export default defineType({
-    name: "impressumContent",
+    name: "privacyPolicyContent",
     title: "Impressum Content",
     type: "object",
     fields: [
@@ -28,18 +28,13 @@ export default defineType({
                         defineField({
                             name: "contentDE",
                             title: "Content DE",
-                            type: "string"
+                            type: "text"
                         }),
                         defineField({
                             name: "contentEN",
                             title: "Content EN",
-                            type: "string"
+                            type: "text"
                         }),
-                        defineField({
-                            name: "link",
-                            title: "Url",
-                            type: "string"
-                        })
                     ]
                 })
             ]

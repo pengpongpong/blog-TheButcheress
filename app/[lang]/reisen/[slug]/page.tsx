@@ -74,7 +74,7 @@ const TravelPost = async ({ params: { lang, slug } }: ParamsProps) => {
     ) :
         <>
             <BlogPost pageData={data} lang={lang} />
-            <Footer lang={lang} tags={data?.tags} />
+            {/* <Footer lang={lang} tags={data?.tags} /> */}
         </>
 }
 

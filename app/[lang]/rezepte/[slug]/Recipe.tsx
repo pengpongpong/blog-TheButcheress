@@ -6,6 +6,7 @@ import RecipeTable from "@/components/recipe/RecipeTable";
 import CookingTime from "@/components/recipe/CookingTime";
 import SocialShare from "@/components/socials/SocialShare";
 import { Locale } from "../../HomePage";
+import Link from "next/link";
 
 
 interface Time {
@@ -71,9 +72,31 @@ export interface RecipeProps {
     lang: Locale
 }
 
+interface TagsProps {
+    _id: string;
+    title: string;
+    url: string;
+}
+export const Tags = ({ tags }: { tags: TagsProps[] }) => {
+    const tagItems = tags.map((tag) => {
+        return (
+            <li className="py-2 px-4 bg-primary rounded-full" key={tag._id}>
+                <Link href={`/kategorie/${tag.url}`}>#{tag.title}</Link>
+            </li>
+        );
+    });
+
+    return (
+        <ul className="mb-4 flex items-center justify-center gap-2 font-text underline">
+            <>{tagItems}</>
+        </ul>
+    );
+};
+
+
 const styles = {
     main: "flex flex-row lg:flex-col gap-4 lg:gap-2 justify-center items-center",
-    first:"pr-4 pl-4 lg:pr-0 lg:pl-0 lg:pb-2 lg:pt-2 border-r-2 border-l-2 lg:border-r-0 lg:border-l-0 lg:border-b-2 lg:border-t-2 border-solid", 
+    first: "pr-4 pl-4 lg:pr-0 lg:pl-0 lg:pb-2 lg:pt-2 border-r-2 border-l-2 lg:border-r-0 lg:border-l-0 lg:border-b-2 lg:border-t-2 border-solid",
     last: "pr-4 pl-4 lg:pr-0 lg:pl-0 lg:pb-2 lg:pt-2 border-r-2 border-l-2 lg:border-r-0 lg:border-l-0 lg:border-t-2 border-solid"
 }
 
@@ -84,7 +107,7 @@ const Recipe = ({ pageData, lang }: RecipeProps) => {
                 <section className="flex flex-col gap-4 font-text lg:mx-16 lg:flex-row">
                     <div className="w-full flex flex-col-reverse gap-4 lg:gap-0 lg:flex-row">
                         <div className="max-w-full lg:max-w-fit lg:pr-8 my-auto lg:w-1/6 text-center">
-                            <SocialShare lang={lang} title={pageData?.title} styles={styles}/>
+                            <SocialShare lang={lang} title={pageData?.title} styles={styles} />
                         </div>
                         <div className="mb-4 lg:mb-0 flex flex-col items-center justify-between">
                             <h1 className="m-4 mb-8 text-4xl tracking-wide lg:mt-8 md:text-5xl lg:text-6xl">
@@ -125,6 +148,7 @@ const Recipe = ({ pageData, lang }: RecipeProps) => {
                     </section>
                     <Steps list={pageData?.instructions} />
                 </section>
+                <Tags tags={pageData?.tags} />
             </main >
         </>
     );
