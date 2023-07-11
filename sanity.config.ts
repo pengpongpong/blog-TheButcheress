@@ -40,7 +40,7 @@ export interface NavigationItem {
 export type NavigationData = NavigationItem[];
 
 //!fix any
-//transform fetched data for recipes from CMS for generateStructure
+// transform fetched data for recipes from CMS for generateStructure
 function transformNavigation(navigation: NavigationItem): any {
     return navigation.submenus!.map((submenu) => {
         if (submenu._type === 'navigationSubmenu' && submenu.submenus) {
@@ -74,7 +74,7 @@ function transformNavigation(navigation: NavigationItem): any {
     })
 }
 
-//create structure from data
+// create structure from data
 const generateStructure = (
     S: StructureBuilder,
     items: (StructureStudio | ListItem | Divider)[],
@@ -107,15 +107,15 @@ const generateStructure = (
         .items(structure);
 };
 
-//structure for recipes
+// structure for recipes
 const getRecipeData = async (S: StructureBuilder) => {
     const data = await getNavData("DE")
     const schema = transformNavigation(data[1])
     return generateStructure(S, schema, "Rezepte")
 }
 
-//structure for all other documents
-const structureStudio: (ListItem | StructureStudio | Divider)[] = [
+// structure for setting documents
+const structureSetting: (ListItem | StructureStudio | Divider)[] = [
     {
         title: "Authoren",
         listItem: { title: "Author", type: "author" },
@@ -145,34 +145,49 @@ const structureStudio: (ListItem | StructureStudio | Divider)[] = [
     {
         divider: true
     },
-    {
-        title: "Pages",
-        tag: undefined,
-        child: {
-            title: "Pages",
-            items: [
-                {
-                    title: "Home",
-                    listItem: { title: "Home", type: "home" },
-                },
-                // {
-                //   title: "Blog",
-                //   listItem: { title: "Blog", type: "blog" },
-                // },
-            ]
-        }
-    }
 ];
 
+// structure for pages
+const structurePages: (ListItem | StructureStudio | Divider)[] = [
+    {
+        title: "Home",
+        listItem: { title: "Home", type: "home" }
+    },
+    {
+        title: "Blog",
+        listItem: { title: "Blog", type: "blog" }
+    },
+    {
+        title: "Über mich",
+        listItem: { title: "Über mich", type: "aboutMe" }
+    },
+    {
+        title: "Impressum",
+        listItem: { title: "Impressum", type: "impressum" }
+    },
+    {
+        title: "Datenschutz",
+        listItem: { title: "Datenschutz", type: "privacyPolicy" }
+    },
+]
+
+// show recipes
 export const recipeStructure = (S: StructureBuilder) => {
     return getRecipeData(S);
 };
 
-export const otherStructure = (S: StructureBuilder) => {
-    return generateStructure(S, structureStudio, "Other")
+// show settings
+export const settingStructure = (S: StructureBuilder) => {
+    return generateStructure(S, structureSetting, "Setting")
 };
 
-export const devStructure: DefaultDocumentNodeResolver = (S, { schemaType, documentId }) => {
+// show pages
+export const pageStructure = (S: StructureBuilder) => {
+    return generateStructure(S, structurePages, "Pages")
+};
+
+// show all documents
+export const mainStructure: DefaultDocumentNodeResolver = (S, { schemaType, documentId }) => {
     switch (schemaType) {
         case `home`:
             return S.document().views([
@@ -249,14 +264,19 @@ export default defineConfig({
             structure: recipeStructure
         }),
         deskTool({
-            name: "tags",
-            title: "Other",
-            structure: otherStructure
+            name: "pages",
+            title: "Seiten",
+            structure: pageStructure
         }),
         deskTool({
-            name: "DEV",
-            title: "DEV",
-            defaultDocumentNode: devStructure
+            name: "all",
+            title: "Alles",
+            defaultDocumentNode: mainStructure
+        }),
+        deskTool({
+            name: "setting",
+            title: "Einstellungen",
+            structure: settingStructure
         }),
         visionTool(),
     ],
