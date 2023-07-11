@@ -2,7 +2,7 @@
 import CardContainer, { CardData } from "@/components/card/Card"
 import { client } from "@/sanity/lib/sanity-utils"
 import { groq } from "next-sanity"
-import React, { ChangeEventHandler, useEffect, useRef } from 'react'
+import React, { ChangeEventHandler, useEffect } from 'react'
 import { Locale } from "../HomePage"
 import Loading from "@/components/loading/Loading"
 import { useSearchStore } from "@/components/utils/store"
@@ -13,7 +13,7 @@ const getData = async (query: string) => {
     const searchQuery = groq`*[
         (_type in ["recipe", "blog"] && (tags[]->titleDE match [${formattedQuery}]|| tags[]->titleEN match [${formattedQuery}])) || 
         (_type in ["recipe", "blog"] && [titleDE, titleEN] match [${formattedQuery}])
-        ]{"title": titleDE, "description": description.descriptionDE, "url": slug.current, "imageUrl": image, "type": _type, "blogCategory": category}`
+        ]{"title": titleDE, "description": description.descriptionDE, "url": slug.current, "imageUrl": image, "type": _type, category}`
 
     return await client.fetch(searchQuery)
 }
@@ -37,6 +37,7 @@ const Search = ({ lang }: { lang: Locale }) => {
 
     // set input 
     const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+        // e.preventDefault()
         if (e.target.value === "") {
             setSearch("")
         } else {
@@ -44,7 +45,7 @@ const Search = ({ lang }: { lang: Locale }) => {
         }
     }
 
-    // fetch data is search input
+    // fetch data is search input with 1s delay
     useEffect(() => {
         if (search !== "") {
             setLoading(true)
@@ -61,22 +62,14 @@ const Search = ({ lang }: { lang: Locale }) => {
         }
     }, [search, data.length])
 
-    const inputRef = useRef<HTMLInputElement>(null)
-
-    // prevent enter key default for preventing refresh
     useEffect(() => {
-        if (inputRef.current) {
-            inputRef.current.addEventListener("keypress", (event) => {
-                if (event.key === "Enter") {
-                    event.preventDefault()
-                }
-            })
-        }
+        setSearch("")
     }, [])
+
     return (
         <>
-            <input ref={inputRef} type="text" placeholder={lang === "en" ? "Enter search here" : "Gib Suche hier ein"} className="mb-12 w-4/5 lg:w-2/5 mx-auto max-w-content input input-bordered " onChange={onChange} />
-            {loading ? <Loading /> : <CardContainer data={data} type="recipe"/>}
+            <input type="text" placeholder={lang === "en" ? "Enter search here" : "Gib Suche hier ein"} className="mb-12 w-4/5 lg:w-2/5 mx-auto max-w-content input input-bordered " onChange={onChange} />
+            {loading ? <Loading /> : <CardContainer data={data} />}
         </>
     )
 }

@@ -7,6 +7,7 @@ import CookingTime from "@/components/recipe/CookingTime";
 import SocialShare from "@/components/socials/SocialShare";
 import { Locale } from "../../HomePage";
 import Link from "next/link";
+import { urlFor } from "@/sanity/lib/sanity-utils";
 
 
 interface Time {
@@ -61,7 +62,7 @@ interface RecipeData {
     instructions: Instruction[];
     ingredients: Ingredients[];
     tags: TagsType[];
-    imageUrl: string;
+    imageUrl: ImageSanity;
     category: {
         title: string;
     },
@@ -101,6 +102,7 @@ const styles = {
 }
 
 const Recipe = ({ pageData, lang }: RecipeProps) => {
+
     return (
         <>
             <main>
@@ -138,7 +140,7 @@ const Recipe = ({ pageData, lang }: RecipeProps) => {
                         </div>
                     </div>
                     <picture className="mt-4 w-full lg:mt-0">
-                        {pageData?.imageUrl ? < Image width={800} height={500} loading="lazy" src={pageData?.imageUrl} alt={pageData?.title} /> : ""}
+                        {pageData?.imageUrl ? < Image style={{width: "auto", height: "auto", objectFit: "cover"}} width={800} height={500} loading="lazy" src={urlFor(pageData?.imageUrl).size(2560, 1440).auto("format").url()} alt={pageData?.title} /> : ""}
                     </picture>
                 </section>
                 <section className="m-4 mt-8 flex flex-col gap-8 md:m-8 lg:mx-16 lg:my-20 lg:mt-12 lg:flex-row lg:gap-20">

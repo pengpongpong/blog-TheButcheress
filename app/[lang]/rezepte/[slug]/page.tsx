@@ -12,25 +12,6 @@ import { Lang, navQuery } from "@/sanity/lib/sanity-query"
 import { notFound } from "next/navigation"
 import Navbar from "@/components/navbar/Navbar"
 
-// get recipe by slug
-const recipeQuery = (lang: Lang) => {
-    return (groq`*[_type == "recipe" && slug.current == $slug][0]{
-        ingredients[]{"title": title${lang},
-        ingredientsList[]{"title": title${lang},
-        "quantity": quantity${lang}}},
-        instructions[]{"title": title${lang},"content": content${lang}, image, _id, tipp[]{"title": title${lang}, _id, "content": content${lang}}},
-        prepTime,
-        totalTime,
-        servings,
-        "imageUrl": image.asset->url,
-        tags[]->{_id, "title": title${lang}, "url": slug.current},
-        "title": title${lang},
-        "description": description.description${lang},
-        "pdf": pdf.pdf${lang}.asset->url
-        }
-        `)
-}
-
 // static paths
 export const generateStaticParams = async () => {
     const paths = await client.fetch(groq`*[_type == "recipe" && defined(slug.current)][].slug.current`)
@@ -72,6 +53,25 @@ export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps
             type: 'website',
         },
     }
+}
+
+// get recipe by slug
+const recipeQuery = (lang: Lang) => {
+    return (groq`*[_type == "recipe" && slug.current == $slug][0]{
+        ingredients[]{"title": title${lang},
+        ingredientsList[]{"title": title${lang},
+        "quantity": quantity${lang}}},
+        instructions[]{"title": title${lang},"content": content${lang}, image, _id, tipp[]{"title": title${lang}, _id, "content": content${lang}}},
+        prepTime,
+        totalTime,
+        servings,
+        "imageUrl": image.asset,
+        tags[]->{_id, "title": title${lang}, "url": slug.current},
+        "title": title${lang},
+        "description": description.description${lang},
+        "pdf": pdf.pdf${lang}.asset->url
+        }
+        `)
 }
 
 const Footer = lazy(() => import("@/components/footer/Footer"))
