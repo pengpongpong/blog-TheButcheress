@@ -7,16 +7,7 @@ import { Metadata } from "next"
 import BlogContainer from "@/components/blog/BlogContainer"
 import { client } from "@/sanity/lib/sanity-utils"
 
-
-const travelPostsQuery = (lang: Lang) => {
-    return (
-        groq`*[_type == "blogPage" && category == "travel"][0]{
-            "title": title${lang},
-            "blogs": *[_type == "blog" && category == "travel"]{"title": title${lang}, "description": description.description${lang}, "imageUrl": image, "url": slug.current} | order(_createdAt desc)
-            }`
-    )
-}
-
+// meta data
 export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Promise<Metadata> => {
     const text = lang === "en" ? `TheButcheress_ | Travel blog post collection` : `TheButcheress_ | Reise Blog Post Sammlung`
     const description = lang === "en" ? `TheButcheress_ | A collection of all travel blog posts` : `TheButcheress_ | Eine Sammlung von allen Blog Posts über Reisen`
@@ -39,15 +30,32 @@ export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Pro
     }
 }
 
-const TravelPosts = async ({ params: { lang } }: ParamsProps) => {
+// get travel blog post data from CMS
+const travelPostsQuery = (lang: Lang) => {
+    return (
+        groq`*[_type == "blogPage" && category == "travel"][0]{
+            "title": title${lang},
+            "blogs": *[_type == "blog" && category == "travel"]{
+                "title": title${lang},
+                "description": description.description${lang},
+                "imageUrl": image,
+                "url": slug.current,
+                "type": _type,
+                category,
+                } | order(_createdAt desc)
+            }`
+    )
+}
 
+
+const TravelPosts = async ({ params: { lang } }: ParamsProps) => {
     const data = await client.fetch(travelPostsQuery(transformLocale(lang)))
+
     return (
         <>
             <BlogContainer
                 title={data?.title}
                 blogData={data?.blogs}
-                blogType="travel"
             />
         </>
     )

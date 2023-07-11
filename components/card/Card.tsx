@@ -4,7 +4,7 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/sanity-utils";
 import { SanityImageAssetDocument } from "@sanity/client";
 
-type linkType = "blog" | "recipe" | "travel" | "email"
+type linkType = "blog" | "recipe" | "travel" | "emailContent"
 
 export interface CardData {
     title: string;
@@ -12,18 +12,21 @@ export interface CardData {
     imageUrl: SanityImageAssetDocument;
     url: string;
     type: linkType;
+    category?: "blog" | "travel"
 }
 
-const Card = ({ title, description, imageUrl, url, type }: CardData) => {
+const Card = ({ title, description, imageUrl, url, type, category }: CardData) => {
     let linkHref;
 
     if (type === "recipe") {
         linkHref = `rezepte/${url}`
     } else if (type === "blog") {
-        linkHref = `blog/${url}`
-    } else if (type === "travel") {
-        linkHref = `reisen/${url}`
-    } else if (type === "email") {
+        if (category === "travel") {
+            linkHref = `reisen/${url}`
+        } else {
+            linkHref = `blog/${url}`
+        }
+    } else if (type === "emailContent") {
         linkHref = `dashboard/email/${url}`
     }
 
@@ -39,7 +42,7 @@ const Card = ({ title, description, imageUrl, url, type }: CardData) => {
 }
 
 // display cards
-const CardContainer = ({ data, type }: { data?: CardData[], type: linkType }) => {
+const CardContainer = ({ data }: { data?: CardData[] }) => {
     const items: Array<Array<CardData>> = [[], [], [], []]
     const itemsMidScreen: Array<Array<CardData>> = [[], []]
 
@@ -65,7 +68,7 @@ const CardContainer = ({ data, type }: { data?: CardData[], type: linkType }) =>
                             <ul className="list-none">
                                 {item.map(obj => (
                                     <li key={obj.url} className="flex justify-center items-center">
-                                        <Card title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={type} />
+                                        <Card title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={obj.type} category={obj.category} />
                                     </li>
                                 ))}
                             </ul>
@@ -81,7 +84,7 @@ const CardContainer = ({ data, type }: { data?: CardData[], type: linkType }) =>
                             <ul className="list-none">
                                 {item.map(obj => (
                                     <li key={obj.url} className="flex justify-center items-center">
-                                        <Card title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={type}/>
+                                        <Card title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={obj.type} category={obj.category} />
                                     </li>
                                 ))}
                             </ul>
@@ -95,7 +98,7 @@ const CardContainer = ({ data, type }: { data?: CardData[], type: linkType }) =>
                     if (obj.url) {
                         return (
                             <li key={obj.url} className="flex justify-center items-center">
-                                <Card title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={type}/>
+                                <Card title={obj.title} description={obj.description} imageUrl={obj.imageUrl} url={obj.url} type={obj.type} category={obj.category} />
                             </li>
                         )
                     }

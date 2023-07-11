@@ -4,10 +4,9 @@ import React from 'react'
 interface BlogContainerProps {
     title: string;
     blogData: CardData[];
-    blogType: "travel" | "blog";
 }
 
-const BlogContainer = ({title, blogData, blogType}: BlogContainerProps) => {
+const BlogContainer = ({title, blogData}: BlogContainerProps) => {
     return (
         <>
             <header className="m-8 lg:m-16 lg:mb-20 text-center">
@@ -16,7 +15,7 @@ const BlogContainer = ({title, blogData, blogType}: BlogContainerProps) => {
                 </h1>
             </header>
             <main>
-                <CardContainer type={blogType} data={blogData} />
+                <CardContainer data={blogData} />
             </main>
         </>
     )

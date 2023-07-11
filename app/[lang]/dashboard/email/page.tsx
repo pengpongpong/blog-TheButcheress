@@ -12,7 +12,8 @@ const getData = async () => {
     const query = (groq`*[_type == "emailContent"]{
         "title": title,
         "imageUrl": image,
-        "url": slug.current 
+        "url": slug.current,
+        "type": _type
         }`)
 
     return await client.fetch(query)
@@ -23,6 +24,7 @@ const EmailsPage = async () => {
 
     if (session) {
         const data = await getData()
+
         return (
             <main className="m-8">
                 <header>
@@ -30,7 +32,7 @@ const EmailsPage = async () => {
                 </header>
                 <section className="flex flex-col justify-center items-center gap-8">
                     <Link className="btn btn-primary" href="/de/dashboard">Back to dashboard</Link>
-                    <CardContainer type="email" data={data} />
+                    <CardContainer data={data} />
                 </section>
             </main>
         )

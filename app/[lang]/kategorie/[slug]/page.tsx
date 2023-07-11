@@ -12,24 +12,6 @@ import { MetaDataProps, ParamsProps } from "../../page";
 import { draftMode } from "next/headers";
 import { Lang } from "@/sanity/lib/sanity-query";
 
-//get category
-const categoryQuery = (lang: Lang) => {
-    return (
-        groq`*[_type == "tags" && slug.current == $slug][0]{
-        "title": title${lang},
-        "description": description.description${lang},
-        "recipes": *[_type == "recipe" && $slug in tags[]->slug.current]
-        {
-        "title": title${lang},
-        "description": description.description${lang},
-        "imageUrl": image,
-        "url": slug.current,
-        "type": _type,
-        _updatedAt
-        } | order(_updatedAt desc)}`
-    )
-}
-
 // static paths
 export async function generateStaticParams() {
     const paths = await client.fetch(groq`*[_type == "tags" && defined(slug.current)][].slug.current`)
@@ -61,6 +43,25 @@ export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps
             type: 'website',
         },
     }
+}
+
+// get category
+const categoryQuery = (lang: Lang) => {
+    return (
+        groq`*[_type == "tags" && slug.current == $slug][0]{
+            "title": title${lang},
+            "description": description.description${lang},
+            "recipes": *[_type == "recipe" && $slug in tags[]->slug.current]
+            {
+                "title": title${lang},
+                "description": description.description${lang},
+                "imageUrl": image,
+                "url": slug.current,
+                "type": _type,
+                _updatedAt
+            } | order(_updatedAt desc)
+        }`
+    )
 }
 
 const CategoryPreview = lazy(() => import("./CategoryPreview"))

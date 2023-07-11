@@ -17,6 +17,7 @@ const recipesQuery = (lang: Lang) => {
         "description": description.description${lang},
         "imageUrl": image,
         "url": slug.current,
+        "type": _type,
         _updatedAt} | order(_updatedAt desc)`
     )
 }
@@ -60,7 +61,7 @@ const RecipesPage = async ({ params: { lang } }: ParamsProps) => {
                 </h1>
             </header>
             <main className="m-8">
-                <CardContainer type="recipe" data={pageData} />
+                <CardContainer data={pageData} />
             </main>
             <Footer lang={lang} />
         </>
