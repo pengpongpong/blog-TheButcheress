@@ -4,6 +4,7 @@ import { Locale } from "./HomePage"
 import CookieBanner from "@/components/cookie-banner/CookieBanner"
 import { cookies } from 'next/headers'
 import Script from "next/script"
+import Head from "next/head"
 
 export const metadata = {
   robots: {

@@ -5,7 +5,6 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/sanity-utils";
 import { ImageSliderProps } from "@/components/image-slider/ImageSlider";
 
-
 interface TitleContent {
     title: {
         title: string;

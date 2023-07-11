@@ -14,7 +14,6 @@ const theme = createTheme({
             styleOverrides: {
                 // Name of the slot
                 root: {
-                    // Some CSS
                     fontFamily: "Josefin Slab",
                     fontSize: "1.1rem"
                 },

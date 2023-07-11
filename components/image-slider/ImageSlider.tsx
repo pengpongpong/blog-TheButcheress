@@ -6,6 +6,10 @@ import { urlFor } from "@/sanity/lib/sanity-utils";
 
 import Image from "next/image";
 
+import "swiper/css";
+import "swiper/css/navigation";
+import Loading from "../loading/Loading";
+
 export interface ImageSliderProps {
   _type: "imageSlide";
   _key: string;
@@ -83,15 +87,18 @@ function ImageSlider({ list }: { list: ImageSliderProps[] }) {
   const swiperEl = diashowLinks.map((obj) => (
     <Image className="swiper-slide" key={obj.id} src={obj.imageSrc} width={400} height={300} style={{ objectFit: "cover" }} alt="" />
   ));
-  
-  return (
-    <div className="swiper">
-      <div className="swiper-wrapper">{swiperEl}</div>
 
-      {/* <div className="swiper-pagination"></div> */}
-      <div className="swiper-button-prev"></div>
-      <div className="swiper-button-next"></div>
-    </div>
+  return (
+
+    !swiperEl.length
+      ? <div className="flex justify-center"><Loading /> </div>
+      : <div className="swiper">
+        <div className="swiper-wrapper">{swiperEl}</div>
+
+        <div className="swiper-button-prev"></div>
+        <div className="swiper-button-next"></div>
+      </div>
+
   );
 }
 
