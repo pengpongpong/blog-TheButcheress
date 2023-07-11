@@ -6,7 +6,7 @@ import { Preview } from "@/app/[lang]/HomePreview"
 import { ExitPreview } from "../preview/ExitPreview"
 
 
-const BlogContainerPreview = ({ pageQuery, blogType }: Preview & { blogType: "travel" | "blog" }) => {
+const BlogContainerPreview = ({ pageQuery }: Preview & { blogType: "travel" | "blog" }) => {
     const data = usePreview(null, pageQuery)
     
     return (
@@ -14,7 +14,6 @@ const BlogContainerPreview = ({ pageQuery, blogType }: Preview & { blogType: "tr
             <BlogContainer
                 title={data?.title}
                 blogData={data?.blogs}
-                blogType={blogType}
             />
             <ExitPreview />
         </>

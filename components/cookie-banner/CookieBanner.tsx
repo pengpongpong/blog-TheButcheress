@@ -7,6 +7,7 @@ import Image from "next/image"
 import CookieIcon from "/public/icons/bx-cookie.svg"
 import { useConsentStore } from "../utils/store"
 import { setLocalStorage } from "./LocalStorage"
+import { setCookie } from "cookies-next"
 
 const setConsent = (current: boolean) => {
     useConsentStore.getState().setConsent(current)
@@ -24,12 +25,14 @@ const CookieBanner = ({ lang }: { lang: Locale }) => {
 
     const acceptConsent = () => {
         setLocalStorage("true")
+        setCookie("cookie-preference", "true")
         setConsent(true)
         setShowBanner(false)
     }
 
     const denyConsent = () => {
         setLocalStorage("false")
+        setCookie("cookie-preference", "false")
         setConsent(false)
         setShowBanner(false)
     }

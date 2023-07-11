@@ -85,7 +85,9 @@ function ImageSlider({ list }: { list: ImageSliderProps[] }) {
   })
 
   const swiperEl = diashowLinks.map((obj) => (
-    <Image className="swiper-slide" key={obj.id} src={obj.imageSrc} width={400} height={300} style={{ objectFit: "cover" }} alt="" />
+    <picture className="swiper-slide" key={obj.id} >
+      <Image src={obj.imageSrc} fill={true} sizes="400, 300" style={{ objectFit: "cover" }} alt="" />
+    </picture>
   ));
 
   return (

@@ -2,9 +2,7 @@ import { ReactNode } from "react"
 import "./globals.css"
 import { Locale } from "./HomePage"
 import CookieBanner from "@/components/cookie-banner/CookieBanner"
-import { cookies } from 'next/headers'
-import Script from "next/script"
-import Head from "next/head"
+import Analytics from "@/components/analytics/Analytics"
 
 export const metadata = {
   robots: {
@@ -33,19 +31,12 @@ export default async function RootLayout({
   params: { lang: Locale },
 }) {
 
-  // const token = process.env.NEXT_PUBLIC_TINYBIRD
-  // const cookieStore = cookies()
-  // console.log(cookieStore.getAll())
+
 
   return (
     <html lang={`${params.lang ?? "de"}`}>
-      {/* <Script
-        defer
-        src="https://unpkg.com/@tinybirdco/flock.js"
-        data-host="https://api.tinybird.co"
-        data-token={token}
-        id="tinybird"
-      /> */}
+      <Analytics />
+
       <body className="min-h-screen flex flex-col">
         {children}
         <CookieBanner lang={params.lang} />

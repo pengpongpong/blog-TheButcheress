@@ -26,7 +26,7 @@ const RecipeByTags = ({ tags, lang }: RecipeByTagsProps) => {
                     lang={transformLocale(lang)}
                 />
                 <section>
-                    {loading ? <Loading /> : <CardContainer type="recipe" data={data} />}
+                    {loading ? <Loading /> : <CardContainer data={data} />}
                 </section>
             </main>
         </>

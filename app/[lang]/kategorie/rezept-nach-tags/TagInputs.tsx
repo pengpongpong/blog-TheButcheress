@@ -17,17 +17,19 @@ interface TagInputsProps {
     lang: Lang,
 }
 
-//get recipes by selected tags
+// get recipes by selected tags
 const selectedTagsQuery = (lang: Lang, tagsQuery: Array<string>) => {
     return groq`*[ _type == "recipe" ${tagsQuery.join(" ")}]{
     "title": title${lang},
     "description": description.description${lang},
     "url": slug.current,
     "imageUrl": image,
+    "type": _type,
     _updatedAt
     } | order(_updatedAt desc)`
 }
 
+// fetch data from CMS 
 const getSelectedTags = async (lang: Lang, tags: string[]) => {
     const tagsQuery = tags.map(obj => (`&& "${obj}" in tags[]->slug.current`))
 
@@ -50,6 +52,7 @@ const TagInputs = ({ tags, lang }: TagInputsProps) => {
         useQueryStore.getState().setData(result)
     }
 
+    // fetch data with 1s delay
     useEffect(() => {
         const setLoading = (current: boolean) => {
             useQueryStore.getState().setLoading(current)
@@ -70,6 +73,7 @@ const TagInputs = ({ tags, lang }: TagInputsProps) => {
         return () => clearTimeout(delaySearch)
     }, [query, lang, data.length])
 
+    // tag input
     const TagInput = ({ title, url }: { title: string, url: string }) => {
         const duplicateItem = query.filter(obj => obj === url)
 
