@@ -4,7 +4,10 @@ import { Locale } from "./HomePage"
 import CookieBanner from "@/components/cookie-banner/CookieBanner"
 import Analytics from "@/components/analytics/Analytics"
 
+const domain = process.env.NEXT_PUBLIC_DOMAIN
+
 export const metadata = {
+  metadataBase: new URL(`${domain}`),
   robots: {
     index: false,
     follow: true,
