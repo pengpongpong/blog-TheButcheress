@@ -11,7 +11,6 @@ import React from 'react'
 //!adding main image to email?
 const EmailPage = async ({ params: { slug } }: ParamsProps) => {
     const session = await getServerSession(authOption)
-    const domain = process.env.NEXT_PUBLIC_DOMAIN
 
     if (session) {
         const data = await client.fetch(groq`*[_type == "emailContent" && slug.current == $slug][0]{

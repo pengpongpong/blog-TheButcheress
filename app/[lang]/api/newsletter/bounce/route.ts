@@ -17,7 +17,6 @@ export const POST = async (req: NextRequest) => {
         try {
             await EmailModel.findOneAndUpdate({ email: destination[i] }, { active: "blocked", error: "bounce" })
         } catch (error) {
-            console.log("Error looping bounce-recipients", error)
             return NextResponse.json({ message: "Error looping bounce-recipients", error: JSON.stringify(error) }, { status: 500 })
         }
     }

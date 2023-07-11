@@ -223,7 +223,6 @@ const EmailPreview = ({ body, title }: { body: PortableTextBlock[], title: strin
             emails: emails ?? [{ email: inputRef?.current?.value }],
             body: htmlData,
             style: style
-            // attachments: attachments,
         }
 
         setLoading(true)

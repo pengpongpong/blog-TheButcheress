@@ -6,7 +6,7 @@ import { connectToDatabase, db } from "@/components/utils/db";
 import EmailModel from "@/models/EmailModel";
 
 // send email
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const POST = async (req: NextRequest) => {
     const session = await getServerSession(authOption)
 
     if (session) {
@@ -18,7 +18,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         if (!emails) return NextResponse.json({ message: "No recipients!" }, { status: 400 })
 
         for (let i = 0; i < emails.length; i++) {
-            console.log("route email", emails[i].email)
             try {
                 await transporter.sendMail(
                     {

@@ -9,8 +9,8 @@ import Preview from "@/components/preview/Preview"
 import RecipePreview from "./RecipePreview"
 import { groq } from "next-sanity"
 import { Lang, navQuery } from "@/sanity/lib/sanity-query"
-import Navbar from "@/components/navbar/Navbar"
 import { notFound } from "next/navigation"
+import Navbar from "@/components/navbar/Navbar"
 
 // get recipe by slug
 const recipeQuery = (lang: Lang) => {
@@ -94,7 +94,7 @@ const RecipePage = async ({ params: { lang, slug } }: ParamsProps) => {
         <>
             <Navbar navData={navData} lang={lang} />
             <Recipe pageData={data} lang={lang} />
-            <Footer lang={lang} tags={data?.tags} />
+            <Footer lang={lang} />
         </>
 }
 

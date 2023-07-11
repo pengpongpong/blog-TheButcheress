@@ -24,7 +24,7 @@ export const authOption = {
                 username: { label: "Benutzername", type: "text", placeholder: "Benutzername" },
                 password: { label: "Password", type: "password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 const userData = await getUserData(credentials) // get user data
                 const comparePassword: boolean = await bcrypt.compare(credentials?.password, userData[0].password); // check password
 
@@ -37,17 +37,6 @@ export const authOption = {
         })
     ],
     callbacks: {
-        async signIn({ user, account, profile, email, credentials }: any) {
-            const isAllowedToSignIn = true
-            if (isAllowedToSignIn) {
-                return true
-            } else {
-                // Return false to display a default error message
-                return false
-                // Or you can return a URL to redirect to:
-                // return '/unauthorized'
-            }
-        },
         async redirect({ url, baseUrl }: any) {
             // Allows relative callback URLs
             if (url.startsWith("/")) return `${baseUrl}${url}`

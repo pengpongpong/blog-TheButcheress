@@ -3,7 +3,7 @@ import React from 'react'
 import { urlFor } from "@/sanity/lib/sanity-utils"
 import { SanityImageSource } from "@sanity/image-url/lib/types/types"
 import { PortableTextBlock } from "sanity"
-import { TagsType } from "@/app/[lang]/rezepte/[slug]/Recipe"
+import { Tags, TagsType } from "@/app/[lang]/rezepte/[slug]/Recipe"
 import SocialShare from "../socials/SocialShare"
 import { Locale } from "@/app/[lang]/HomePage"
 import Blog from "./Blog"
@@ -48,14 +48,19 @@ const BlogPost = ({ pageData, lang }: BlogProps) => {
                 </h1>
                 {pageData?.image ? <Image className="mx-auto" priority style={{ width: "auto", height: "auto" }} width={1000} height={600} src={urlFor(pageData?.image).size(2560, 1440).auto("format").url()} alt="Blog image" /> : ""}
                 <SocialShare blog lang={lang} title={pageData?.title} styles={styles} />
-                <address className="mt-8 flex flex-col justify-center items-center text-lg font-text">
-                    <p>{lang === "en" ? "Published" : "Veröffentlicht am"} <time dateTime="YYYY-MM-DD">{publishedDate}</time></p>
-                    <p>{lang === "en" ? "Last updated on" : "Zuletzt geändert am"} <time dateTime="YYYY-MM-DD">{updatedDate}</time></p>
-                    <p>{lang === "en" ? "By" : "Von"} {pageData?.author}</p>
-                </address>
+                <section className="mt-8 flex flex-col justify-center items-center text-lg font-text">
+                    <address>
+                        <p>{lang === "en" ? "By" : "Von"} {pageData?.author}</p>
+                    </address>
+                    <p>{lang === "en" ? "Published" : "Veröffentlicht am"} <time dateTime={pageData?.publishedAt}>{publishedDate}</time></p>
+                    <p>{lang === "en" ? "Last updated on" : "Zuletzt geändert am"} <time dateTime={pageData?._updatedAt}>{updatedDate}</time></p>
+                </section>
             </header>
-            <main className="m-8 mb-20 lg:ml-16 lg:mr-16 lg:mb-16">
-                <Blog body={pageData?.body} />
+            <main>
+                <section className="m-8 mb-20 lg:ml-16 lg:mr-16 lg:mb-16">
+                    <Blog body={pageData?.body} />
+                </section>
+                <Tags tags={pageData?.tags} />
             </main>
         </>
     )

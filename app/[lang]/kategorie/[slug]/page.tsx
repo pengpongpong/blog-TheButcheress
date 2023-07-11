@@ -1,5 +1,5 @@
 import React, { lazy } from 'react'
-import { Metadata, ResolvingMetadata } from "next"
+import { Metadata } from "next"
 
 import { client } from "@/sanity/lib/sanity-utils"
 import { PreviewSuspense } from "next-sanity/preview";
@@ -40,7 +40,7 @@ export async function generateStaticParams() {
 }
 
 // meta data
-export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps, parent: ResolvingMetadata): Promise<Metadata> => {
+export const generateMetadata = async ({ params: { lang, slug } }: MetaDataProps): Promise<Metadata> => {
     const data = await client.fetch(categoryQuery(transformLocale(lang)), { slug })
     const text = lang === "en" ? `TheButcheress_ | Food category - ${data?.title}` : `TheButcheress_ | Nahrung Kategorie - ${data?.title}`
     const description = `TheButcheress_ | ${data?.description}`

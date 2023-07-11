@@ -1,5 +1,5 @@
 import { groq } from "next-sanity"
-import React, { lazy } from 'react'
+import React from 'react'
 import { Lang } from "@/sanity/lib/sanity-query"
 import { transformLocale } from "@/components/utils/utils"
 import { MetaDataProps, ParamsProps } from "../page"
@@ -39,8 +39,6 @@ export const generateMetadata = async ({ params: { lang } }: MetaDataProps): Pro
     }
 }
 
-const Footer = lazy(() => import("@/components/footer/Footer"))
-
 const TravelPosts = async ({ params: { lang } }: ParamsProps) => {
 
     const data = await client.fetch(travelPostsQuery(transformLocale(lang)))
@@ -51,8 +49,6 @@ const TravelPosts = async ({ params: { lang } }: ParamsProps) => {
                 blogData={data?.blogs}
                 blogType="travel"
             />
-            <Footer lang={lang} />
-
         </>
     )
 

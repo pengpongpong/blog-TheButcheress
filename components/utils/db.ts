@@ -13,7 +13,6 @@ export async function connectToDatabase(): Promise<void> {
         await mongoose.connect(MONGODB_URI as string, {
             dbName: 'TheButcheress',
         });
-        console.log('MongoDB successfully connected');
     } catch (error) {
         throw new Error(`Could not connect to MongoDB: ${error}`);
     }

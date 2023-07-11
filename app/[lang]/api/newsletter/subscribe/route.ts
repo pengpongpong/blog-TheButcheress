@@ -174,7 +174,6 @@ export const POST = async (req: NextRequest) => {
     await new Promise((resolve, reject) => {
         transporter.sendMail(mailData, (err: any, info: any) => {
             if (err) {
-                console.error(err);
                 reject(err);
                 return NextResponse.json({ message: lang === "en" ? "Could not send email. Please try again!" : "Konnte Email nicht senden. Bitter wiederholen!", error: err }, { status: 500 })
             } else {
