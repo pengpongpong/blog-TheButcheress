@@ -9,11 +9,12 @@ const LanguageSwitch = () => {
     const langCookie = getCookie("lang")
     const pathname = usePathname()
     const params = useParams()
-    const [preference, setPreference] = useState<string>("false")
+    const [preference, setPreference] = useState<boolean>(false)
 
+    // get cookie consent & set preference
     useEffect(() => {
-        const data = localStorage.getItem("cookie-preference")
-        setPreference(data!)
+        const consentCookie = getCookie("cookie-preference")
+        setPreference(Boolean(consentCookie))
     }, [])
 
     const consent = useConsentStore((state) => state.consent)
@@ -37,9 +38,9 @@ const LanguageSwitch = () => {
         }
     }
 
-    //set cookie for language preference for 1 year
+    //set cookie for language preference for 1 year if cookie consent
     const setLang = () => {
-        if (preference === "true" || consent) {
+        if (preference === true || consent) {
             if (langCookie === "en" || !langCookie && params.lang === "en") {
                 setCookie("lang", "de", { maxAge: 60 * 60 * 24 * 365 })
             } else {

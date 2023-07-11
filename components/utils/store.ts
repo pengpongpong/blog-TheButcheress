@@ -41,11 +41,11 @@ export const useQueryStore = create<QueryStore>((set) => ({
 }))
 
 interface ConsentStore {
-    consent: boolean | null,
+    consent: boolean,
     setConsent: (current: boolean) => void
 }
 
 export const useConsentStore = create<ConsentStore>((set) => ({
-    consent: null,
+    consent: false,
     setConsent: (current) => set(() => ({ consent: current }))
 }))

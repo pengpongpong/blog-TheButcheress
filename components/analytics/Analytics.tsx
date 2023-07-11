@@ -1,14 +1,22 @@
 "use client"
 import { getCookie } from "cookies-next"
 import Script from "next/script"
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useConsentStore } from "../utils/store"
 
+const setConsent = (current: boolean) => {
+    useConsentStore.getState().setConsent(current)
+}
 
-const Analytics = async () => {
+const Analytics = () => {
     const token = process.env.NEXT_PUBLIC_TINYBIRD
-    const consent = await getCookie("cookie-preference")
-    
-    console.log(consent)
+    const consent = useConsentStore(state => state.consent)
+
+    // get consent cookie & set consent state
+    useEffect(() => {
+        const cookieConsent = getCookie("cookie-preference")
+        setConsent(Boolean(cookieConsent))
+    }, [])
 
     return (
         <>

@@ -6,7 +6,7 @@ import Negotiator from 'negotiator'
 const locales = ['en', 'de']
 
 // Get the preferred locale
-function getLocale(request: NextRequest) {
+function getLocale() {
     let headers = { 'accept-language': 'de,en;q=0.5' }
     let languages = new Negotiator({ headers }).languages()
     let defaultLocale = 'de'
@@ -30,7 +30,7 @@ export function middleware(request: NextRequest) {
                 new URL(`/${cookie.value}${pathname}`, request.url)
             )
         }
-        const locale = getLocale(request)
+        const locale = getLocale()
 
         return NextResponse.redirect(
             new URL(`/${locale}${pathname}`, request.url)

@@ -138,13 +138,13 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
       if (obj.order && !obj.submenus) {
         return {
           title: `${obj.title}`,
-          url: `${!obj.slug ? "" : obj.slug}`,
+          url: `${!obj.slug ? "" : `${lang}/${obj.slug}`}`,
           main: true
         }
       } else if (obj.order && obj.submenus) {
         return {
           title: `${obj.title}`,
-          url: `${obj.slug}`,
+          url: `${lang}/${obj.slug}`,
           dropContent: navStructure(obj.submenus!),
           main: true
         }
@@ -152,7 +152,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
       else if (obj.slug && !obj.order && !obj.submenus) {
         return {
           title: `${obj.title}`,
-          url: `${obj.slug}`
+          url: `${lang}/${obj.slug}`
         }
       }
       else {
