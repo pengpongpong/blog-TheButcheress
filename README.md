@@ -1,3 +1,3 @@
 # TheButcheress_ blog
 
-TheButcheress_ blog soon available under https://thebutcheress.me
+TheButcheress_ blog soon [here](https://thebutcheress.me) available! 

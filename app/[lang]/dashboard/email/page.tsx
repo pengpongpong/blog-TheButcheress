@@ -7,6 +7,7 @@ import { authOption } from "../../api/auth/[...nextauth]/route"
 import SignIn from "@/components/auth/SignIn"
 import Link from "next/link"
 import CardContainer from "@/components/card/Card"
+import { ParamsProps } from "../../page"
 
 const getData = async () => {
     const query = (groq`*[_type == "emailContent"]{
@@ -19,7 +20,7 @@ const getData = async () => {
     return await client.fetch(query)
 }
 
-const EmailsPage = async () => {
+const EmailsPage = async ({ params: { lang } }: ParamsProps) => {
     const session = await getServerSession(authOption)
 
     if (session) {
@@ -32,7 +33,7 @@ const EmailsPage = async () => {
                 </header>
                 <section className="flex flex-col justify-center items-center gap-8">
                     <Link className="btn btn-primary" href="/de/dashboard">Back to dashboard</Link>
-                    <CardContainer data={data} />
+                    <CardContainer data={data} lang={lang} />
                 </section>
             </main>
         )

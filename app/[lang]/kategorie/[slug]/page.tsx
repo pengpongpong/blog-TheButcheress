@@ -76,12 +76,12 @@ const CategoryPage = async ({ params: { lang, slug } }: ParamsProps) => {
     return isEnabled ? (
         <>
             <PreviewSuspense fallback="Ladet Preview...">
-                <CategoryPreview pageQuery={categoryQuery(transformLocale(lang))} queryParams={{ slug }} />
+                <CategoryPreview pageQuery={categoryQuery(transformLocale(lang))} queryParams={{ slug }} lang={lang} />
             </PreviewSuspense>
         </>
     ) :
         <>
-            <Category pageData={data} />
+            <Category pageData={data} lang={lang} />
         </>
 
 }
