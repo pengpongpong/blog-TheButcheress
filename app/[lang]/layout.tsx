@@ -9,12 +9,12 @@ const domain = process.env.NEXT_PUBLIC_DOMAIN
 export const metadata = {
   metadataBase: new URL(`${domain}`),
   robots: {
-    index: false,
+    index: true,
     follow: true,
     nocache: true,
     googleBot: {
       index: true,
-      follow: false,
+      follow: true,
       noimageindex: true,
       'max-video-preview': -1,
       'max-image-preview': 'large',
@@ -22,7 +22,6 @@ export const metadata = {
     },
   },
   category: "blog",
-  httpEquiv: "test"
 }
 
 
