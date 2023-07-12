@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { getCookie, setCookie } from 'cookies-next';
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
@@ -7,17 +7,10 @@ import { useConsentStore } from "../utils/store";
 
 const LanguageSwitch = () => {
     const langCookie = getCookie("lang")
+    const functionalCookie = getCookie("cookie-functional")
+    const functionalConsent = useConsentStore(state => state.functionalConsent)
     const pathname = usePathname()
     const params = useParams()
-    const [preference, setPreference] = useState<boolean>(false)
-
-    // get cookie consent & set preference
-    useEffect(() => {
-        const consentCookie = getCookie("cookie-preference")
-        setPreference(Boolean(consentCookie))
-    }, [])
-
-    const consent = useConsentStore((state) => state.consent)
 
     //get updated url for other language de/en
     const getUrl = (): string => {
@@ -40,7 +33,7 @@ const LanguageSwitch = () => {
 
     //set cookie for language preference for 1 year if cookie consent
     const setLang = () => {
-        if (preference === true || consent) {
+        if (functionalCookie === true || functionalConsent === true) {
             if (langCookie === "en" || !langCookie && params.lang === "en") {
                 setCookie("lang", "de", { maxAge: 60 * 60 * 24 * 365 })
             } else {

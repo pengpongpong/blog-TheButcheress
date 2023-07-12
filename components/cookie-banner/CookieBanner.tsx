@@ -1,43 +1,76 @@
 "use client"
 import { Locale } from "@/app/[lang]/HomePage"
 import Link from "next/link"
-import React, { useEffect, useState } from 'react'
-import CookieModal from "./CookieModal"
+import React, { useEffect } from 'react';
 import Image from "next/image"
 import CookieIcon from "/public/icons/bx-cookie.svg"
-import { useConsentStore } from "../utils/store"
 import { getCookie, setCookie } from "cookies-next"
+import { useConsentStore } from "../utils/store";
+import CookieModal from "./CookieModal";
 
-const setConsent = (current: boolean) => {
-    useConsentStore.getState().setConsent(current)
+
+
+// set analytics consent state
+export const setAnalyticsConsent = (bool: boolean) => {
+    useConsentStore.getState().setAnalyticsConsent(bool)
+}
+
+// set functional consent state
+export const setFunctionalConsent = (bool: boolean) => {
+    useConsentStore.getState().setFunctionalConsent(bool)
+}
+
+// open cookie banner dialog
+export const setOpen = (bool: boolean) => {
+    useConsentStore.getState().setOpen(bool)
+}
+
+export const setShowBanner = (bool: boolean) => {
+    useConsentStore.getState().setShowBanner(bool)
+}
+
+// accept consent
+export const acceptConsent = () => {
+    setCookie("cookie-preference", "true")
+    setCookie("cookie-functional", "true")
+    setCookie("cookie-analytics", "true")
+    setFunctionalConsent(true)
+    setAnalyticsConsent(true)
+
+    setOpen(false);
+    setShowBanner(false)
+}
+
+// deny consent
+export const denyConsent = () => {
+    setCookie("cookie-preference", "true")
+    setAnalyticsConsent(false)
+    setFunctionalConsent(false)
+
+    setOpen(false);
+    setShowBanner(false)
 }
 
 const CookieBanner = ({ lang }: { lang: Locale }) => {
-    const [showBanner, setShowBanner] = useState(false)
+    const showBanner = useConsentStore(state => state.showBanner)
 
     // show cookie banner if no consent cookie
     useEffect(() => {
         const data = getCookie("cookie-preference")
 
-        if (data === true || data === false) {
-            setShowBanner(false)
-        } else {
-            setShowBanner(true)
-        }
+        if (data === true) return setShowBanner(false)
 
+        setShowBanner(true)
     }, [])
 
-    const acceptConsent = () => {
-        setCookie("cookie-preference", "true")
-        setConsent(true)
-        setShowBanner(false)
-    }
 
-    const denyConsent = () => {
-        setCookie("cookie-preference", "false")
-        setConsent(false)
-        setShowBanner(false)
-    }
+
+    // open modal advanced setting
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+
 
     return (
         <>
@@ -51,10 +84,12 @@ const CookieBanner = ({ lang }: { lang: Locale }) => {
                 </span>
                 <div>
                     <button className="btn btn-sm btn-secondary" onClick={denyConsent}>Deny</button>
-                    <CookieModal />
+                    <button className="btn btn-sm btn-secondary" onClick={handleClickOpen}>Preference</button>
                     <button className="btn btn-sm btn-accent" onClick={acceptConsent}>Accept</button>
+                    <CookieModal/>
                 </div>
-            </div> : ""}
+            </div > : ""
+            }
         </>
     )
 }

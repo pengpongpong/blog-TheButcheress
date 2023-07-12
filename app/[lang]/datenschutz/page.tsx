@@ -5,6 +5,7 @@ import { Lang } from "@/sanity/lib/sanity-query"
 import { groq } from "next-sanity"
 import { client } from "@/sanity/lib/sanity-utils"
 import { transformLocale } from "@/components/utils/utils"
+import CookieBannerSettings from "./CookieBannerSettings"
 
 export const Headline = ({ children, title }: { children: ReactNode, title: string }) => {
     return (
@@ -80,6 +81,7 @@ const PrivacyPolicyPage = async ({ params: { lang } }: ParamsProps) => {
                         </Headline>
                     )
                 })}
+                <CookieBannerSettings/>
             </main>
         </>
 

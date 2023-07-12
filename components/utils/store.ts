@@ -40,12 +40,25 @@ export const useQueryStore = create<QueryStore>((set) => ({
     setLoading: (current) => set(() => ({ loading: current }))
 }))
 
-interface ConsentStore {
-    consent: boolean,
-    setConsent: (current: boolean) => void
+// handle consent for cookie banner & language switch
+interface useConsentStore {
+    analyticsConsent: boolean,
+    functionalConsent: boolean,
+    open: boolean,
+    showBanner: boolean,
+    setShowBanner: (current: boolean) => void
+    setOpen: (current: boolean) => void
+    setAnalyticsConsent: (current: boolean) => void
+    setFunctionalConsent: (current: boolean) => void
 }
 
-export const useConsentStore = create<ConsentStore>((set) => ({
-    consent: false,
-    setConsent: (current) => set(() => ({ consent: current }))
+export const useConsentStore = create<useConsentStore>((set) => ({
+    analyticsConsent: false,
+    functionalConsent: false,
+    open: false,
+    showBanner: false,
+    setShowBanner: (current) => set(() => ({ showBanner: current })),
+    setOpen: (current) => set(() => ({ open: current })),
+    setAnalyticsConsent: (current) => set(() => ({ analyticsConsent: current })),
+    setFunctionalConsent: (current) => set(() => ({ functionalConsent: current })),
 }))

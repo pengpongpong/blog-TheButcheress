@@ -4,17 +4,18 @@ import Script from "next/script"
 import React, { useEffect } from 'react'
 import { useConsentStore } from "../utils/store"
 
-const setConsent = (current: boolean) => {
-    useConsentStore.getState().setConsent(current)
+const setConsent = (bool: boolean) => {
+    useConsentStore.getState().setAnalyticsConsent(bool)
 }
 
 const Analytics = () => {
     const token = process.env.NEXT_PUBLIC_TINYBIRD
-    const consent = useConsentStore(state => state.consent)
+    const consent = useConsentStore(state => state.analyticsConsent)
 
     // get consent cookie & set consent state
     useEffect(() => {
-        const cookieConsent = getCookie("cookie-preference")
+        const cookieConsent = getCookie("cookie-analytics")
+
         setConsent(Boolean(cookieConsent))
     }, [])
 

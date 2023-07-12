@@ -138,7 +138,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
       if (obj.order && !obj.submenus) {
         return {
           title: `${obj.title}`,
-          url: `${!obj.slug ? "" : `${lang}/${obj.slug}`}`,
+          url: `${!obj.slug ? `${lang}` : `${lang}/${obj.slug}`}`,
           main: true
         }
       } else if (obj.order && obj.submenus) {
