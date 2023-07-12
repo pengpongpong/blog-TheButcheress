@@ -1,3 +1,3 @@
 # TheButcheress_ blog
 
-under construction
+TheButcheress_ blog soon available under https://thebutcheress.me
