@@ -56,6 +56,7 @@ const BlogPosts = async ({ params: { lang } }: ParamsProps) => {
             <BlogContainer
                 title={data?.title}
                 blogData={data?.blogs}
+                lang={lang}
             />
         </>
     )

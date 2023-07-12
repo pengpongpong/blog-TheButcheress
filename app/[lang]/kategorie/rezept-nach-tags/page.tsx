@@ -53,7 +53,7 @@ const RecipeByTagsPage = async ({ params: { lang } }: ParamsProps) => {
             <header>
                 <h1 className="mb-8 lg:mb-20 text-center text-5xl lg:text-8xl font-headline">{lang === "en" ? "Recipes by tags" : "Rezepte nach Tags"}</h1>
             </header>
-            <RecipeByTags tags={data} lang={transformLocale(lang)} />
+            <RecipeByTags tags={data} lang={lang} />
         </>
     )
 }

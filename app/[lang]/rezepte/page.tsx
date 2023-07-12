@@ -61,7 +61,7 @@ const RecipesPage = async ({ params: { lang } }: ParamsProps) => {
                 </h1>
             </header>
             <main className="m-8">
-                <CardContainer data={pageData} />
+                <CardContainer data={pageData} lang={lang}/>
             </main>
             <Footer lang={lang} />
         </>

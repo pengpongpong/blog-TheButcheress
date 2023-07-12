@@ -1,15 +1,15 @@
 "use client"
 import React, { lazy } from 'react'
 
-import { Lang } from "@/sanity/lib/sanity-query"
 import TagInputs, { TagsProps } from "./TagInputs"
 import { transformLocale } from "@/components/utils/utils"
 import { useQueryStore } from "@/components/utils/store"
 import Loading from "@/components/loading/Loading"
+import { Locale } from "../../HomePage"
 
 export interface RecipeByTagsProps {
     tags: TagsProps[];
-    lang: Lang
+    lang: Locale
 }
 
 const CardContainer = lazy(() => import("@/components/card/Card"))
@@ -26,7 +26,7 @@ const RecipeByTags = ({ tags, lang }: RecipeByTagsProps) => {
                     lang={transformLocale(lang)}
                 />
                 <section>
-                    {loading ? <Loading /> : <CardContainer data={data} />}
+                    {loading ? <Loading /> : <CardContainer data={data} lang={lang}/>}
                 </section>
             </main>
         </>
