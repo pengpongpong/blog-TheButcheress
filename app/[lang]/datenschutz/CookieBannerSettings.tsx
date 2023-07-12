@@ -8,7 +8,7 @@ const CookieBannerSettings = () => {
 
     return (
         <div>
-            <button className="mt-4 btn btn-outline" onClick={handleCookieModal}>Change cookie preference here</button>
+            <button className="mt-4 btn btn-outline hover:bg-primary hover:text-neutral" onClick={handleCookieModal}>Change cookie preference here</button>
             <CookieModal/>
         </div>
     )
