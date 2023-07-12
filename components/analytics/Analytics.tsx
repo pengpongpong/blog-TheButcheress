@@ -8,6 +8,7 @@ const setConsent = (bool: boolean) => {
     useConsentStore.getState().setAnalyticsConsent(bool)
 }
 
+// tinybird analytics
 const Analytics = () => {
     const token = process.env.NEXT_PUBLIC_TINYBIRD
     const consent = useConsentStore(state => state.analyticsConsent)
@@ -15,9 +16,14 @@ const Analytics = () => {
     // get consent cookie & set consent state
     useEffect(() => {
         const cookieConsent = getCookie("cookie-analytics")
+        const tinyBirdScript = document.getElementById("tinybird")
 
+        // remove script if it is present in DOM instead refresh
+        if (!cookieConsent && tinyBirdScript) {
+            tinyBirdScript.remove()
+        }
         setConsent(Boolean(cookieConsent))
-    }, [])
+    }, [consent])
 
     return (
         <>

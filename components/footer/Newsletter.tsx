@@ -27,8 +27,8 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
 
     return (
         <div className="flex flex-col text-center lg:text-left">
-            <span className="ml-2 footer-title">Newsletter</span>
-            <form className="flex flex-col gap-4 md:flex-row md:justify-center" onSubmit={onSubmit}>
+            <span className="ml-1 mb-3 footer-title tracking-wider">Newsletter</span>
+            <form className="flex flex-col md:flex-row md:justify-center" onSubmit={onSubmit}>
                 <input
                     type="email"
                     name="email"
@@ -38,13 +38,13 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
                     autoComplete="email"
                     ref={newsletterInput}
                 />
-                <button className="btn-outline btn hover:bg-primary hover:text-neutral">
+                <button className="ml-4 btn-outline btn hover:bg-primary hover:text-neutral">
                     Subscribe
                 </button>
             </form>
-            {message ? <span className="my-2 ml-2 text-success">{message}</span> : ""}
-            {error ? <span className="my-2 ml-2 text-error">{error}</span> : ""}
-            <span className="ml-2 mt-2">{lang === "en" ? "Stay in contact!" : "Bleibe in Kontakt!"} </span>
+            {message ? <span className="my-2text-success">{message}</span> : ""}
+            {error ? <span className="my-2 text-error">{error}</span> : ""}
+            <span className="mt-3 ml-1">{lang === "en" ? "Stay in contact!" : "Bleibe in Kontakt!"} </span>
         </div>
     )
 }

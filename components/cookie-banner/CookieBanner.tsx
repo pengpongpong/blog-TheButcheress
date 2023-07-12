@@ -4,11 +4,9 @@ import Link from "next/link"
 import React, { useEffect } from 'react';
 import Image from "next/image"
 import CookieIcon from "/public/icons/bx-cookie.svg"
-import { getCookie, setCookie } from "cookies-next"
+import { deleteCookie, getCookie, setCookie } from "cookies-next"
 import { useConsentStore } from "../utils/store";
 import CookieModal from "./CookieModal";
-
-
 
 // set analytics consent state
 export const setAnalyticsConsent = (bool: boolean) => {
@@ -25,12 +23,18 @@ export const setOpen = (bool: boolean) => {
     useConsentStore.getState().setOpen(bool)
 }
 
+// show/hide cookie banner
 export const setShowBanner = (bool: boolean) => {
     useConsentStore.getState().setShowBanner(bool)
 }
 
+// open cookie modal preference setting
+export const handleCookieModal = () => {
+    setOpen(true);
+};
+
 // accept consent
-export const acceptConsent = () => {
+const acceptConsent = () => {
     setCookie("cookie-preference", "true")
     setCookie("cookie-functional", "true")
     setCookie("cookie-analytics", "true")
@@ -44,6 +48,10 @@ export const acceptConsent = () => {
 // deny consent
 export const denyConsent = () => {
     setCookie("cookie-preference", "true")
+    deleteCookie("cookie-functional")
+    deleteCookie("cookie-analytics");
+    deleteCookie("lang")
+    
     setAnalyticsConsent(false)
     setFunctionalConsent(false)
 
@@ -63,15 +71,6 @@ const CookieBanner = ({ lang }: { lang: Locale }) => {
         setShowBanner(true)
     }, [])
 
-
-
-    // open modal advanced setting
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-
-
     return (
         <>
             {showBanner ? <div className={`flex alert bg-primary fixed bottom-0 left-0 right-0 font-text`}>
@@ -84,9 +83,9 @@ const CookieBanner = ({ lang }: { lang: Locale }) => {
                 </span>
                 <div>
                     <button className="btn btn-sm btn-secondary" onClick={denyConsent}>Deny</button>
-                    <button className="btn btn-sm btn-secondary" onClick={handleClickOpen}>Preference</button>
+                    <button className="btn btn-sm btn-secondary" onClick={handleCookieModal}>Preference</button>
                     <button className="btn btn-sm btn-accent" onClick={acceptConsent}>Accept</button>
-                    <CookieModal/>
+                    <CookieModal />
                 </div>
             </div > : ""
             }

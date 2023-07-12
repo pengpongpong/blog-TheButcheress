@@ -1,4 +1,5 @@
-import React, { ReactElement, Ref, forwardRef, useRef } from 'react';
+"use client"
+import React, { ReactElement, Ref, forwardRef, useEffect, useRef } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -6,8 +7,8 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { ThemeProvider, createTheme } from "@mui/material";
 import { useConsentStore } from "../utils/store";
-import { acceptConsent, denyConsent, setAnalyticsConsent, setFunctionalConsent, setOpen, setShowBanner } from "./CookieBanner";
-import { setCookie } from "cookies-next";
+import { denyConsent, setAnalyticsConsent, setFunctionalConsent, setOpen, setShowBanner } from "./CookieBanner";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 // styles for dialog modal
 const theme = createTheme({
@@ -43,9 +44,38 @@ const Transition = forwardRef(function Transition(
 });
 
 export default function CookieModal() {
-    const cookieFunctionalRef = useRef<HTMLInputElement>(null)
-    const cookieAnalyticsRef = useRef<HTMLInputElement>(null)
-    const open = useConsentStore(state => state.open)
+    const open = useConsentStore(state => state.open) // open state for dialog modal
+    const cookieFunctionalState = useConsentStore(state => state.functionalConsent)
+    const cookieAnalyticsState = useConsentStore(state => state.analyticsConsent)
+
+    const inputFunctionalRef = useRef<HTMLInputElement>(null)
+    const inputAnalyticsRef = useRef<HTMLInputElement>(null)
+
+    const cookieFunctional = getCookie("cookie-functional")
+    const cookieAnalytics = getCookie("cookie-analytics")
+    const cookiePreference = getCookie("cookie-preference")
+
+    // if cookies detected then set state in consent-store and set input checked value to state
+    useEffect(() => {
+        if (cookieFunctional) setFunctionalConsent(true)
+        if (cookieAnalytics) setAnalyticsConsent(true)
+        if (inputFunctionalRef.current && inputAnalyticsRef.current) {
+            inputFunctionalRef.current.checked = cookieFunctionalState
+            inputAnalyticsRef.current.checked = cookieAnalyticsState
+        }
+    }, [cookieFunctionalState, cookieAnalyticsState, cookieFunctional, cookieAnalytics, cookiePreference])
+
+    // accept all consent
+    const acceptConsent = () => {
+        setCookie("cookie-preference", "true")
+        setCookie("cookie-functional", "true")
+        setCookie("cookie-analytics", "true")
+        setFunctionalConsent(true)
+        setAnalyticsConsent(true)
+
+        setOpen(false);
+        setShowBanner(false)
+    }
 
     // close modal & accept advanced setting
     const handleClose = () => {
@@ -54,17 +84,19 @@ export default function CookieModal() {
 
     // accept user setting consent
     const acceptAdvancedConsent = () => {
-        const functionalConsent = cookieFunctionalRef?.current?.checked
-        const analyticsConsent = cookieAnalyticsRef?.current?.checked
+        const functionalConsent = inputFunctionalRef?.current?.checked
+        const analyticsConsent = inputAnalyticsRef?.current?.checked
 
         setCookie("cookie-preference", "true")
-        
-        // !change to delete cookie!
+
         if (functionalConsent === true) {
             setCookie("cookie-functional", "true")
             setFunctionalConsent(true)
         } else {
-            setCookie("cookie-functional", "false")
+            if (cookieFunctional) {
+                deleteCookie("cookie-functional")
+                deleteCookie("lang")
+            }
             setFunctionalConsent(false)
         }
 
@@ -72,7 +104,7 @@ export default function CookieModal() {
             setCookie("cookie-analytics", "true")
             setAnalyticsConsent(true)
         } else {
-            setCookie("cookie-analytics", "false")
+            if (cookieAnalytics) deleteCookie("cookie-analytics");
             setAnalyticsConsent(false)
         }
 
@@ -105,14 +137,14 @@ export default function CookieModal() {
                             <fieldset>
                                 <label className="cursor-pointer label mb-2 mt-4 font-bold">
                                     <span className="label-text text-xl">Functional cookies</span>
-                                    <input type="checkbox" className="checkbox checkbox-accent" ref={cookieFunctionalRef} />
+                                    <input type="checkbox" className="checkbox checkbox-accent" defaultChecked={!cookiePreference ? true : Boolean(cookieFunctional)} ref={inputFunctionalRef} />
                                 </label>
                                 <p className="w-4/5 ml-1">Preference cookies enable a website to remember information that changes the way the website behaves or looks, like your preferred language.</p>
                             </fieldset>
                             <fieldset>
                                 <label className="cursor-pointer label mb-2 mt-4 font-bold">
                                     <span className="label-text text-xl">Analytics cookies cookies</span>
-                                    <input type="checkbox" className="checkbox checkbox-accent" ref={cookieAnalyticsRef} />
+                                    <input type="checkbox" className="checkbox checkbox-accent" defaultChecked={Boolean(cookieAnalytics) ?? false} ref={inputAnalyticsRef} />
                                 </label>
                                 <p className="w-4/5 ml-1">Analytics cookies help website owners to understand how visitors interact with websites by collecting and reporting information anonymously.</p>
                             </fieldset>

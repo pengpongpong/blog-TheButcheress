@@ -39,7 +39,7 @@ export default async function RootLayout({
   return (
     <html lang={`${params.lang ?? "de"}`}>
       <Analytics />
-
+      
       <body className="min-h-screen flex flex-col">
         {children}
         <CookieBanner lang={params.lang} />
