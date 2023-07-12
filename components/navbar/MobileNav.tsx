@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import { Slide } from "@mui/material";
 import { MenuListType } from "./Navbar";
 import Link from "next/link";
+import { Locale } from "@/app/[lang]/HomePage";
 
 const style = "w-full h-full p-14 py-24 bg-primary font-text text-3xl md:text-5xl md:p-20 md:py-32 absolute" // styles for container
 
@@ -77,14 +78,14 @@ const ChildModal = ({ children, title, setOpenMain }: { children: ReactNode, tit
     );
 }
 
-export const SubMenu = ({ list, setOpenMain }: MenuListType & SetOpenMain) => {
+export const SubMenu = ({ list, setOpenMain, lang }: MenuListType & SetOpenMain & { lang: Locale }) => {
     const listStyle = "mb-8"
     const items = list.map(obj => {
         if (obj.dropContent) {
             return (
                 <li className={listStyle} key={obj.title}>
                     <ChildModal title={obj.title} setOpenMain={setOpenMain}>
-                        <SubMenu list={obj.dropContent} setOpenMain={setOpenMain}/>
+                        <SubMenu list={obj.dropContent} setOpenMain={setOpenMain} lang={lang} />
                     </ChildModal>
                 </li>
             )
@@ -97,7 +98,7 @@ export const SubMenu = ({ list, setOpenMain }: MenuListType & SetOpenMain) => {
         } else if (!obj.main && !obj.dropContent) {
             return (
                 <li className={listStyle} key={obj.title}>
-                    <Link href={`/kategorie/${obj.url}`}>{obj.title}</Link>
+                    <Link href={`/${lang}/kategorie/${obj.url}`}>{obj.title}</Link>
                 </li>
             )
         }
@@ -110,7 +111,7 @@ export const SubMenu = ({ list, setOpenMain }: MenuListType & SetOpenMain) => {
     )
 }
 
-const MobileNav = ({ list }: MenuListType) => {
+const MobileNav = ({ list, lang }: MenuListType & { lang: Locale }) => {
     const [open, setOpen] = useState(false);
     const pathname = usePathname()
 
@@ -158,7 +159,7 @@ const MobileNav = ({ list }: MenuListType) => {
                                 <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
                             </svg>
                         </button>
-                        <SubMenu list={list} setOpenMain={setOpen}/>
+                        <SubMenu list={list} setOpenMain={setOpen} lang={lang} />
                     </Box>
                 </Slide>
             </Modal>

@@ -32,7 +32,7 @@ export type MenuListType = {
 
 
 //desktop navbar
-const DesktopNav = ({ list }: MenuListType) => {
+const DesktopNav = ({ list, lang }: MenuListType & { lang: Locale }) => {
 
   const mainNavItems = list?.map(item => {
     if (item.dropContent && item.main) {
@@ -50,7 +50,7 @@ const DesktopNav = ({ list }: MenuListType) => {
               <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
             </svg>
           </Link>
-          <MenuList list={item.dropContent} />
+          <MenuList list={item.dropContent} lang={lang} />
         </li>
       )
     } else if (item.dropContent && !item.main) {
@@ -68,7 +68,7 @@ const DesktopNav = ({ list }: MenuListType) => {
               <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
             </svg>
           </span>
-          <MenuList list={item.dropContent} />
+          <MenuList list={item.dropContent} lang={lang} />
         </li>
       )
     } else if (item.main) {
@@ -96,7 +96,7 @@ const DesktopNav = ({ list }: MenuListType) => {
 }
 
 //creates list for dropdown menu desktop navbar
-const MenuList = ({ list }: MenuListType) => {
+const MenuList = ({ list, lang }: MenuListType & { lang: Locale }) => {
   const items = list.map((obj: MenuListInterface) => {
     if (obj.dropContent) {
       return (
@@ -113,13 +113,13 @@ const MenuList = ({ list }: MenuListType) => {
               <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
             </svg>
           </span>
-          <MenuList list={obj.dropContent} />
+          <MenuList list={obj.dropContent} lang={lang} />
         </li>
       );
     } else {
       return (
         <li key={obj.title}>
-          <Link href={`/kategorie/${obj.url}`}>{obj.title}</Link>
+          <Link href={`/${lang}/kategorie/${obj.url}`}>{obj.title}</Link>
         </li>
       );
     }
@@ -152,7 +152,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
       else if (obj.slug && !obj.order && !obj.submenus) {
         return {
           title: `${obj.title}`,
-          url: `${lang}/${obj.slug}`
+          url: `${obj.slug}`
         }
       }
       else {
@@ -175,12 +175,12 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
             TheButcheress_
           </Link>
           <nav>
-            <MobileNav list={structure} />
+            <MobileNav list={structure} lang={lang} />
           </nav>
         </nav>
         <Socials />
         <nav className="flex justify-center items-center gap-8">
-          <Link href="/suche"><Image alt="search icon" style={{width: "24", height: "24"}} src={SearchIcon} /></Link>
+          <Link href={`/${lang}/suche`}><Image alt="search icon" style={{ width: "24", height: "24" }} src={SearchIcon} /></Link>
           <LanguageSwitch />
         </nav>
       </header>
@@ -189,7 +189,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
       <header className="hidden xl:flex navbar relative z-10 w-auto flex-col m-8">
         <nav className="w-full mb-4 justify-end">
           <nav className="mr-5 flex justify-center items-center gap-8">
-            <Link href="/suche"><Image width={30} height={30} src={SearchIcon} alt="search icon"/></Link>
+            <Link href={`/${lang}/suche`}><Image width={30} height={30} src={SearchIcon} alt="search icon" /></Link>
             <Socials />
             <LanguageSwitch />
           </nav>
@@ -199,7 +199,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
             TheButcheress_
           </Link>
           <nav>
-            <DesktopNav list={structure} />
+            <DesktopNav list={structure} lang={lang} />
           </nav>
         </nav>
       </header>
