@@ -41,4 +41,5 @@ next-env.d.ts
 # cypress
 cypress.env.json
 
+# vs code
 /.vscode
