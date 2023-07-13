@@ -1,14 +1,16 @@
 "use client"
 import React, { ReactElement, Ref, forwardRef, useEffect, useRef } from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import Slide from '@mui/material/Slide';
+import Image from "next/image";
+
 import { TransitionProps } from '@mui/material/transitions';
-import { ThemeProvider, createTheme } from "@mui/material";
+import { Button, ThemeProvider, createTheme, Slide, DialogContent, DialogActions, Dialog } from "@mui/material";
+
 import { useConsentStore } from "../utils/store";
 import { denyConsent, setAnalyticsConsent, setFunctionalConsent, setOpen, setShowBanner } from "./CookieBanner";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
+
+import cookieIcon from "/public/icons/bx-cookie.svg"
+import closeIcon from "/public/icons/bx-x-circle.svg"
 
 // styles for dialog modal
 const theme = createTheme({
@@ -19,19 +21,62 @@ const theme = createTheme({
                     padding: "1rem 0",
                     borderRadius: "0.5rem",
                     fontFamily: "Josefin Slab",
-                    backgroundColor: "#FBF7F0"
+                    backgroundColor: "#FBF7F0",
                 }
             }
         },
         MuiDialogActions: {
             styleOverrides: {
                 root: {
-                    margin: "2rem 1rem 0 0"
+                    width: "100%",
+                    margin: "2rem 1rem 0 0",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "flex-end",
+                    gap: "1rem",
+                    '@media (max-width: 600px)': {
+                        width: "auto",
+                        margin: "1rem",
+                        padding: 0,
+                        flexDirection: "column-reverse",
+                        alignItems: "center",
+                    }
+                },
+            }
+        },
+        MuiButtonBase: {
+            styleOverrides: {
+                root: {
+                    width: "auto",
+                    '@media (max-width: 600px)': {
+                        width: "100%",
+                        padding: ".6rem 0"
+                    }
+                }
+            }
+        },
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    margin: "1rem",
+                    '@media (max-width: 600px)': {
+                        margin: "0 1rem",
+                        paddingBottom: "0"
+                    }
+                }
+            }
+        },
+        MuiBackdrop: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: "rgba(0,0,0,0.2)",
+                    backdropFilter: "blur(3px)"
                 }
             }
         }
     }
 })
+
 
 // transition for dialog
 const Transition = forwardRef(function Transition(
@@ -43,14 +88,19 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
+// cookie icon for MUI buttons
+const CookieImage = () => (<Image src={cookieIcon} alt="" />)
+
 export default function CookieModal() {
     const open = useConsentStore(state => state.open) // open state for dialog modal
     const cookieFunctionalState = useConsentStore(state => state.functionalConsent)
     const cookieAnalyticsState = useConsentStore(state => state.analyticsConsent)
 
+    // refs for getting values
     const inputFunctionalRef = useRef<HTMLInputElement>(null)
     const inputAnalyticsRef = useRef<HTMLInputElement>(null)
 
+    // get cookies data
     const cookieFunctional = getCookie("cookie-functional")
     const cookieAnalytics = getCookie("cookie-analytics")
     const cookiePreference = getCookie("cookie-preference")
@@ -77,7 +127,7 @@ export default function CookieModal() {
         setShowBanner(false)
     }
 
-    // close modal & accept advanced setting
+    // close modal
     const handleClose = () => {
         setOpen(false);
     };
@@ -113,7 +163,6 @@ export default function CookieModal() {
         setShowBanner(false)
     }
 
-
     return (
         <>
             <ThemeProvider theme={theme}>
@@ -124,6 +173,9 @@ export default function CookieModal() {
                     onClose={handleClose}
                     aria-describedby="cookie-preference-setting"
                 >
+                    <button onClick={handleClose} className="absolute top-4 right-4 lg:hidden">
+                        <Image src={closeIcon} width={35} height={35} alt="" />
+                    </button>
                     <h1 className="my-4 text-center text-4xl font-bold tracking-widest" id="cookie-preference-setting">Preference</h1>
                     <DialogContent>
                         <form>
@@ -150,10 +202,10 @@ export default function CookieModal() {
                             </fieldset>
                         </form>
                     </DialogContent>
-                    <DialogActions>
-                        <button className="btn btn-sm btn-secondary" onClick={denyConsent}>Deny all</button>
-                        <button className="btn btn-sm btn-secondary" onClick={acceptAdvancedConsent}>Save user setting</button>
-                        <button className="btn btn-sm btn-accent" onClick={acceptConsent}>Accept</button>
+                    <DialogActions disableSpacing>
+                        <Button variant="contained" className="bg-secondary text-neutral" endIcon={<CookieImage />} onClick={denyConsent}>Deny All</Button>
+                        <Button variant="contained" className="bg-secondary text-neutral" endIcon={<CookieImage />} onClick={acceptAdvancedConsent}>Save Settings</Button>
+                        <Button variant="contained" className="bg-accent text-neutral" endIcon={<CookieImage />} onClick={acceptConsent}>Accept All</Button>
                     </DialogActions>
                 </Dialog>
             </ThemeProvider>

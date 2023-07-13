@@ -83,9 +83,9 @@ const CookieBanner = ({ lang }: { lang: Locale }) => {
                     we use cookies for no reason.
                 </span>
                 <div>
-                    <button className="btn btn-sm btn-secondary" onClick={denyConsent}>Deny</button>
-                    <button className="btn btn-sm btn-secondary" onClick={handleCookieModal}>Preference</button>
-                    <button className="btn btn-sm btn-accent" onClick={acceptConsent}>Accept</button>
+                    <button className="btn btn-sm btn-secondary box-shadow" onClick={denyConsent}>Deny All</button>
+                    <button className="btn btn-sm btn-secondary box-shadow" onClick={handleCookieModal}>Preference</button>
+                    <button className="btn btn-sm btn-accent box-shadow" onClick={acceptConsent}>Accept All</button>
                     <CookieModal />
                 </div>
             </div > : ""

@@ -28,7 +28,7 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
     return (
         <div className="flex flex-col text-center lg:text-left">
             <span className="ml-1 mb-3 footer-title tracking-wider">Newsletter</span>
-            <form className="flex flex-col md:flex-row md:justify-center" onSubmit={onSubmit}>
+            <form className="flex flex-col gap-4 lg:gap-0 md:flex-row md:justify-center" onSubmit={onSubmit}>
                 <input
                     type="email"
                     name="email"
@@ -38,7 +38,7 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
                     autoComplete="email"
                     ref={newsletterInput}
                 />
-                <button className="ml-4 btn-outline btn hover:bg-primary hover:text-neutral">
+                <button className="lg:ml-4 btn-outline btn hover:bg-primary hover:text-neutral box-shadow">
                     Subscribe
                 </button>
             </form>
