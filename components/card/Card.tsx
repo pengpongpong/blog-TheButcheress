@@ -34,7 +34,7 @@ const Card = ({ title, description, imageUrl, url, type, category, lang }: CardD
 
     return (
         <Link href={`/${lang}/${linkHref}`}>
-            <div className="mb-8 p-4 max-w-xs max-h-fit bg-white rounded-xl font-text">
+            <div className="mb-8 p-4 max-w-xs max-h-fit bg-white rounded-xl font-text box-shadow">
                 <p className="text-center text-2xl font-bold">{title}</p>
                 <Image className="mb-4 mt-4 mx-auto object-scale-down" loading="lazy" style={{ width: "auto", height: "auto" }} width={600} height={400} src={urlFor(imageUrl).size(600, 400).auto("format").url()} alt={title} />
                 <p className="text-center text-base font-base">{description}</p>

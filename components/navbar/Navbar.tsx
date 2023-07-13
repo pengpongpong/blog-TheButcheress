@@ -180,7 +180,7 @@ function Navbar({ navData, lang }: { lang: Locale, navData: NavigationItem[] }) 
         </nav>
         <Socials />
         <nav className="flex justify-center items-center gap-8">
-          <Link href={`/${lang}/suche`}><Image alt="search icon" style={{ width: "24", height: "24" }} src={SearchIcon} /></Link>
+          <Link href={`/${lang}/suche`}><Image alt="search icon" style={{ width: "24", height: "24" }} src={SearchIcon}/></Link>
           <LanguageSwitch />
         </nav>
       </header>

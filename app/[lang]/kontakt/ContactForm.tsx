@@ -97,7 +97,7 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
                 {errors?.textField && <Error text={errors?.textField.message} />}
             </ThemeProvider>
 
-            <input type="submit" className="w-full py-2 border border-grey hover:border-neutral text-lg font-bold rounded cursor-pointer hover:bg-primary transition duration-300" defaultValue={lang === "en" ? "Submit" : "Abschicken"} />
+            <input type="submit" className="w-full py-2 border border-grey hover:border-neutral text-lg font-bold rounded cursor-pointer hover:bg-primary transition duration-300 box-shadow" defaultValue={lang === "en" ? "Submit" : "Abschicken"} />
             {message ? <span className="my-4 font-text text-success text-center">{message}</span> : ""}
         </form>
     );

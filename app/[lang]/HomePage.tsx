@@ -92,7 +92,7 @@ const Home = ({ pageData, lang }: HomeProps) => {
                         {pageData?.introduction.content.content}
                     </p>
                     <Link
-                        className="btn-outline btn text-lg hover:bg-primary hover:text-neutral"
+                        className="btn-outline btn text-lg hover:bg-primary hover:text-neutral box-shadow"
                         href={`${links.about.url}`}
                     >
                         {links.about.text}
@@ -126,7 +126,7 @@ const Home = ({ pageData, lang }: HomeProps) => {
                                 {pageData?.recipe.content.content}
                             </p>
                             <Link
-                                className="btn-outline btn text-lg hover:bg-primary hover:text-neutral"
+                                className="btn-outline btn text-lg hover:bg-primary hover:text-neutral box-shadow"
                                 href={`${links.recipe.url}`}
                             >
                                 {links.recipe.text}
@@ -162,7 +162,7 @@ const Home = ({ pageData, lang }: HomeProps) => {
                                 {pageData?.travel.content.content}
                             </p>
                             <Link
-                                className="btn-outline btn mt-8 text-lg hover:bg-primary hover:text-neutral"
+                                className="btn-outline btn mt-8 text-lg hover:bg-primary hover:text-neutral box-shadow"
                                 href={`${links.travel.url}`}
                             >
                                 {links.travel.text}

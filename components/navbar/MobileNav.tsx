@@ -54,12 +54,12 @@ const ChildModal = ({ children, title, setOpenMain }: { children: ReactNode, tit
             >
                 <Slide direction="left" in={open} mountOnEnter unmountOnExit>
                     <Box className={style}>
-                        <button className="w-16 btn btn-square glass absolute top-6 right-6 md:top-8 md:right-28" onClick={handleClose}>
+                        <button className="w-16 btn btn-square glass absolute top-6 right-24 md:top-8 md:right-28 box-shadow" onClick={handleClose}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" className="fill-black">
                                 <path d="M21 11H6.414l5.293-5.293-1.414-1.414L2.586 12l7.707 7.707 1.414-1.414L6.414 13H21z"></path>
                             </svg>
                         </button>
-                        <button className="w-16 btn btn-square glass absolute top-6 right-6 md:top-8 md:right-8" onClick={handleCloseMain}>
+                        <button className="w-16 btn btn-square glass absolute top-6 right-6 md:top-8 md:right-8 box-shadow" onClick={handleCloseMain}>
                             <svg
                                 className="fill-black"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +130,7 @@ const MobileNav = ({ list, lang }: MenuListType & { lang: Locale }) => {
     return (
         <>
             {/* hamburger menu button */}
-            <button className="w-16 btn btn-square glass" aria-label="open navigation menu" role="navigation" onClick={handleOpen}>
+            <button className="w-16 btn btn-square glass box-shadow" aria-label="open navigation menu" role="navigation" onClick={handleOpen}>
                 <svg
                     className="fill-black"
                     xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +148,7 @@ const MobileNav = ({ list, lang }: MenuListType & { lang: Locale }) => {
                 <Slide direction="left" in={open} mountOnEnter unmountOnExit>
                     <Box className={style}>
                         {/* close button */}
-                        <button className="w-16 btn btn-square glass absolute top-6 right-6 md:top-8 md:right-8" onClick={handleClose}>
+                        <button className="w-16 btn btn-square glass absolute top-6 right-6 md:top-8 md:right-8 box-shadow" onClick={handleClose}>
                             <svg
                                 className="fill-black"
                                 xmlns="http://www.w3.org/2000/svg"

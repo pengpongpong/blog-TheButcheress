@@ -69,9 +69,9 @@ const PrivacyPolicyPage = async ({ params: { lang } }: ParamsProps) => {
     return (
         <>
             <header>
-                <h1 className="my-4 lg:mb-16 lg:mt-12 text-6xl lg:text-8xl text-center font-text">Datenschutz</h1>
+                <h1 className="my-4 xl:mb-16 xl:mt-12 text-6xl xl:text-8xl text-center font-text">Datenschutz</h1>
             </header>
-            <main className="mx-8 lg:mx-auto mb-8 lg:mb-16 lg:max-w-screen-xl font-text">
+            <main className="mx-8 xl:mx-auto mb-8 xl:mb-16 xl:max-w-screen-xl font-text">
                 {data.content.map(obj => {
                     return (
                         <Headline title={obj.title} key={obj.title}>
