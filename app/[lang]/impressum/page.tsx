@@ -57,7 +57,7 @@ const ImpressumPage = async ({ params: { lang } }: ParamsProps) => {
             <header>
                 <h1 className="my-4 lg:mb-16 lg:mt-12 text-6xl lg:text-8xl text-center font-text">Impressum</h1>
             </header>
-            <main className="mx-8 lg:mx-auto mb-8 lg:mb-16 lg:max-w-screen-xl lg:w-2/5 font-text">
+            <main className="mx-8 lg:mx-auto mb-8 lg:mb-16 lg:max-w-screen-xl lg:w-2/5 font-text flex-grow">
                 {data.content.map(obj => {
                     return (
                         <Headline title={obj.title} key={obj.title}>

@@ -33,7 +33,7 @@ const CookingTime = ({
 
   return (
     <div className={styling}>
-      <p className="pb-4 text-lg font-bold tracking-wider lg:text-2xl">
+      <p className="pb-4 text-base font-bold tracking-wider sm:text-lg md:text-xl lg:text-2xl">
         {title}
       </p>
       {servings ? (

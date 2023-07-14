@@ -79,7 +79,7 @@ interface TagsProps {
     url: string;
 }
 export const Tags = ({ tags }: { tags: TagsProps[] }) => {
-    const tagItems = tags.map((tag) => {
+    const tagItems = tags?.map((tag) => {
         return (
             <li className="py-2 px-4 bg-primary rounded-full" key={tag._id}>
                 <Link href={`/kategorie/${tag.url}`}>#{tag.title}</Link>
@@ -108,14 +108,14 @@ const Recipe = ({ pageData, lang }: RecipeProps) => {
             <main>
                 <section className="flex flex-col gap-4 font-text lg:mx-16 lg:flex-row">
                     <div className="w-full flex flex-col-reverse gap-4 lg:gap-0 lg:flex-row">
-                        <div className="max-w-full lg:max-w-fit lg:pr-8 my-auto lg:w-1/6 text-center">
+                        <section className="max-w-full lg:max-w-fit lg:pr-8 my-auto lg:w-1/6 text-center">
                             <SocialShare lang={lang} title={pageData?.title} styles={styles} />
-                        </div>
-                        <div className="mb-4 lg:mb-0 flex flex-col items-center justify-between">
+                        </section>
+                        <section className="mb-4 lg:mb-0 flex flex-col items-center justify-between">
                             <h1 className="m-4 mb-8 text-4xl tracking-wide lg:mt-8 md:text-5xl lg:text-6xl">
                                 {pageData?.title}
                             </h1>
-                            <div className="flex flex-row whitespace-pre lg:gap-8">
+                            <div className="flex flex-row whitespace-pre lg:gap-8 max-w-fit">
                                 <CookingTime
                                     hours={pageData?.prepTime?.hours}
                                     minutes={pageData?.prepTime?.minutes}
@@ -137,7 +137,7 @@ const Recipe = ({ pageData, lang }: RecipeProps) => {
                                     lang={lang}
                                 />
                             </div>
-                        </div>
+                        </section>
                     </div>
                     <picture className="mt-4 w-full lg:mt-0">
                         {pageData?.imageUrl ? < Image style={{width: "auto", height: "auto", objectFit: "cover"}} width={800} height={500} loading="lazy" src={urlFor(pageData?.imageUrl).size(2560, 1440).auto("format").url()} alt={pageData?.title} /> : ""}

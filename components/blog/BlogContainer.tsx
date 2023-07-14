@@ -16,7 +16,7 @@ const BlogContainer = ({title, blogData, lang}: BlogContainerProps) => {
                     {title}
                 </h1>
             </header>
-            <main>
+            <main className="flex-grow">
                 <CardContainer data={blogData} lang={lang}/>
             </main>
         </>

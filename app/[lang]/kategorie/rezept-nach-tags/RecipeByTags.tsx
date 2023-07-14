@@ -20,7 +20,7 @@ const RecipeByTags = ({ tags, lang }: RecipeByTagsProps) => {
 
     return (
         <>
-            <main className="flex flex-col items-center gap-16">
+            <main className="flex flex-col items-center gap-16 flex-grow">
                 <TagInputs
                     tags={tags}
                     lang={transformLocale(lang)}
