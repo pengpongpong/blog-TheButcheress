@@ -18,12 +18,12 @@ const Footer = ({ lang }: { lang: "de" | "en" }) => {
     <>
       <footer className="bg-base-200 p-8 font-text text-neutral lg:px-16 lg:py-12">
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:gap-0">
-          <div className="flex justify-between md:justify-around lg:flex-col lg:justify-start">
+          <nav className="flex justify-between md:justify-around lg:flex-col lg:justify-start">
             <FooterLink url={`${lang}/ueber-mich`} text={lang === "en" ? "About me" : "Über mich"} />
             <FooterLink url={`${lang}/kontakt`} text={lang === "en" ? "Contact" : "Kontakt"} />
             <FooterLink url={`${lang}/datenschutz`} text={lang === "en" ? "Privacy Policy" : "Datenschutz"} />
-            <FooterLink url={`${lang}/impressum`} text="Impressum" />
-          </div>
+            {/* <FooterLink url={`${lang}/impressum`} text="Impressum" /> */}
+          </nav>
           <div className="flex flex-col text-center lg:text-left">
             <span className="footer-title">Social</span>
             <Socials />

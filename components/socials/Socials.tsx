@@ -10,7 +10,7 @@ import youtubeIcon from "/public/icons/socials/bxl-youtube.svg"
 
 export const Socials = () => {
     return (
-        <div className="w-full flex items-center justify-around gap-8">
+        <nav className="w-full flex items-center justify-around gap-8">
             <Link rel="noopener noreferrer" target="_blank" href="https://www.instagram.com">
                 <Image src={instagramIcon} alt="instagram icon" />
             </Link>
@@ -29,7 +29,7 @@ export const Socials = () => {
             <Link rel="noopener noreferrer" target="_blank" href="https://www.twitch.com">
                 <Image src={twitchIcon} alt="twitch icon" />
             </Link>
-        </div>
+        </nav>
     )
 }
 

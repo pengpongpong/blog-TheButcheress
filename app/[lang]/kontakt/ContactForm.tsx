@@ -65,7 +65,7 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
 
     // submit form
     const onSubmit = handleSubmit((data) => {
-        fetch("/de/kontakt/api", { method: "POST", body: JSON.stringify({data, lang}) })
+        fetch("/de/kontakt/api", { method: "POST", body: JSON.stringify({ data, lang }) })
             .then(res => res.json())
             .then(result => {
                 if (result.message === "success") {
@@ -86,19 +86,21 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
 
     return (
         <form onSubmit={onSubmit} className="mx-4 md:mx-8 lg:mx-auto w-auto lg:w-3/5 xl:w-2/5 flex flex-col font-text">
-            <ThemeProvider theme={theme}>
-                <TextField style={{ marginBottom: "1rem" }} {...register("name")} id="outlined-basic" label="Name" variant="outlined" inputProps={{ classes: { input: "font-headline" } }} />
-                {errors?.name && <Error text={errors?.name.message} />}
+            <fieldset>
+                <ThemeProvider theme={theme}>
+                    <TextField style={{ marginBottom: "1rem" }} {...register("name")} id="outlined-basic" label="Name" variant="outlined" inputProps={{ classes: { input: "font-headline" } }} />
+                    {errors?.name && <Error text={errors?.name.message} />}
 
-                <TextField style={{ marginBottom: "1rem" }} {...register("email")} id="outlined-basic" label="Email" variant="outlined" />
-                {errors?.email && <Error text={errors?.email.message} />}
+                    <TextField style={{ marginBottom: "1rem" }} {...register("email")} id="outlined-basic" label="Email" variant="outlined" />
+                    {errors?.email && <Error text={errors?.email.message} />}
 
-                <TextField style={{ marginBottom: "1rem" }} {...register("textField")} label={lang === "en" ? "Message" : "Nachricht"} multiline rows={7} />
-                {errors?.textField && <Error text={errors?.textField.message} />}
-            </ThemeProvider>
+                    <TextField style={{ marginBottom: "1rem" }} {...register("textField")} label={lang === "en" ? "Message" : "Nachricht"} multiline rows={7} />
+                    {errors?.textField && <Error text={errors?.textField.message} />}
+                </ThemeProvider>
 
-            <input type="submit" className="w-full py-2 border border-grey hover:border-neutral text-lg font-bold rounded cursor-pointer hover:bg-primary transition duration-300 box-shadow" defaultValue={lang === "en" ? "Submit" : "Abschicken"} />
-            {message ? <span className="my-4 font-text text-success text-center">{message}</span> : ""}
+                <input type="submit" className="w-full py-2 border border-grey hover:border-neutral text-lg font-bold rounded cursor-pointer hover:bg-primary transition duration-300 box-shadow" defaultValue={lang === "en" ? "Submit" : "Abschicken"} />
+                {message ? <span className="my-4 font-text text-success text-center">{message}</span> : ""}
+            </fieldset>
         </form>
     );
 }

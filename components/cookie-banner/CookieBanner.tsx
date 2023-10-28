@@ -73,7 +73,7 @@ const CookieBanner = ({ lang }: { lang: Locale }) => {
 
     return (
         <>
-            {showBanner ? <div className={`flex alert bg-primary fixed bottom-0 left-0 right-0 font-text`}>
+            {showBanner ? <div className="flex alert bg-primary fixed bottom-0 left-0 right-0 font-text">
                 <Link className="hover:underline" href={lang === "en" ? "/en/datenschutz" : "/de/datenschutz"} title={`${lang === "en" ? "Go to privacy policy" : "Gehe zu Datenschutz"}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span>{lang === "en" ? "Privacy policy" : "Datenschutz"}</span>
