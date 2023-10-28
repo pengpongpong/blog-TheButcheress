@@ -85,8 +85,8 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
     }, [isSubmitSuccessful, reset])
 
     return (
-        <form onSubmit={onSubmit} className="mx-4 md:mx-8 lg:mx-auto w-auto lg:w-3/5 xl:w-2/5 flex flex-col font-text">
-            <fieldset>
+        <form onSubmit={onSubmit} className="mx-4 md:mx-8 lg:mx-auto w-auto lg:w-3/5 xl:w-2/5 font-text">
+            <fieldset className="flex flex-col">
                 <ThemeProvider theme={theme}>
                     <TextField style={{ marginBottom: "1rem" }} {...register("name")} id="outlined-basic" label="Name" variant="outlined" inputProps={{ classes: { input: "font-headline" } }} />
                     {errors?.name && <Error text={errors?.name.message} />}
