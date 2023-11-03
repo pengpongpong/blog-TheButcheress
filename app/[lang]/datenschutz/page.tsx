@@ -7,7 +7,7 @@ import { client } from "@/sanity/lib/sanity-utils"
 import { transformLocale } from "@/components/utils/utils"
 import CookieBannerSettings from "./CookieBannerSettings"
 
-export const Headline = ({ children, title }: { children: ReactNode, title: string }) => {
+const Headline = ({ children, title }: { children: ReactNode, title: string }) => {
     return (
         <>
             <h2 className="mb-4 mt-8 text-lg">{title}</h2>
@@ -16,7 +16,7 @@ export const Headline = ({ children, title }: { children: ReactNode, title: stri
     )
 }
 
-export const Text = ({ text }: { text: string }) => {
+const Text = ({ text }: { text: string }) => {
     return <p className="mb-2">{text}</p>
 }
 
@@ -69,7 +69,7 @@ const PrivacyPolicyPage = async ({ params: { lang } }: ParamsProps) => {
     return (
         <>
             <header>
-                <h1 className="my-4 xl:mb-16 xl:mt-12 text-6xl xl:text-8xl text-center font-text">Datenschutz</h1>
+                <h1 className="my-4 xl:mb-16 xl:mt-12 text-6xl xl:text-8xl text-center font-text">{lang === "en" ? "Privacy" : "Datenschutz"}</h1>
             </header>
             <main className="mx-8 xl:mx-auto mb-8 xl:mb-16 xl:max-w-screen-xl font-text flex-grow">
                 {data.content.map(obj => {
@@ -81,7 +81,7 @@ const PrivacyPolicyPage = async ({ params: { lang } }: ParamsProps) => {
                         </Headline>
                     )
                 })}
-                <CookieBannerSettings/>
+                <CookieBannerSettings />
             </main>
         </>
 

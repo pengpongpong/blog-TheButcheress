@@ -42,6 +42,7 @@ export const useQueryStore = create<QueryStore>((set) => ({
 
 // handle consent for cookie banner & language switch
 interface useConsentStore {
+    advertiseConsent: boolean,
     analyticsConsent: boolean,
     functionalConsent: boolean,
     open: boolean,
@@ -50,9 +51,11 @@ interface useConsentStore {
     setOpen: (current: boolean) => void
     setAnalyticsConsent: (current: boolean) => void
     setFunctionalConsent: (current: boolean) => void
+    setAdvertiseConsent: (current: boolean) => void
 }
 
 export const useConsentStore = create<useConsentStore>((set) => ({
+    advertiseConsent: false,
     analyticsConsent: false,
     functionalConsent: false,
     open: false,
@@ -61,4 +64,30 @@ export const useConsentStore = create<useConsentStore>((set) => ({
     setOpen: (current) => set(() => ({ open: current })),
     setAnalyticsConsent: (current) => set(() => ({ analyticsConsent: current })),
     setFunctionalConsent: (current) => set(() => ({ functionalConsent: current })),
+    setAdvertiseConsent: (current) => set(() => ({ advertiseConsent: current })),
 }))
+
+// set analytics consent state
+export const setAnalyticsConsent = (bool: boolean) => {
+    useConsentStore.getState().setAnalyticsConsent(bool)
+}
+
+// set functional consent state
+export const setFunctionalConsent = (bool: boolean) => {
+    useConsentStore.getState().setFunctionalConsent(bool)
+}
+
+// set advertise consent state
+export const setAdvertiseConsent = (bool: boolean) => {
+    useConsentStore.getState().setAdvertiseConsent(bool)
+}
+
+// open cookie banner dialog
+export const setOpen = (bool: boolean) => {
+    useConsentStore.getState().setOpen(bool)
+}
+
+// show/hide cookie banner
+export const setShowBanner = (bool: boolean) => {
+    useConsentStore.getState().setShowBanner(bool)
+}

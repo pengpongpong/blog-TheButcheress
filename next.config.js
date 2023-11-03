@@ -3,6 +3,7 @@
 const csp = `
     base-uri 'self';
     child-src 'self';
+    script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;
     img-src 'self' https://cdn.sanity.io data:;
     style-src 'self' fonts.googleapis.com https: 'unsafe-inline' data:;
     style-src-elem 'self' fonts.googleapis.com data: 'unsafe-inline';

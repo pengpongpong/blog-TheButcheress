@@ -42,8 +42,8 @@ const Newsletter = ({ lang }: { lang: Locale }) => {
                     Subscribe
                 </button>
             </form>
-            {message ? <span className="my-2text-success">{message}</span> : ""}
-            {error ? <span className="my-2 text-error">{error}</span> : ""}
+            {message ? <span className="ml-1 mt-2 text-success">{message}</span> : ""}
+            {error ? <span className="ml-1 mt-2 text-error">{error}</span> : ""}
             <span className="mt-3 ml-1">{lang === "en" ? "Stay in contact!" : "Bleibe in Kontakt!"} </span>
         </div>
     )

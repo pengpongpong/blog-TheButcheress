@@ -2,7 +2,8 @@ import { ReactNode } from "react"
 import "./globals.css"
 import { Locale } from "./HomePage"
 import CookieBanner from "@/components/cookie-banner/CookieBanner"
-import Analytics from "@/components/analytics/Analytics"
+import Analytics from "@/components/google-analytics/Analytics"
+
 
 const domain = process.env.NEXT_PUBLIC_DOMAIN
 

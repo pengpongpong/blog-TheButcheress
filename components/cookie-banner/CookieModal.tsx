@@ -3,14 +3,14 @@ import React, { ReactElement, Ref, forwardRef, useEffect, useRef } from 'react';
 import Image from "next/image";
 
 import { TransitionProps } from '@mui/material/transitions';
-import { Button, ThemeProvider, createTheme, Slide, DialogContent, DialogActions, Dialog } from "@mui/material";
+import { ThemeProvider, createTheme, Slide, DialogContent, DialogActions, Dialog } from "@mui/material";
 
-import { useConsentStore } from "../utils/store";
-import { denyConsent, setAnalyticsConsent, setFunctionalConsent, setOpen, setShowBanner } from "./CookieBanner";
+import { setAdvertiseConsent, setAnalyticsConsent, setFunctionalConsent, setOpen, setShowBanner, useConsentStore } from "../utils/store";
+import { denyConsent, } from "./CookieBanner";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
-import cookieIcon from "/public/icons/bx-cookie.svg"
 import closeIcon from "/public/icons/bx-x-circle.svg"
+import { getLocalStorage, setLocalStorage } from "../utils/utils";
 
 // styles for dialog modal
 const theme = createTheme({
@@ -31,16 +31,9 @@ const theme = createTheme({
                     width: "100%",
                     margin: "2rem 1rem 0 0",
                     display: "flex",
-                    justifyContent: "flex-end",
+                    justifyContent: "space-around",
                     alignItems: "flex-end",
                     gap: "1rem",
-                    '@media (max-width: 600px)': {
-                        width: "auto",
-                        margin: "1rem",
-                        padding: 0,
-                        flexDirection: "column-reverse",
-                        alignItems: "center",
-                    }
                 },
             }
         },
@@ -48,6 +41,10 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     width: "auto",
+                    backgroundColor: "#1FB2A5 !important",
+                    fontFamily: "Josefin Slab !important",
+                    color: "black !important",
+                    fontWeight: "bold !important",
                     '@media (max-width: 600px)': {
                         width: "100%",
                         padding: ".6rem 0"
@@ -88,40 +85,47 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-// cookie icon for MUI buttons
-const CookieImage = () => (<Image src={cookieIcon} alt="" />)
-
 export default function CookieModal() {
     const open = useConsentStore(state => state.open) // open state for dialog modal
     const cookieFunctionalState = useConsentStore(state => state.functionalConsent)
     const cookieAnalyticsState = useConsentStore(state => state.analyticsConsent)
+    const cookieAdvertiseState = useConsentStore(state => state.advertiseConsent)
 
     // refs for getting values
     const inputFunctionalRef = useRef<HTMLInputElement>(null)
     const inputAnalyticsRef = useRef<HTMLInputElement>(null)
+    const inputAdvertiseRef = useRef<HTMLInputElement>(null)
 
     // get cookies data
     const cookieFunctional = getCookie("cookie-functional")
     const cookieAnalytics = getCookie("cookie-analytics")
-    const cookiePreference = getCookie("cookie-preference")
+    const cookieAdvertise = getCookie("cookie-advertise")
+
+    // const cookieConsent = getLocalStorage("consent")
 
     // if cookies detected then set state in consent-store and set input checked value to state
     useEffect(() => {
         if (cookieFunctional) setFunctionalConsent(true)
         if (cookieAnalytics) setAnalyticsConsent(true)
-        if (inputFunctionalRef.current && inputAnalyticsRef.current) {
+        if (cookieAdvertise) setAdvertiseConsent(true)
+        if (inputFunctionalRef.current && inputAnalyticsRef.current && inputAdvertiseRef.current) {
             inputFunctionalRef.current.checked = cookieFunctionalState
             inputAnalyticsRef.current.checked = cookieAnalyticsState
+            inputAdvertiseRef.current.checked = cookieAdvertiseState
         }
-    }, [cookieFunctionalState, cookieAnalyticsState, cookieFunctional, cookieAnalytics, cookiePreference])
+    }, [cookieFunctionalState, cookieAnalyticsState, cookieAdvertiseState, cookieFunctional, cookieAnalytics, cookieAdvertise])
 
     // accept all consent
     const acceptConsent = () => {
-        setCookie("cookie-preference", "true")
+        setLocalStorage("consent", "granted")
+
         setCookie("cookie-functional", "true")
         setCookie("cookie-analytics", "true")
+        setCookie("cookie-advertise", "true")
+
         setFunctionalConsent(true)
         setAnalyticsConsent(true)
+        setAdvertiseConsent(true)
 
         setOpen(false);
         setShowBanner(false)
@@ -136,8 +140,10 @@ export default function CookieModal() {
     const acceptAdvancedConsent = () => {
         const functionalConsent = inputFunctionalRef?.current?.checked
         const analyticsConsent = inputAnalyticsRef?.current?.checked
+        const advertiseConsent = inputAdvertiseRef?.current?.checked
 
-        setCookie("cookie-preference", "true")
+        // setCookie("cookie-preference", "true")
+        setLocalStorage("consent", "partial")
 
         if (functionalConsent === true) {
             setCookie("cookie-functional", "true")
@@ -156,6 +162,14 @@ export default function CookieModal() {
         } else {
             if (cookieAnalytics) deleteCookie("cookie-analytics");
             setAnalyticsConsent(false)
+        }
+
+        if (advertiseConsent === true) {
+            setCookie("cookie-advertise", "true")
+            setAnalyticsConsent(true)
+        } else {
+            if (cookieAdvertise) deleteCookie("cookie-advertise");
+            setAdvertiseConsent(false)
         }
 
         // close dialog & banner
@@ -189,23 +203,30 @@ export default function CookieModal() {
                             <fieldset>
                                 <label className="cursor-pointer label mb-2 mt-4 font-bold">
                                     <span className="label-text text-xl">Functional cookies</span>
-                                    <input type="checkbox" className="checkbox checkbox-accent" defaultChecked={!cookiePreference ? true : Boolean(cookieFunctional)} ref={inputFunctionalRef} />
+                                    <input type="checkbox" className="checkbox checkbox-accent" defaultChecked={Boolean(cookieFunctional) ?? false} ref={inputFunctionalRef} />
                                 </label>
                                 <p className="w-4/5 ml-1">Preference cookies enable a website to remember information that changes the way the website behaves or looks, like your preferred language.</p>
                             </fieldset>
                             <fieldset>
                                 <label className="cursor-pointer label mb-2 mt-4 font-bold">
-                                    <span className="label-text text-xl">Analytics cookies cookies</span>
+                                    <span className="label-text text-xl">Analytics cookies</span>
                                     <input type="checkbox" className="checkbox checkbox-accent" defaultChecked={Boolean(cookieAnalytics) ?? false} ref={inputAnalyticsRef} />
                                 </label>
                                 <p className="w-4/5 ml-1">Analytics cookies help website owners to understand how visitors interact with websites by collecting and reporting information anonymously.</p>
                             </fieldset>
+                            <fieldset>
+                                <label className="cursor-pointer label mb-2 mt-4 font-bold">
+                                    <span className="label-text text-xl">Advertising cookies</span>
+                                    <input type="checkbox" className="checkbox checkbox-accent" defaultChecked={Boolean(cookieAdvertise) ?? false} ref={inputAdvertiseRef} />
+                                </label>
+                                <p className="w-4/5 ml-1">Our website only uses an advertising cookie for Google Analytics. This cookie helps us analyze user interactions with ads and measure the effectiveness of our advertising campaigns. No personal data is collected or passed on.</p>
+                            </fieldset>
                         </form>
                     </DialogContent>
                     <DialogActions disableSpacing>
-                        <Button variant="contained" className="bg-secondary text-neutral" endIcon={<CookieImage />} onClick={denyConsent}>Deny All</Button>
-                        <Button variant="contained" className="bg-secondary text-neutral" endIcon={<CookieImage />} onClick={acceptAdvancedConsent}>Save Settings</Button>
-                        <Button variant="contained" className="bg-accent text-neutral" endIcon={<CookieImage />} onClick={acceptConsent}>Accept All</Button>
+                        <button className="mb-4 hover:underline" onClick={denyConsent}>Deny</button>
+                        <button className="mb-4 hover:underline" onClick={acceptAdvancedConsent}>Save Settings</button>
+                        <button className="mb-4 btn btn-sm btn-accent box-shadow" onClick={acceptConsent}>Accept</button>
                     </DialogActions>
                 </Dialog>
             </ThemeProvider>
