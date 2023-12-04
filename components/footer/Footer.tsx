@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Socials from "../socials/Socials";
-import Newsletter from "./Newsletter";
+// import Newsletter from "./Newsletter";
 
 const FooterLink = ({ text, url }: { text: string, url: string }) => {
   return (
@@ -28,7 +28,7 @@ const Footer = ({ lang }: { lang: "de" | "en" }) => {
             <span className="footer-title">Social</span>
             <Socials />
           </div>
-          <Newsletter lang={lang}/>
+          {/* <Newsletter lang={lang}/> */}
         </div>
       </footer>
     </>

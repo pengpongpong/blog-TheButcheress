@@ -68,11 +68,22 @@ const ContactForm = ({ lang }: { lang: Locale }) => {
         fetch("/de/kontakt/api", { method: "POST", body: JSON.stringify({ data, lang }) })
             .then(res => res.json())
             .then(result => {
-                if (result.message === "success") {
+
+                // handle errors
+                if (result.message === "Required fields missing") {
+                    const successMessage = lang === "en" ? "Required fields missing!" : "Erforderliche Felder fehlen!"
+                    setMessage(successMessage)
+                } else if (result.message === "Invalid email") {
+                    const successMessage = lang === "en" ? "Invalid email!" : "Ungültige Email!"
+                    setMessage(successMessage)
+                } else if (result.message === "error") {
+                    const successMessage = lang === "en" ? "Error! Please try again later!" : "Fehler! Bitte später erneut versuchen!"
+                    setMessage(successMessage)
+
+                    // handle success
+                } else if (result.message === "success") {
                     const successMessage = lang === "en" ? "Succesfully submitted!" : "Erfolgreich übermittelt!"
                     setMessage(successMessage)
-                } else {
-                    setMessage(result.message)
                 }
             })
     });

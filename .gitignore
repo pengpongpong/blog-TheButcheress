@@ -43,3 +43,7 @@ cypress.env.json
 
 # vs code
 /.vscode
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

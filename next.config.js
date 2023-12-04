@@ -11,6 +11,7 @@ const csp = `
     font-src 'self' fonts.gstatic.com data: https: data:;
     frame-src 'self' https://cdn.sanity.io;
     frame-ancestors 'self';
+    connect-src 'self' https://94y9p2mz.apicdn.sanity.io;
 `
 
 const nextConfig = {
@@ -39,7 +40,7 @@ const nextConfig = {
                     },
                     {
                         key: 'Content-Security-Policy',
-                        value: csp.replace(/\s{2,}/g, ' ').trim()
+                        value: process.env.NODE_ENV === "development" ? "" : csp.replace(/\s{2,}/g, ' ').trim()
                     },
                     {
                         key: 'X-Content-Type-Options',
