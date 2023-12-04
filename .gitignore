@@ -38,11 +38,12 @@ next-env.d.ts
 /__todo__
 *.todo
 
-# cypress
-cypress.env.json
-
 # vs code
 /.vscode
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 /test-results/
 /playwright-report/
 /blob-report/
