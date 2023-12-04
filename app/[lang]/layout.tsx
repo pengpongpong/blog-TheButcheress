@@ -8,7 +8,6 @@ import Analytics from "@/components/google-analytics/Analytics"
 const domain = process.env.NEXT_PUBLIC_DOMAIN
 
 export const metadata = {
-  metadataBase: new URL(`${domain}`),
   robots: {
     index: true,
     follow: true,
@@ -23,6 +22,10 @@ export const metadata = {
     },
   },
   category: "blog",
+  metadataBase: new URL(domain as string),
+  alternates: {
+    canonical: "/kontakt"
+  },
 }
 
 
@@ -39,7 +42,7 @@ export default async function RootLayout({
   return (
     <html lang={`${params.lang ?? "de"}`}>
       <Analytics />
-      
+
       <body className="min-h-screen flex flex-col">
         {children}
         <CookieBanner lang={params.lang} />
