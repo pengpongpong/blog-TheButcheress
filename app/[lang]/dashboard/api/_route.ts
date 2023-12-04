@@ -1,9 +1,27 @@
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 import { authOption } from "../../api/auth/[...nextauth]/route";
-import { transporter } from "../../api/newsletter/subscribe/route";
 import { connectToDatabase, db } from "@/components/utils/db";
 import EmailModel from "@/models/EmailModel";
+
+const aws = require("@aws-sdk/client-ses")
+const nodemailer = require("nodemailer");
+
+// get AWS SES provider
+const ses = new aws.SES({
+    apiVersion: "2010-12-01",
+    region: "eu-central-1",
+    credentials: {
+        accessKeyId: `${process.env.NEXT_PUBLIC_AWS_ACCESS_KEY}`,
+        secretAccessKey: `${process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY}`
+    }
+});
+
+// create Nodemailer SES transporter
+export const transporter = nodemailer.createTransport({
+    SES: { ses, aws },
+});
+
 
 // send email
 export const POST = async (req: NextRequest) => {

@@ -81,7 +81,7 @@ const PrivacyPolicyPage = async ({ params: { lang } }: ParamsProps) => {
                         </Headline>
                     )
                 })}
-                <CookieBannerSettings />
+                <CookieBannerSettings lang={lang}/>
             </main>
         </>
 

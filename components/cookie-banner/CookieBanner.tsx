@@ -68,14 +68,16 @@ const CookieBanner = ({ lang }: { lang: Locale }) => {
                     <span>{lang === "en" ? "Privacy policy" : "Datenschutz"}</span>
                 </Link>
                 <span>
-                    <Image src={CookieIcon} alt="" />
-                    Cookies enhance your experience on our food blog. Enjoy our recipes and culinary adventures!
+                    <Image src={CookieIcon} alt="Cookie icon" />
+                    {lang === "en"
+                        ? "Cookies enhance your experience on our food blog. Enjoy our recipes and culinary adventures!"
+                        : "Cookies verbessern Ihr Erlebnis in unserem Food-Blog. Genießen Sie unsere Rezepte und kulinarischen Erlebnisse!"}
                 </span>
-                <div>
-                    <button className="hover:underline" onClick={denyConsent}>Deny</button>
-                    <button className="hover:underline" onClick={handleCookieModal}>Preference</button>
-                    <button className="btn btn-sm btn-accent box-shadow" onClick={acceptConsent}>Accept</button>
-                    <CookieModal />
+                <div className="flex gap-4">
+                    <button className="hover:underline" onClick={denyConsent}>{lang === "en" ? "Deny" : "Ablehnen"}</button>
+                    <button className="hover:underline" onClick={handleCookieModal}>{lang === "en" ? "Settings" : "Einstellungen"}</button>
+                    <button className="btn btn-sm btn-accent box-shadow" onClick={acceptConsent}>{lang === "en" ? "Accept" : "Akzeptieren"}</button>
+                    <CookieModal lang={lang}/>
                 </div>
             </div > : ""
             }
