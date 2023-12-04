@@ -53,7 +53,7 @@ export const POST = async (req: NextRequest) => {
     const { email, lang }: { email: string, lang: Locale } = data
 
     // check if right email format
-    if (!emailRegex.test(email)) return NextResponse.json({ message: lang === "en" ? "Invalid email" : "Ungültige Email" }, { status: 400 })
+    if (!email.match(emailRegex)) return NextResponse.json({ message: lang === "en" ? "Invalid email" : "Ungültige Email" }, { status: 400 })
 
     // get email data on database
     const checkEmailData = await getEmail(email)
